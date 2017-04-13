@@ -12,6 +12,7 @@ Plug 'honza/vim-snippets'
 
 Plug 'terryma/vim-multiple-cursors'
 Plug 'airblade/vim-gitgutter'
+
 " syntax and style
 Plug 'sickill/vim-monokai'
 Plug 'mhartington/oceanic-next'
@@ -19,27 +20,39 @@ Plug 'vim-python/python-syntax'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-fugitive'  " show git branch
+
 "typescript
 Plug 'mhartington/nvim-typescript'
 Plug 'HerringtonDarkholme/yats.vim'
-"Projects
-Plug 'tek/proteome.nvim', {'do': ':UpdateRemotePlugins'}
-" Terminal/REPL
-Plug 'kassio/neoterm'
+
 " virtualenv
 Plug 'jmcantrell/vim-virtualenv'
-"Jedi
-Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
-Plug 'zchee/deoplete-jedi'  " NVIM
-" Plug 'davidhalter/jedi-vim'  " VIM
-" neomake
-Plug 'neomake/neomake'
 
 "NERDTree
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 
 Plug 'nvie/vim-flake8'
+
+"""""""""""""""""""""""
+" NEOVIM ONLY
+"""""""""""""""""""""""
+" Projects
+Plug 'tek/proteome.nvim', {'do': ':UpdateRemotePlugins'}
+" Terminal/REPL
+Plug 'kassio/neoterm'
+" Jedi
+Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
+Plug 'zchee/deoplete-jedi'  " NVIM
+" Neomake
+Plug 'neomake/neomake'
+
+"""""""""""""""""""""""
+" VIM ONLY
+"""""""""""""""""""""""
+" Jedi
+" Plug 'davidhalter/jedi-vim'  " VIM
+
 
 call plug#end()
 
@@ -51,24 +64,32 @@ filetype plugin indent on    " required
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:flake8_show_in_gutter = 1
+" call flake8#Flake8UnplaceMarkers()
+let g:airline_powerline_fonts = 1
+"let g:airline#extensions#tagbar#enabled = 0
+
+"""""""""""""""""""""""
+" NEOVIM ONLY
+"""""""""""""""""""""""
 " proteome
 let g:proteome_config_path = '~/.config/nvim/projects'
 let g:proteome_base_dirs = ['~/repos']
+
 " deoplete.nvim
 let g:deoplete#enable_at_startup = 1
 " setup extra paths with
 " let g:deoplete#sources#jedi#extra_path=
-let g:flake8_show_in_gutter = 1
-" call flake8#Flake8UnplaceMarkers()
+"
+" Neoterm
 " let g:neoterm_position = 'vertical' " set the neoterm pos to vertical
 let g:neoterm_size=15
-let g:airline_powerline_fonts = 1
-"let g:airline#extensions#tagbar#enabled = 0
+
 " run Neomake on ever write
 autocmd! BufWritePost * Neomake
 " 'pip install --no-deps --upgrade .' maker
 " let g:neomake_pipnodeps_maker = {'exe': 'pip', 'args': ['install --no-deps --upgrade .']}
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -110,10 +131,10 @@ syntax enable  " enables specific syntax
 " highligh all from vim-python/python-syntax
 let g:python_highlight_all = 1
 highlight link pythonNone Boolean
-highlight Statement gui=italic
-highlight Conditional gui=italic
-highlight Operator gui=italic
-highlight Identifier gui=italic
+highlight Statement cterm=italic gui=italic
+highlight Conditional cterm=italic gui=italic
+highlight Operator cterm=italic gui=italic
+highlight Identifier cterm=italic gui=italic
 
 " load html/css/js/jQuery scope when qsl scope is activated
 " with :SnipMateLoadScope
