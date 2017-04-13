@@ -12,7 +12,6 @@ Plug 'honza/vim-snippets'
 
 Plug 'terryma/vim-multiple-cursors'
 Plug 'airblade/vim-gitgutter'
-
 " syntax and style
 Plug 'sickill/vim-monokai'
 Plug 'mhartington/oceanic-next'
@@ -20,23 +19,21 @@ Plug 'vim-python/python-syntax'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-fugitive'  " show git branch
-
 "typescript
 Plug 'mhartington/nvim-typescript'
 Plug 'HerringtonDarkholme/yats.vim'
-
 "Projects
-" Plug 'tek/proteome.nvim', {'do': ':UpdateRemotePlugins'} " NeoVim
+Plug 'tek/proteome.nvim', {'do': ':UpdateRemotePlugins'}
 " Terminal/REPL
-" Plug 'kassio/neoterm' " NeoVim
+Plug 'kassio/neoterm'
 " virtualenv
 Plug 'jmcantrell/vim-virtualenv'
 "Jedi
-" Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'} " NeoVim
-" Plug 'zchee/deoplete-jedi'  " NeoVim
-Plug 'davidhalter/jedi-vim'  " VIM
+Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
+Plug 'zchee/deoplete-jedi'  " NVIM
+" Plug 'davidhalter/jedi-vim'  " VIM
 " neomake
-" Plug 'neomake/neomake' " NeoVim
+Plug 'neomake/neomake'
 
 "NERDTree
 Plug 'scrooloose/nerdtree'
@@ -100,8 +97,8 @@ endif
 " Style
 """""""""""""""""""""""""""""""""
 " allow italics (VIM only)
-set t_ZH=[3m      " INSERT mode: <ctrl>+v<esc>
-set t_ZR=[23m
+" set t_ZH=[3m      " INSERT mode: <ctrl>+v<esc>
+" set t_ZR=[23m
 
 colorscheme OceanicNext
 let g:airline_theme='solarized'
@@ -237,15 +234,14 @@ set expandtab
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " INSERT mode
 imap jj <ESC>
-" TERMINAL mode " NeoVim
+" TERMINAL mode
 " map <ESC> to exit terminal mode and navigate throug windows
 " via Alt + [hjkl]
-" :tnoremap <Esc> <C-\><C-n>
-" :tnoremap <A-h> <C-\><C-n><C-w>h
-" :tnoremap <A-j> <C-\><C-n><C-w>j
-" :tnoremap <A-k> <C-\><C-n><C-w>k
-" :tnoremap <A-l> <C-\><C-n><C-w>l
-
+:tnoremap <Esc> <C-\><C-n>
+:tnoremap <A-h> <C-\><C-n><C-w>h
+:tnoremap <A-j> <C-\><C-n><C-w>j
+:tnoremap <A-k> <C-\><C-n><C-w>k
+:tnoremap <A-l> <C-\><C-n><C-w>l
 :nnoremap <A-h> <C-w>h
 :nnoremap <A-j> <C-w>j
 :nnoremap <A-k> <C-w>k
