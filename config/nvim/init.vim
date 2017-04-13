@@ -107,27 +107,30 @@ set isk+=_,$,@,%,#,- " none of these should be word dividers, so make them not b
 set sbr=> " show wrapped lines:
 set backspace=indent,eol,start " Allow backspace in insert mode
 
+"""""""""""""""""""""""""""""""""
+" Style
+"""""""""""""""""""""""""""""""""
+" Syntax
+syntax enable  " enables specific syntax
+" For Vim < 8
+" set t_Co=256
+
 " For Neovim 0.1.3 and 0.1.4
 " let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-" Or if you have Neovim >= 0.1.5
+" For Neovim >= 0.1.5 or Vim > 8
 if (has("termguicolors"))
   set termguicolors
 endif
 
-"""""""""""""""""""""""""""""""""
-" Style
-"""""""""""""""""""""""""""""""""
 " allow italics (VIM only)
 " set t_ZH=[3m      " INSERT mode: <ctrl>+v<esc>
 " set t_ZR=[23m
 
 colorscheme OceanicNext
-let g:airline_theme='solarized'
+let g:airline_theme='oceanicnext'
 " colorscheme monokai
 " let g:airline_theme='wombat'
 
-" Syntax
-syntax enable  " enables specific syntax
 " highligh all from vim-python/python-syntax
 let g:python_highlight_all = 1
 highlight link pythonNone Boolean
