@@ -84,7 +84,7 @@ let g:deoplete#enable_at_startup = 1
 "
 " Neoterm
 " let g:neoterm_position = 'vertical' " set the neoterm pos to vertical
-let g:neoterm_size=15
+let g:neoterm_size=10
 
 " run Neomake on ever write
 autocmd! BufWritePost * Neomake
