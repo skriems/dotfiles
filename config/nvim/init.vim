@@ -25,6 +25,9 @@ Plug 'tpope/vim-fugitive'  " show git branch
 Plug 'mhartington/nvim-typescript'
 Plug 'HerringtonDarkholme/yats.vim'
 
+" Emmet
+Plug 'mattn/emmet-vim'
+
 " virtualenv
 Plug 'jmcantrell/vim-virtualenv'
 
@@ -70,6 +73,9 @@ let g:flake8_show_in_gutter = 1
 let g:airline_powerline_fonts = 1
 "let g:airline#extensions#tagbar#enabled = 0
 
+" use emmet only in html and css files
+let g:user_emmet_install_global = 0
+autocmd FileType html,css EmmetInstall
 """""""""""""""""""""""
 " NEOVIM ONLY
 """""""""""""""""""""""
@@ -106,6 +112,8 @@ set viminfo+=!  " make sure it can save viminfo
 set isk+=_,$,@,%,#,- " none of these should be word dividers, so make them not be
 set sbr=> " show wrapped lines:
 set backspace=indent,eol,start " Allow backspace in insert mode
+" realod on external writes
+set autoread
 
 """""""""""""""""""""""""""""""""
 " Style
@@ -223,6 +231,15 @@ augroup python
     let g:pymode_lint_checker = "flake8"
     let g:pymode_rope_complete_on_dot = 0
     let g:pymofe_rope = 0
+augroup END
+
+augroup html
+    au!
+    au BufNewFile, BufRead *.html
+    au FileType html set softtabstop=2
+    au FileType html set tabstop=2
+    au FileType html set shiftwidth=2
+    au FileType html set expandtab
 augroup END
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
