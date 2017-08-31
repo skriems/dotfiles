@@ -75,7 +75,7 @@ let g:airline_powerline_fonts = 1
 
 " use emmet only in html and css files
 let g:user_emmet_install_global = 0
-autocmd FileType html,css EmmetInstall
+autocmd FileType html,css,ts EmmetInstall
 """""""""""""""""""""""
 " NEOVIM ONLY
 """""""""""""""""""""""
@@ -146,6 +146,10 @@ highlight Statement cterm=italic gui=italic
 highlight Conditional cterm=italic gui=italic
 highlight Operator cterm=italic gui=italic
 highlight Identifier cterm=italic gui=italic
+
+" transparent background
+highlight Normal ctermbg=None guibg=None
+highlight NonText ctermbg=None guibg=None
 
 " load html/css/js/jQuery scope when qsl scope is activated
 " with :SnipMateLoadScope
