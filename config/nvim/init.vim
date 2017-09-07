@@ -40,8 +40,6 @@ Plug 'nvie/vim-flake8'
 """""""""""""""""""""""
 " NEOVIM ONLY
 """""""""""""""""""""""
-" Projects
-Plug 'tek/proteome.nvim', {'do': ':UpdateRemotePlugins'}
 " Terminal/REPL
 Plug 'kassio/neoterm'
 " Jedi
@@ -79,9 +77,6 @@ autocmd FileType html,css,ts EmmetInstall
 """""""""""""""""""""""
 " NEOVIM ONLY
 """""""""""""""""""""""
-" proteome
-let g:proteome_config_path = '~/.config/nvim/projects'
-let g:proteome_base_dirs = ['~/repos']
 
 " deoplete.nvim
 let g:deoplete#enable_at_startup = 1
