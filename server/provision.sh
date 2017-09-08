@@ -47,6 +47,7 @@ apt-get install -y \
     jq \
     imagemagick \
     git \
+    git-flow \
     virtualenvwrapper \
     tmux \
     python-dev \
