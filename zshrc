@@ -117,6 +117,11 @@ alias lla="ls -la --color=auto"
 alias df="df -h"
 alias du="du -h"
 
+# kubernetes
+alias kns='kubectl config set-context $(kubectl config current-context) --namespace'
+alias kc='kubectl config get-contexts'
+alias ksc='kubectl config use-context'
+
 # history search
 autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
 zle -N up-line-or-beginning-search
