@@ -14,7 +14,6 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'airblade/vim-gitgutter'
 
 " syntax and style
-Plug 'sickill/vim-monokai'
 Plug 'mhartington/oceanic-next'
 Plug 'vim-python/python-syntax'
 Plug 'vim-airline/vim-airline'
@@ -129,10 +128,11 @@ endif
 " set t_ZH=[3m      " INSERT mode: <ctrl>+v<esc>
 " set t_ZR=[23m
 
+let g:oceanic_next_terminal_bold = 1
+let g:oceanic_next_terminal_italic = 1
+
 colorscheme OceanicNext
 let g:airline_theme='oceanicnext'
-" colorscheme monokai
-" let g:airline_theme='wombat'
 
 " highligh all from vim-python/python-syntax
 let g:python_highlight_all = 1
