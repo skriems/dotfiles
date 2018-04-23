@@ -4,55 +4,48 @@ filetype off
 " vim-plug
 call plug#begin('~/.local/share/nvim/plugged')
 
-" snipMate
-Plug 'garbas/vim-snipmate'
-Plug 'tomtom/tlib_vim'
-Plug 'MarcWeber/vim-addon-mw-utils'
-Plug 'honza/vim-snippets'
-
-Plug 'terryma/vim-multiple-cursors'
+" consider installing js-beautify, autopep8
+Plug 'Chiel92/vim-autoformat'
+" vim-orgmode
+Plug 'jceb/vim-orgmode'
+Plug 'tpope/vim-speeddating'
+" Plug 'terryma/vim-multiple-cursors'
 Plug 'airblade/vim-gitgutter'
-
 " syntax and style
 Plug 'mhartington/oceanic-next'
 Plug 'vim-python/python-syntax'
 Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+" Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-fugitive'  " show git branch
-
-"typescript
+" tabular needs be before markdown
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown'
+" typescript
 Plug 'mhartington/nvim-typescript'
 Plug 'HerringtonDarkholme/yats.vim'
-
+" javascript / react jsx
+" Plug 'pangloss/vim-javascript'
+" Plug 'maxmellon/vim-jsx-pretty'
 " Emmet
 Plug 'mattn/emmet-vim'
-
 " virtualenv
-Plug 'jmcantrell/vim-virtualenv'
-
+" Plug 'jmcantrell/vim-virtualenv'
 "NERDTree
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
-
-Plug 'nvie/vim-flake8'
-
-"""""""""""""""""""""""
-" NEOVIM ONLY
-"""""""""""""""""""""""
 " Terminal/REPL
 Plug 'kassio/neoterm'
 " Jedi
 Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
 Plug 'zchee/deoplete-jedi'  " NVIM
+Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
+" autocomplete-flow
+Plug 'wokalski/autocomplete-flow'
+" For func argument completion
+Plug 'Shougo/neosnippet'
+Plug 'Shougo/neosnippet-snippets'
 " Neomake
 Plug 'neomake/neomake'
-
-"""""""""""""""""""""""
-" VIM ONLY
-"""""""""""""""""""""""
-" Jedi
-" Plug 'davidhalter/jedi-vim'  " VIM
-
 
 call plug#end()
 
@@ -62,50 +55,47 @@ filetype plugin indent on    " required
 " filetype plugin on
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Plugins
+" Plugin Config
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-let g:flake8_show_in_gutter = 1
-" call flake8#Flake8UnplaceMarkers()
-let g:airline_powerline_fonts = 1
-"let g:airline#extensions#tagbar#enabled = 0
-
-" use emmet only in html and css files
+" use emmet in html,css,js files
 let g:user_emmet_install_global = 0
-autocmd FileType html,css,ts EmmetInstall
-"""""""""""""""""""""""
-" NEOVIM ONLY
-"""""""""""""""""""""""
-
+autocmd FileType html,css,typescript,javascript EmmetInstall
+" use prettier for auto formatting
+autocmd FileType javascript set formatprg=prettier\ --stdin
+autocmd BufWritePre *.js :normal gggqG
 " deoplete.nvim
 let g:deoplete#enable_at_startup = 1
-" setup extra paths with
-" let g:deoplete#sources#jedi#extra_path=
-"
+" enable neosnippet to support func argument completion with autocomplete-flow
+let g:neosnippet#enable_completed_snippet = 1
 " Neoterm
 " let g:neoterm_position = 'vertical' " set the neoterm pos to vertical
 let g:neoterm_size=10
 
-" run Neomake on ever write
-autocmd! BufWritePost * Neomake
-" 'pip install --no-deps --upgrade .' maker
-" let g:neomake_pipnodeps_maker = {'exe': 'pip', 'args': ['install --no-deps --upgrade .']}
+" run Neomake asynchronously
+autocmd! BufWritePost, BufEnter * Neomake
+call neomake#configure#automake('nrw', 750)
+" :lopen when neomake runs
+" let g:neomake_open_list = 2
+" https://github.com/neomake/neomake/wiki/Makers
+let g:neomake_python_enabled_makers = ['pylint']
+let g:neomake_javascript_enabled_makers = ['eslint']
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set history=1000 " How many lines of history to remember
-
-" use the clipboard even in terminal
-" NOTE: for nvim: install xsel to have the system clipboard
-" available at "+" or "*" registers
-" set clipboard+=unnamed " VIM only!
-
-set cf " enable error files and error jumping
-set ffs=unix,mac,dos " support all three, in this order
-set viminfo+=!  " make sure it can save viminfo
-set isk+=_,$,@,%,#,- " none of these should be word dividers, so make them not be
-set sbr=> " show wrapped lines:
-set backspace=indent,eol,start " Allow backspace in insert mode
+" How many lines of history to remember
+set history=1000
+" enable error files and error jumping
+set cf
+" support all three, in this order
+set ffs=unix,mac,dos
+" make sure it can save viminfo
+set viminfo+=!
+" none of these should be word dividers, so make them not be
+set isk+=_,$,@,%,#,-
+" show wrapped lines:
+set sbr=>
+" Allow backspace in insert mode
+set backspace=indent,eol,start
 " realod on external writes
 set autoread
 
@@ -114,26 +104,15 @@ set autoread
 """""""""""""""""""""""""""""""""
 " Syntax
 syntax enable  " enables specific syntax
-" For Vim < 8
-" set t_Co=256
-
-" For Neovim 0.1.3 and 0.1.4
-" let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-" For Neovim >= 0.1.5 or Vim > 8
 if (has("termguicolors"))
   set termguicolors
 endif
-
-" allow italics (VIM only)
-" set t_ZH=[3m      " INSERT mode: <ctrl>+v<esc>
-" set t_ZR=[23m
-
 let g:oceanic_next_terminal_bold = 1
 let g:oceanic_next_terminal_italic = 1
-
 colorscheme OceanicNext
 let g:airline_theme='oceanicnext'
-
+let g:airline_powerline_fonts = 1
+"let g:airline#extensions#tagbar#enabled = 0
 " highligh all from vim-python/python-syntax
 let g:python_highlight_all = 1
 highlight link pythonNone Boolean
@@ -141,41 +120,27 @@ highlight Statement cterm=italic gui=italic
 highlight Conditional cterm=italic gui=italic
 highlight Operator cterm=italic gui=italic
 highlight Identifier cterm=italic gui=italic
-
 " transparent background
 highlight Normal ctermbg=None guibg=None
 highlight NonText ctermbg=None guibg=None
-
-" load html/css/js/jQuery scope when qsl scope is activated
-" with :SnipMateLoadScope
-let g:snipMate = {}
-let g:snipMate.scope_aliases = {}
-let g:snipMate.scope_aliases['qsl'] = 'html,css,javascript,javascript-jquery'
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Visual Cues
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" searching
-" show matching brackets
+" show matching brackets on search
 set showmatch
 " how many tenths of a second to blink matching brackets for
 set mat=5
-
 " do not highlight search for phrases
 set nohlsearch
 " BUT do highlight as you type your search phrase
 set incsearch
-
 set columns=80 " 80 cols wide
-set so=5 " Keep 5 lines (top/bottom) for scope
-
-set visualbell " do blink
-set noerrorbells " no noises
-
+" Keep 5 lines (top/bottom) for scope
+set so=5
+" do blink
+set visualbell
+" no noises
+set noerrorbells
 " show whitelist
 set listchars=tab:>-,trail:~,extends:>,precedes:<
 set list
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Status line:
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -185,7 +150,14 @@ set laststatus=2
 set statusline+=%{fugitive#statusline()}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" indent
+" Tabstops
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set softtabstop=4
+set tabstop=4
+set shiftwidth=4
+set expandtab
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Indent
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " autoindent
 set ai
@@ -203,7 +175,7 @@ set numberwidth=2
 let delimitMate_expand_cr = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" python
+" FileTypes
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " global interpreters for nvim so that we don't need to 
 " 'pip install neovim' in every virtualenv
@@ -215,21 +187,10 @@ augroup python
     au BufNewFile /**/*.py 0r ~/.vim/skeleton/python.py|norm G
     au FileType python set textwidth=79
     au FileType python set omnifunc=pythoncomplete#Complete
-    " au FileType python set relativenumber
     au FileType python set number
+    au FileType python set relativenumber
     au FileType python nnoremap <buffer> <localleader>c I#<esc>
-    " au FileType python IndentGuidesEnable  " VIM only
-
-    if v:version >= 703
-        au FileType python set colorcolumn=80
-    endif
-
-    " python-mode stuff
-    " Switch pylint, pyflakes, pep8, mccabe code-checkers
-    " Can have multiply values "pep8,pyflakes,mcccabe"
-    let g:pymode_lint_checker = "flake8"
-    let g:pymode_rope_complete_on_dot = 0
-    let g:pymofe_rope = 0
+    au FileType python set colorcolumn=80
 augroup END
 
 augroup html
@@ -241,13 +202,14 @@ augroup html
     au FileType html set expandtab
 augroup END
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Tabstops
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set softtabstop=4
-set tabstop=4
-set shiftwidth=4
-set expandtab
+augroup js
+    au!
+    au BufNewFile, BufRead *.js
+    au FileType javascript set softtabstop=2
+    au FileType javascript set tabstop=2
+    au FileType javascript set shiftwidth=2
+    au FileType javascript set expandtab
+augroup END
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Folding
@@ -292,6 +254,13 @@ imap jj <ESC>
 "nnoremap <leader>n :NERDTreeToggle<CR>
 "nnoremap <leader>C :set background=light<CR>
 "nnoremap <leader>c :set background=dark<CR>
+"
+" neomake
+nmap <Leader><Space>o :lopen<CR>      " open location window
+nmap <Leader><Space>c :lclose<CR>     " close location window
+nmap <Leader><Space>, :ll<CR>         " go to current error/warning
+nmap <Leader><Space>n :lnext<CR>      " next error/warning
+nmap <Leader><Space>p :lprev<CR>      " previous error/warning
 
 " do not jump on wrapped lines
 "nnoremap j gj
