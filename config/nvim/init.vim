@@ -4,38 +4,49 @@ filetype off
 " vim-plug
 call plug#begin('~/.local/share/nvim/plugged')
 
+" Plug 'airblade/vim-gitgutter'
+Plug 'mhinz/vim-signify'
+"""""
+" Syntax Checking and Highlighting
+"""""
 " consider installing js-beautify, autopep8
 Plug 'Chiel92/vim-autoformat'
-" vim-orgmode
-Plug 'jceb/vim-orgmode'
-Plug 'tpope/vim-speeddating'
-" Plug 'terryma/vim-multiple-cursors'
-Plug 'airblade/vim-gitgutter'
-" syntax and style
-Plug 'mhartington/oceanic-next'
+
+Plug 'vim-syntastic/syntastic'
 Plug 'vim-python/python-syntax'
-Plug 'vim-airline/vim-airline'
-" Plug 'vim-airline/vim-airline-themes'
-Plug 'tpope/vim-fugitive'  " show git branch
-" tabular needs be before markdown
-Plug 'godlygeek/tabular'
+
+" Markdown
+Plug 'godlygeek/tabular' " tabular needs be before markdown
 Plug 'plasticboy/vim-markdown'
+Plug 'iamcco/markdown-preview.vim'
+
 " typescript
-Plug 'mhartington/nvim-typescript'
-Plug 'HerringtonDarkholme/yats.vim'
+" Plug 'mhartington/nvim-typescript'
+" Plug 'HerringtonDarkholme/yats.vim'
+"
 " javascript / react jsx
-" Plug 'pangloss/vim-javascript'
-" Plug 'maxmellon/vim-jsx-pretty'
-" Emmet
+Plug 'pangloss/vim-javascript'
+Plug 'maxmellon/vim-jsx-pretty'
+
+" Rust
+Plug 'rust-lang/rust.vim'
+Plug 'Nonius/cargo.vim'
+
+"""""
+" Tools
+"""""
+Plug 'tpope/vim-fugitive'
 Plug 'mattn/emmet-vim'
-" virtualenv
-" Plug 'jmcantrell/vim-virtualenv'
+Plug 'jmcantrell/vim-virtualenv'
 "NERDTree
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 " Terminal/REPL
 Plug 'kassio/neoterm'
+
+"""""
 " Jedi
+"""""
 Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
 Plug 'zchee/deoplete-jedi'  " NVIM
 Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
@@ -45,11 +56,25 @@ Plug 'wokalski/autocomplete-flow'
 Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
 " Neomake
-Plug 'neomake/neomake'
+" Plug 'neomake/neomake'
+
+"""""
+" vim-orgmode
+"""""
+Plug 'jceb/vim-orgmode'
+Plug 'tpope/vim-speeddating'
+" Plug 'terryma/vim-multiple-cursors'
+
+"""""
+" Style
+"""""
+Plug 'joshdick/onedark.vim'
+Plug 'morhetz/gruvbox'
+Plug 'mhartington/oceanic-next'
+Plug 'vim-airline/vim-airline'
 
 call plug#end()
 
-syntax on  " enables standard syntax
 filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
 " filetype plugin on
@@ -57,12 +82,12 @@ filetype plugin indent on    " required
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin Config
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" use emmet in html,css,js files
+" use emmet in html,css,js, tsx files
 let g:user_emmet_install_global = 0
 autocmd FileType html,css,typescript,javascript EmmetInstall
 " use prettier for auto formatting
 autocmd FileType javascript set formatprg=prettier\ --stdin
-autocmd BufWritePre *.js :normal gggqG
+" autocmd BufWritePre *.js :normal gggqG
 " deoplete.nvim
 let g:deoplete#enable_at_startup = 1
 " enable neosnippet to support func argument completion with autocomplete-flow
@@ -72,13 +97,40 @@ let g:neosnippet#enable_completed_snippet = 1
 let g:neoterm_size=10
 
 " run Neomake asynchronously
-autocmd! BufWritePost, BufEnter * Neomake
-call neomake#configure#automake('nrw', 750)
+" autocmd! BufWritePost, BufEnter * Neomake
+" call neomake#configure#automake('nrw', 750)
 " :lopen when neomake runs
 " let g:neomake_open_list = 2
 " https://github.com/neomake/neomake/wiki/Makers
-let g:neomake_python_enabled_makers = ['pylint']
-let g:neomake_javascript_enabled_makers = ['eslint']
+" let g:neomake_python_enabled_makers = ['pylint']
+" let g:neomake_javascript_enabled_makers = ['eslint']
+
+" autoformat Rust on save
+let g:rustfmt_autosave = 1
+
+"""""
+" Syntax Checkers and Gutter
+"""""
+" vim-signify
+let g:signify_vcs_list =  ['git']
+let g:signify_realtime = 1
+let g:signify_cursorhold_normal = 0
+let g:signify_cursorhold_insert = 0
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+" Error symbols 
+let g:syntastic_enable_signs = 1
+let g:syntastic_error_symbol = "✗"
+let syntastic_style_error_symbol = "✗"
+let g:syntastic_warning_symbol = "∙∙"
+let syntastic_style_warning_symbol = "∙∙"
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -102,27 +154,25 @@ set autoread
 """""""""""""""""""""""""""""""""
 " Style
 """""""""""""""""""""""""""""""""
-" Syntax
-syntax enable  " enables specific syntax
 if (has("termguicolors"))
   set termguicolors
 endif
-let g:oceanic_next_terminal_bold = 1
-let g:oceanic_next_terminal_italic = 1
-colorscheme OceanicNext
-let g:airline_theme='oceanicnext'
+
+" enable italics for the colorschemes
+let g:gruvbox_italic = 1
+let g:onedark_terminal_italics = 1
+
+" let g:airline_theme='gruvbox'
+let g:airline_theme='onedark'
 let g:airline_powerline_fonts = 1
-"let g:airline#extensions#tagbar#enabled = 0
+
 " highligh all from vim-python/python-syntax
 let g:python_highlight_all = 1
-highlight link pythonNone Boolean
-highlight Statement cterm=italic gui=italic
-highlight Conditional cterm=italic gui=italic
-highlight Operator cterm=italic gui=italic
-highlight Identifier cterm=italic gui=italic
-" transparent background
-highlight Normal ctermbg=None guibg=None
-highlight NonText ctermbg=None guibg=None
+hi link pythonNone Boolean
+hi Statement cterm=italic gui=italic
+hi Conditional cterm=italic gui=italic
+hi Operator cterm=italic gui=italic
+hi Identifier cterm=italic gui=italic
 " show matching brackets on search
 set showmatch
 " how many tenths of a second to blink matching brackets for
@@ -141,6 +191,15 @@ set noerrorbells
 " show whitelist
 set listchars=tab:>-,trail:~,extends:>,precedes:<
 set list
+
+" colorscheme gruvbox
+colorscheme onedark
+set background=dark
+syntax enable
+
+" transparent background
+hi Normal ctermbg=None guibg=None
+hi NonText ctermbg=None guibg=None
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Status line:
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

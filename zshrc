@@ -2,13 +2,17 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH=/home/skr/.oh-my-zsh
+export ZSH=$HOME/.oh-my-zsh
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="agnoster"
+ZSH_THEME="wezm"
 DEFAULT_USER="skr"
+
+# export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python
+# source /usr/bin/virtualenvwrapper_lazy.sh
+export WORKON_HOME=~/.virtualenvs
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -52,7 +56,7 @@ DEFAULT_USER="skr"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git kubectl virtualenvwrapper)
+plugins=(git kubectl helm virtualenvwrapper)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -118,9 +122,9 @@ alias df="df -h"
 alias du="du -h"
 
 # kubernetes
-alias kns='kubectl config set-context $(kubectl config current-context) --namespace'
-alias kc='kubectl config get-contexts'
-alias ksc='kubectl config use-context'
+alias ktail='kubetail'
+alias kcns='kubectl config set-context $(kubectl config current-context) --namespace'
+alias kcgc='kubectl config get-contexts'
 
 # history search
 autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
@@ -150,9 +154,6 @@ zle -N down-line-or-beginning-search
 #
 # [end] remember the DIRSTACKSIZE last visited folders
 #
-
-archey3
-# export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python
-# export WORKON_HOME=~/.virtualenvs
-# source /usr/bin/virtualenvwrapper.sh
 source <(kubectl completion zsh)
+source <(helm completion zsh)
+source /usr/share/nvm/init-nvm.sh
