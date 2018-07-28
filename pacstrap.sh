@@ -17,7 +17,8 @@ pactrap /mnt \
     go dep \
     jre8-openjdk java-openjfx \ # needed for MediathekView
     # gnome gnome-software-packagekit-plugin gnome-tweak-tool \
-    chromium owncloud-client vlc libreoffice-fresh
+    chromium owncloud-client vlc libreoffice-fresh \
+    gimp inkscape
 
 echo "Generating fstab"
 genfstab -U /mnt > /mnt/etc/fstab
