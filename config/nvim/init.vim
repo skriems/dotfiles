@@ -21,8 +21,8 @@ Plug 'plasticboy/vim-markdown'
 Plug 'iamcco/markdown-preview.vim'
 
 " typescript
-" Plug 'mhartington/nvim-typescript'
-" Plug 'HerringtonDarkholme/yats.vim'
+Plug 'mhartington/nvim-typescript'
+Plug 'HerringtonDarkholme/yats.vim'
 "
 " javascript / react jsx
 Plug 'pangloss/vim-javascript'
@@ -33,28 +33,36 @@ Plug 'rust-lang/rust.vim'
 Plug 'Nonius/cargo.vim'
 
 """""
-" Tools
-"""""
-Plug 'tpope/vim-fugitive'
-Plug 'mattn/emmet-vim'
-Plug 'jmcantrell/vim-virtualenv'
-"NERDTree
-Plug 'scrooloose/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-" Terminal/REPL
-Plug 'kassio/neoterm'
-
-"""""
 " Jedi
 """""
 Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
 Plug 'zchee/deoplete-jedi'  " NVIM
 Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
+
 " autocomplete-flow
 Plug 'wokalski/autocomplete-flow'
 " For func argument completion
 Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
+" autoclose
+" Plug 'Townk/vim-autoclose'
+
+"""""
+" Tools
+"""""
+Plug 'tpope/vim-fugitive'
+Plug 'mattn/emmet-vim'
+
+Plug 'tpope/vim-dadbod'
+Plug 'jmcantrell/vim-virtualenv'
+
+"NERDTree
+Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+
+" Terminal/REPL
+Plug 'kassio/neoterm'
+
 " Neomake
 " Plug 'neomake/neomake'
 
@@ -162,8 +170,8 @@ endif
 let g:gruvbox_italic = 1
 let g:onedark_terminal_italics = 1
 
-" let g:airline_theme='gruvbox'
 let g:airline_theme='onedark'
+" let g:airline_theme='gruvbox'
 let g:airline_powerline_fonts = 1
 
 " highligh all from vim-python/python-syntax
@@ -192,7 +200,6 @@ set noerrorbells
 set listchars=tab:>-,trail:~,extends:>,precedes:<
 set list
 
-" colorscheme gruvbox
 colorscheme onedark
 set background=dark
 syntax enable
@@ -324,6 +331,16 @@ nmap <Leader><Space>p :lprev<CR>      " previous error/warning
 " do not jump on wrapped lines
 "nnoremap j gj
 "nnoremap k gk
+
+" autoclose some chars
+inoremap " ""<left>
+inoremap ' ''<left>
+inoremap ( ()<left>
+inoremap [ []<left>
+inoremap { {}<left>
+inoremap {<CR> {<CR>}<ESC>O
+inoremap {;<CR> {<CR>};<ESC>O<Paste>
+inoremap <C-SPACE> <ESC>la
 
 " don't show these filetypes in NERDTree
 "set wildignore+=*/tmp/*,*.so,*.swp,*.pyc
