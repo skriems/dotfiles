@@ -186,6 +186,6 @@ ToDo:
 
 - check /etc/vconsole.conf
 - create X11 config files for keyboard and touchpad in /etc/X11/xorg.conf.d/
-- create virtualenvs for neovim and `pip install neovim jedi flake8 pyflakes`
+- create virtualenvs for neovim and `pip install neovim black jedi flake8 pyflakes`
 - install vimplug and plugins
 "

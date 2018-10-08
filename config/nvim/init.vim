@@ -11,10 +11,10 @@ Plug 'mhinz/vim-signify'
 """""
 " consider installing js-beautify, autopep8
 Plug 'Chiel92/vim-autoformat'
+Plug 'ambv/black'
 
 Plug 'vim-syntastic/syntastic'
 Plug 'vim-python/python-syntax'
-
 " Markdown
 Plug 'godlygeek/tabular' " tabular needs be before markdown
 Plug 'plasticboy/vim-markdown'
