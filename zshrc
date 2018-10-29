@@ -157,3 +157,6 @@ zle -N down-line-or-beginning-search
 source <(kubectl completion zsh)
 source <(helm completion zsh)
 source /usr/share/nvm/init-nvm.sh
+
+# add ~/.local/bin to PATH scripts installed via `pip install --user`
+export PATH=$PATH:~/.local/bin
