@@ -5,7 +5,7 @@ pactrap /mnt \
     xorg xorg-server xf86-video-intel \
     zsh zsh-completions termite termite-terminfo \
     vim vim-spell-de vim-spell-en vim-jedi neovim typescript prettier \
-    i3 compton dmenu rofi feh arandr lxappearance acpi pavucontrol playerctl \
+    i3 compton dmenu rofi feh arandr lxappearance acpi pavucontrol playerctl maim \
     gdm gtk-engine-murrine gtk-engines arc-gtk-theme \
     ttf-dejavu adobe-source-code-pro-fonts otf-font-awesome imagemagick \
     hamster-time-tracker virtualbox git s3cmd aws-cli mlocate rsync tmux jq wget htop \
@@ -13,7 +13,7 @@ pactrap /mnt \
     pylint flake8 autopep8 python2-autopep8 eslint \
     docker docker-compose \
     nodejs npm \
-    rust rustup \
+    rust rustup rust-racer \
     go dep \
     jre8-openjdk java-openjfx \ # needed for MediathekView
     # gnome gnome-software-packagekit-plugin gnome-tweak-tool \
