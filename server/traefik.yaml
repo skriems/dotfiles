@@ -1,0 +1,294 @@
+version: "3.3"
+services:
+  traefik:
+    image: traefik:latest
+    volumes:
+      - ./traefik.toml:/etc/traefik/traefik.toml
+      - ./acme:/etc/traefik/acme
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - cluster
+      - web
+    ports:
+      - 80:80
+      - 443:443
+      - 8080:8080
+    deploy:
+      mode: global
+      placement:
+        constraints:
+          - node.role == manager
+      update_config:
+        parallelism: 1
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+      labels:
+        traefik.enable: "true"
+        traefik.docker.network: web
+        traefik.port: 8080
+        traefik.backend: traefik
+        traefik.frontend.rule: "Host:traefik.example.tld"
+        traefik.frontend.headers.SSLRedirect: "true"
+        traefik.frontend.headers.STSSeconds: 315360000
+        traefik.frontend.headers.browserXSSFilter: "true"
+        traefik.frontend.headers.contentTypeNosniff: "true"
+        traefik.frontend.headers.forceSTSHeader: "true"
+        traefik.frontend.headers.SSLHost: traefik.example.tld
+        traefik.frontend.headers.STSIncludeSubdomains: "true"
+        traefik.frontend.headers.STSPreload: "true"
+        traefik.frontend.headers.frameDeny: "true"
+
+  certdumper:
+    image: svendowideit/traefik-certdumper:latest
+    volumes:
+      - ./acme:/traefik
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  nc:
+    image: nextcloud
+    networks:
+      - web
+      - cluster
+    deploy:
+      restart_policy:
+        condition: on-failure
+      labels:
+        traefik.enable: "true"
+        traefik.docker.network: web
+        traefik.port: 80
+        traefik.backend: nextcloud
+        traefik.frontend.rule: "Host:cloud.example.tld"
+        traefik.frontend.headers.SSLRedirect: "true"
+        traefik.frontend.headers.STSSeconds: 315360000
+        traefik.frontend.headers.browserXSSFilter: "true"
+        traefik.frontend.headers.contentTypeNosniff: "true"
+        traefik.frontend.headers.forceSTSHeader: "true"
+        traefik.frontend.headers.SSLHost: cloud.example.tld
+        traefik.frontend.headers.STSIncludeSubdomains: "true"
+        traefik.frontend.headers.STSPreload: "true"
+        traefik.frontend.headers.frameDeny: "true"
+      restart_policy:
+        condition: on-failure
+    volumes:
+      - ./nextcloud:/var/www/html
+      - ./nextcloud/apps:/var/www/html/apps
+      - ./nextcloud/config:/var/www/html/config
+      - ./nextcloud/data:/var/www/html/data
+    env_file:
+      - db.env
+    depends_on:
+      - pg
+
+  pg:
+    image: postgres:9-alpine
+    ports:
+      - target: 5432
+        published: 5432
+        mode: host
+    volumes:
+      - db:/var/lib/postgresql/data
+    env_file:
+      - db.env
+    networks:
+      - cluster
+    deploy:
+      restart_policy:
+        condition: on-failure
+
+  redis:
+    image: redis
+    networks:
+      - cluster
+    deploy:
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 50M
+        reservations:
+          cpus: '0.25'
+          memory: 20M
+
+  gitlab:
+    image: gitlab/gitlab-ce:latest
+    hostname: gitlab.example.tld
+    networks:
+      - web
+      - cluster
+    ports:
+      - target: 22
+        published: XXXX  # port you want to use for SSH
+        mode: host
+    deploy:
+      restart_policy:
+        condition: on-failure
+      labels:
+        traefik.enable: "true"
+        traefik.docker.network: web
+        traefik.port: 80
+        traefik.backend: gitlab
+        traefik.frontend.rule: "Host:gitlab.example.tld"
+        traefik.frontend.headers.SSLRedirect: "true"
+        traefik.frontend.headers.STSSeconds: 315360000
+        traefik.frontend.headers.browserXSSFilter: "true"
+        traefik.frontend.headers.contentTypeNosniff: "true"
+        traefik.frontend.headers.forceSTSHeader: "true"
+        traefik.frontend.headers.SSLHost: gitlab.example.tld
+        traefik.frontend.headers.STSIncludeSubdomains: "true"
+        traefik.frontend.headers.STSPreload: "true"
+        traefik.frontend.headers.frameDeny: "true"
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'https://gitlab.example.tld'
+        gitlab_rails['gitlab_shell_ssh_port'] = XXXX    # see above
+
+        # Nginx
+        nginx['listen_port'] = 80
+        nginx['listen_https'] = false
+        nginx['proxy_set_headers'] = {
+          "X-Forward-Proto" => "https",
+          "X-Forward-Ssl" => "on",
+        }
+
+        # Postgres
+        postgresql['enable'] = false
+        gitlab_rails['db_username'] = "DBUSER"
+        gitlab_rails['db_password'] = "DBPW"
+        gitlab_rails['db_host'] = 'pg'
+        gitlab_rails['db_port'] = "5432"
+        gitlab_rails['db_database'] = "GITLAB_DB"
+        gitlab_rails['db_adapter'] = "postgresql"
+        gitlab_rails['db_encoding'] = 'utf8'
+
+        # redis
+        redis['enable'] = false
+        gitlab_rails['redis_host'] = 'redis'
+        gitlab_rails['redis_port'] = '6379'
+
+        # email
+        gitlab_rails['gitlab_email_enabled'] = true
+        gitlab_rails['gitlab_email_from'] = 'gitlab@example.tld'
+        gitlab_rails['gitlab_email_reply_to'] = 'gitlab@example.tld'
+        gitlab_rails['gitlab_email_display_name'] = 'GitLab@example'
+        gitlab_rails['incoming_email_enabled'] = true
+        gitlab_rails['incoming_email_address'] = 'gitlab+%{key}@example.tld'
+        gitlab_rails['incoming_email_email'] = 'gitlab@example.tld'
+        gitlab_rails['incoming_email_password'] = 'EMAIL_PW'
+        gitlab_rails['incoming_email_host'] = 'mail.example.tld'
+        gitlab_rails['incoming_email_port'] = 993
+        gitlab_rails['incoming_email_ssl'] = true
+        gitlab_rails['incoming_email_start_ssl'] = false
+
+        # SMTP
+        gitlab_rails['smtp_enable'] = true
+        gitlab_rails['smtp_address'] = 'mail.example.tld'
+        gitlab_rails['smtp_port'] = 465
+        gitlab_rails['smtp_user_name'] = 'gitlab@example.tld'
+        gitlab_rails['smtp_password'] = 'EMAIL_PW'
+        gitlab_rails['smtp_authentication'] = 'login'
+        gitlab_rails['smtp_enable_starttls_auto'] = true
+        gitlab_rails['smtp_tls'] = false
+
+        # registry
+        registry_external_url 'https://registry.example.tld'
+        # Settings used by GitLab application
+        gitlab_rails['registry_enabled'] = true
+        gitlab_rails['registry_host'] = 'registry.example.tld'
+        # gitlab_rails['registry_port'] = 5000
+        # gitlab_rails['registry_path'] = '/var/opt/gitlab/gitlab-rails/shared/registry'
+        gitlab_rails['registry_api_url'] = 'https://registry.example.tld'
+        gitlab_rails['registry_key_path'] = '/var/opt/gitlab/gitlab-rails/certificate.key'
+        gitlab_rails['registry_issuer'] = 'omnibus-gitlab-issuer'
+    volumes:
+      # GitLab's registry config and certs
+      - registry:/var/opt/gitlab/registry
+      - ./acme/ssl:/etc/gitlab/ssl:ro
+      - /srv/gitlab/config:/etc/gitlab
+      - /srv/gitlab/logs:/var/log/gitlab
+      - /srv/gitlab/data:/var/opt/gitlab
+
+  gitlab-runner:
+    image: gitlab/gitlab-runner:alpine
+    networks:
+      - cluster
+    volumes:
+      - /srv/gitlab-runner/config:/etc/gitlab-runner
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  registry:
+    image: registry:2
+    networks:
+      - web
+    deploy:
+      labels:
+        traefik.enable: "true"
+        traefik.docker.network: web
+        traefik.port: 5000
+        traefik.backend: registry
+        traefik.frontend.rule: "Host:registry.example.tld"
+        traefik.frontend.headers.SSLRedirect: "true"
+        traefik.frontend.headers.STSSeconds: 315360000
+        traefik.frontend.headers.browserXSSFilter: "true"
+        traefik.frontend.headers.contentTypeNosniff: "true"
+        traefik.frontend.headers.forceSTSHeader: "true"
+        traefik.frontend.headers.SSLHost: registry.example.tld
+        traefik.frontend.headers.STSIncludeSubdomains: "true"
+        traefik.frontend.headers.STSPreload: "true"
+        traefik.frontend.headers.frameDeny: "true"
+    volumes:
+      - registry:/etc/docker/registry/gitlab
+      # - certs:/certs:ro
+      - ./registry.yaml:/etc/docker/registry/config.yml
+      - /srv/registry:/var/lib/registry
+      - /srv/registry_auth:/auth
+
+  roundcube:
+    image: roundcube/roundcubemail
+    networks:
+      - web
+    deploy:
+      restart_policy:
+        condition: on-failure
+      labels:
+        traefik.enable: "true"
+        traefik.docker.network: web
+        traefik.port: 80
+        traefik.backend: roundcube
+        traefik.frontend.rule: "Host:mail.example.tld,imap.example.tld"
+        traefik.frontend.headers.SSLRedirect: "true"
+        traefik.frontend.headers.STSSeconds: 315360000
+        traefik.frontend.headers.browserXSSFilter: "true"
+        traefik.frontend.headers.contentTypeNosniff: "true"
+        traefik.frontend.headers.forceSTSHeader: "true"
+        traefik.frontend.headers.SSLHost: mail.example.tld
+        traefik.frontend.headers.STSIncludeSubdomains: "true"
+        traefik.frontend.headers.STSPreload: "true"
+        traefik.frontend.headers.frameDeny: "true"
+    environment:
+      ROUNDCUBEMAIL_DEFAULT_HOST: mail.example.tld
+      ROUNDCUBEMAIL_DEFAULT_PORT: 993
+      ROUNDCUBEMAIL_DB_TYPE: pgsql
+      ROUNDCUBEMAIL_DB_HOST: pg
+      ROUNDCUBEMAIL_DB_USER: DBUSER
+      ROUNDCUBEMAIL_DB_PASSWORD: DBPW
+      ROUNDCUBEMAIL_DB_NAME: DBNAME
+
+volumes:
+  certs:
+  db:
+  registry:
+
+networks:
+  web:
+    driver: overlay
+    external: true
+
+  cluster:
+    driver: overlay
+    internal: true
