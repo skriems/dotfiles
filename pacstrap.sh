@@ -16,6 +16,7 @@ pactrap /mnt \
     nodejs npm \
     rust rustup rust-racer \
     go dep \
+    jdk-openjdk \
     jre8-openjdk java-openjfx \ # needed for MediathekView
     # gnome gnome-software-packagekit-plugin gnome-tweak-tool \
     chromium owncloud-client vlc libreoffice-fresh \
