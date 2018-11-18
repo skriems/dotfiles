@@ -7,11 +7,13 @@ call plug#begin('~/.local/share/nvim/plugged')
 """""
 " Syntax Checking and Highlighting
 """""
-" consider installing js-beautify, autopep8
-
 " Plug 'airblade/vim-gitgutter'
 Plug 'mhinz/vim-signify'
 Plug 'vim-syntastic/syntastic'
+
+" Formatter
+" consider installing js-beautify, typescript-formatter, black, autopep8,
+" rustfmt
 Plug 'Chiel92/vim-autoformat'
 
 " Python
@@ -23,10 +25,11 @@ Plug 'godlygeek/tabular' " tabular needs be before markdown
 Plug 'plasticboy/vim-markdown'
 Plug 'iamcco/markdown-preview.vim'
 
-" typescript
-Plug 'mhartington/nvim-typescript'
+" Typescript
+" Syntax
 Plug 'HerringtonDarkholme/yats.vim'
-"
+Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
+
 " javascript / react jsx
 Plug 'pangloss/vim-javascript'
 Plug 'maxmellon/vim-jsx-pretty'
@@ -34,6 +37,9 @@ Plug 'maxmellon/vim-jsx-pretty'
 " Rust & Cargo
 Plug 'rust-lang/rust.vim'
 Plug 'Nonius/cargo.vim'
+
+" Java
+Plug 'artur-shaik/vim-javacomplete2'
 
 """""
 " Code completion
@@ -65,7 +71,7 @@ Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 
 " Terminal/REPL
-Plug 'kassio/neoterm'
+" Plug 'kassio/neoterm'
 
 " Neomake
 " Plug 'neomake/neomake'
@@ -73,8 +79,8 @@ Plug 'kassio/neoterm'
 """""
 " vim-orgmode
 """""
-Plug 'jceb/vim-orgmode'
-Plug 'tpope/vim-speeddating'
+" Plug 'jceb/vim-orgmode'
+" Plug 'tpope/vim-speeddating'
 " Plug 'terryma/vim-multiple-cursors'
 
 """""
@@ -97,13 +103,28 @@ filetype plugin indent on    " required
 " use emmet in html,css,js, tsx files
 let g:user_emmet_install_global = 0
 autocmd FileType html,css,typescript,javascript EmmetInstall
-" use prettier for auto formatting
-autocmd FileType javascript set formatprg=prettier\ --stdin
-" autocmd BufWritePre *.js :normal gggqG
-" use black when writing python files
-" autocmd BufWritePre *.py execute ':Black'
 
-" deoplete.nvim
+""""""""
+"""" Formatters
+""""""""
+" vim-autoformat
+let g:formatters_python = ['black']
+let g:formatters_javascript = ['prettier']
+
+" invoke :Autoformat upon save
+" au BufWrite * :Autoformat
+" or manually
+noremap <F3> :Autoformat<CR>
+" autoformat Rust on save
+let g:rustfmt_autosave = 1
+
+" prettier for js
+" autocmd FileType javascript set formatprg=prettier\ --stdin
+" autocmd BufWritePre *.js :normal gggqG
+
+""""""""
+"""" deoplete.nvim
+""""""""
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#sources#rust#racer_binary='/usr/bin/racer'
 let g:deoplete#sources#rust#rust_source_path='/home/skr/repos/rust/rust-src/src'
@@ -113,6 +134,7 @@ let g:deoplete#sources#rust#documentation_max_height=20
 
 " enable neosnippet to support func argument completion with autocomplete-flow
 let g:neosnippet#enable_completed_snippet = 1
+
 " Neoterm
 " let g:neoterm_position = 'vertical' " set the neoterm pos to vertical
 let g:neoterm_size=10
@@ -126,11 +148,8 @@ let g:neoterm_size=10
 " let g:neomake_python_enabled_makers = ['pylint']
 " let g:neomake_javascript_enabled_makers = ['eslint']
 
-" autoformat Rust on save
-let g:rustfmt_autosave = 1
-
 """""
-" Syntax Checkers and Gutter
+" Gutter
 """""
 " vim-signify
 let g:signify_vcs_list =  ['git']
@@ -146,12 +165,13 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
-" Error symbols 
+" Error symbols
 let g:syntastic_enable_signs = 1
 let g:syntastic_error_symbol = "✗"
 let syntastic_style_error_symbol = "✗"
 let g:syntastic_warning_symbol = "∙∙"
 let syntastic_style_warning_symbol = "∙∙"
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -176,7 +196,7 @@ set autoread
 " Style
 """""""""""""""""""""""""""""""""
 if (has("termguicolors"))
-  set termguicolors
+    set termguicolors
 endif
 
 " enable italics for the colorschemes
@@ -256,7 +276,7 @@ let delimitMate_expand_cr = 1
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FileTypes
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" global interpreters for nvim so that we don't need to 
+" global interpreters for nvim so that we don't need to
 " 'pip install neovim' in every virtualenv
 let g:python3_host_prog = '/home/skr/.virtualenvs/nvim3/bin/python'
 let g:python_host_prog = '/home/skr/.virtualenvs/nvim2/bin/python'
