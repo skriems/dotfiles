@@ -4,17 +4,20 @@ filetype off
 " vim-plug
 call plug#begin('~/.local/share/nvim/plugged')
 
-" Plug 'airblade/vim-gitgutter'
-Plug 'mhinz/vim-signify'
 """""
 " Syntax Checking and Highlighting
 """""
 " consider installing js-beautify, autopep8
-Plug 'Chiel92/vim-autoformat'
-Plug 'ambv/black'
 
+" Plug 'airblade/vim-gitgutter'
+Plug 'mhinz/vim-signify'
 Plug 'vim-syntastic/syntastic'
+Plug 'Chiel92/vim-autoformat'
+
+" Python
+Plug 'ambv/black'
 Plug 'vim-python/python-syntax'
+
 " Markdown
 Plug 'godlygeek/tabular' " tabular needs be before markdown
 Plug 'plasticboy/vim-markdown'
