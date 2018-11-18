@@ -166,7 +166,8 @@ packer -S \
     j4-make-config-git \
     slack-desktop \
     spotify \
-    virtualbox-ext-oracle
+    virtualbox-ext-oracle \
+    browserpass \
 
 echo 'source nvm'
 echo 'source /usr/share/nvm/init-nvm.sh' >> ~/.zshrc
