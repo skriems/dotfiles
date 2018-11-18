@@ -1,0 +1,84 @@
+# neomutt only:
+# source ~/.mutt/colors-gruvbox-shuber-extended.muttrc
+source ~/.mutt/transparent-gruvbox.muttrc
+source ~/.muttgpg.rc
+
+# invoke ":exec what-key" in mutt to find out the key to specify here
+# macro index y "<change-folder>?<toggle-mailboxes>" "show incoming mailboxes list"
+#
+# sidebar and vim-like keybindings
+macro index <f2> "<sidebar-toggle-visible>" "toggle sidebar"
+macro index j "<next-entry>" "next entry"
+macro index J "<sidebar-next>" "next mailbox in sidebar"
+macro index k "<previous-entry>" "previous entry"
+macro index K "<sidebar-prev>" "previous mailbox in sidebar"
+# I don't use POP3 (L) and g replies to a group; I want to use L for <sidebar-open>
+macro index L "<sidebar-open>" "open mailbox selected in sidebar"
+macro index G "<list-reply>" "reply to mailing list"
+
+# mail accounts
+macro index <f3> "<sync-mailbox><enter-command>source ~/.mutt/acc1<enter><change-folder>!<enter>"
+macro index <f4> "<sync-mailbox><enter-command>source ~/.mutt/acc2<enter><change-folder>!<enter>"
+macro index <f5> "<sync-mailbox><enter-command>source ~/.mutt/acc2<enter><change-folder>!<enter>"
+folder-hook 'acc1' 'source ~/.mutt/acc1'
+folder-hook 'acc2' 'source ~/.mutt/acc2'
+folder-hook 'acc2' 'source ~/.mutt/acc2'
+
+# switch to default account on startup
+source ~/.mutt/acc1
+
+#
+# ------- Basic config
+#
+set header_cache ="~/.mutt/cache/headers"
+set message_cachedir ="~/.mutt/cache/bodies"
+set certificate_file ="~/.mutt/certificates"
+
+# don't move read mails from spool to mbox
+set move=no # that's actuall default but...
+
+# edit headers in composing mode
+set edit_headers=yes
+
+# don't mark as old
+set mark_old=no
+
+# latest message on top and group by threads
+set sort=threads
+set sort_aux='reverse-last-date-received'
+
+# prefer text over html
+alternative_order text/plain text/enriched text/html *
+
+# convert htlm to text using w3m; put below line in /etc/mailcap:
+#   text/html; w3m -I %{charset} -T text/html; copiousoutput;
+auto_view text/html
+set status_format="$from -%r-Mutt: %f [Msgs:%?M?%M/?%m%?n? New:%n?%?o? Old:%o?%?d? Del:%d?%?F? Flag:%F?%?t? Tag:%t?%?p? Post:%p?%?b? Inc:%b?%?l? %l?]---(%s/%S)-%>-(%P)---"
+
+# keep connection alive to 30 minutes
+set imap_keepalive=300
+
+# subscribe to all mailboxes, so we don't have to use `mailboxes`
+# to manualy specify some
+set imap_check_subscribed
+
+# request additional headers from the server
+# specify in upppercase without colon
+set imap_headers="CONTENT-TYPE X-BOGOSITY X-SPAM-STATUS"
+
+# check mails each N seconds
+set mail_check=180
+
+# block N seconds while waiting for user input
+set timeout=120
+
+# charset is derived from $LC_CTYPE or $LANG
+# and should only be set if mutt fails on that
+#   set charset="utf-8"
+
+# colon seperated list of charsets which are assumed
+# for mail w/o character encoding indication. default: us-ascii
+set assumed_charset="utf-8:iso-8859-1:us-ascii"
+
+# In case the text cannot be converted into one of these exactly, mutt uses $charset as a fallback.
+#   set send_charset="utf-8:iso-8859-1:us-ascii"
