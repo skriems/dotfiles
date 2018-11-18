@@ -189,4 +189,6 @@ ToDo:
 - create X11 config files for keyboard and touchpad in /etc/X11/xorg.conf.d/
 - create virtualenvs for neovim and `pip install neovim black jedi flake8 pyflakes`
 - install vimplug and plugins
+
+- npm install -g create-react-native-app create-react-app css-beautify eslint eslint-plugin-react html-beautify js-beautify neovim serverless remark-cli typescript-formatter
 "
