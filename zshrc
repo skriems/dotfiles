@@ -158,5 +158,12 @@ source <(kubectl completion zsh)
 source <(helm completion zsh)
 source /usr/share/nvm/init-nvm.sh
 
+# tabtab source for serverless package
+# uninstall by removing these lines or running `tabtab uninstall serverless`
+[[ -f /home/skr/repos/react/lambda-react/node_modules/tabtab/.completions/serverless.zsh ]] && . /home/skr/repos/react/lambda-react/node_modules/tabtab/.completions/serverless.zsh
+# tabtab source for sls package
+# uninstall by removing these lines or running `tabtab uninstall sls`
+[[ -f /home/skr/repos/react/lambda-react/node_modules/tabtab/.completions/sls.zsh ]] && . /home/skr/repos/react/lambda-react/node_modules/tabtab/.completions/sls.zsh
+
 # add ~/.local/bin to PATH scripts installed via `pip install --user`
 export PATH=$PATH:~/.local/bin
