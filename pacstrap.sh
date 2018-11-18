@@ -2,7 +2,7 @@
 echo "Installing base packages"
 pactrap /mnt \
     base base-devel intel-ucode networkmanger openconnect gnome-keyring libsecret sudo archey3 \
-    pass pass-otp mutt \
+    mutt w3m pass pass-otp \
     xorg xorg-server xf86-video-intel \
     zsh zsh-completions termite termite-terminfo \
     vim vim-spell-de vim-spell-en vim-jedi neovim typescript prettier \
