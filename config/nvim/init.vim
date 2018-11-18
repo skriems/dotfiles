@@ -28,17 +28,17 @@ Plug 'HerringtonDarkholme/yats.vim'
 Plug 'pangloss/vim-javascript'
 Plug 'maxmellon/vim-jsx-pretty'
 
-" Rust
+" Rust & Cargo
 Plug 'rust-lang/rust.vim'
 Plug 'Nonius/cargo.vim'
-Plug 'sebastianmarkow/deoplete-rust'
 
 """""
-" Jedi
+" Code completion
 """""
 Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
 Plug 'zchee/deoplete-jedi'  " NVIM
 Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
+Plug 'sebastianmarkow/deoplete-rust'
 
 " autocomplete-flow
 Plug 'wokalski/autocomplete-flow'
