@@ -1,0 +1,39 @@
+version: 0.1
+log:
+  level: info
+http:
+  addr: 0.0.0.0:5000
+  host: https://registry.example.tld
+  headers:
+    X-Content-Type-Options: [nosniff]
+health:
+  storagedriver:
+    enabled: true
+    interval: 10s
+    threshold: 3
+storage:
+  filesystem:
+    rootdirectory: /var/lib/registry
+    maxthreads: 100
+    delete:
+      enabled: true
+  cache:
+    blobdescriptor: inmemory
+  maintenance:
+    uploadpurging:
+      enabled: true
+      age: 168h
+      interval: 24h
+      dryrun: false
+    readonly:
+      enabled: false
+auth:
+  token:
+    realm: https://gitlab.example.com/jwt/auth
+    service: container_registry
+    issuer: omnibus-gitlab-issuer
+    rootcertbundle: /etc/docker/registry/gitlab/gitlab-registry.crt
+# newrelic:
+#   licensekey: newreliclicensekey
+#   name: newrelicname
+#   verbose: true
