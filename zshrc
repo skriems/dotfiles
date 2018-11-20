@@ -167,3 +167,6 @@ source /usr/share/nvm/init-nvm.sh
 
 # add ~/.local/bin to PATH scripts installed via `pip install --user`
 export PATH=$PATH:~/.local/bin
+
+# enable python-jedi in REPL
+export PYTHONSTARTUP="$(python -m jedi repl)"
