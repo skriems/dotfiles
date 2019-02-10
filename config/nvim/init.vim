@@ -17,7 +17,7 @@ Plug 'vim-syntastic/syntastic'
 Plug 'Chiel92/vim-autoformat'
 
 " Python
-Plug 'ambv/black'
+" Plug 'ambv/black'
 Plug 'vim-python/python-syntax'
 
 " Markdown
@@ -28,7 +28,7 @@ Plug 'iamcco/markdown-preview.vim'
 " Typescript
 " Syntax
 Plug 'HerringtonDarkholme/yats.vim'
-Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
+Plug 'mhartington/nvim-typescript', { 'for': ['typescript', 'tsx'], 'do': ':!install.sh \| UpdateRemotePlugins'}
 
 " javascript / react jsx
 Plug 'pangloss/vim-javascript'
@@ -45,7 +45,7 @@ Plug 'artur-shaik/vim-javacomplete2'
 " Code completion
 """""
 Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
-Plug 'zchee/deoplete-jedi'  " NVIM
+Plug 'zchee/deoplete-jedi'
 Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
 Plug 'sebastianmarkow/deoplete-rust'
 
@@ -74,7 +74,7 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 " Plug 'kassio/neoterm'
 
 " Neomake
-" Plug 'neomake/neomake'
+Plug 'neomake/neomake'
 
 """""
 " vim-orgmode
@@ -98,57 +98,71 @@ filetype plugin indent on    " required
 " filetype plugin on
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Plugin Config
+"""""" Plugin Config
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" use emmet in html,css,js, tsx files
+
+" Emmet in html,css,js, tsx files
 let g:user_emmet_install_global = 0
 autocmd FileType html,css,typescript,javascript EmmetInstall
 
 """"""""
-"""" Formatters
+"""" Formatters for  vim-autoformat
 """"""""
-" vim-autoformat
-let g:formatters_python = ['black']
-let g:formatters_javascript = ['prettier']
-
-" invoke :Autoformat upon save
-" au BufWrite * :Autoformat
-" or manually
 noremap <F3> :Autoformat<CR>
+" or invoke :Autoformat upon save
+" au BufWrite * :Autoformat
+
+" Python
+let g:formatters_python = ['autopep8', 'black']
+" Javascript
+let g:formatters_javascript = ['prettier']
+" autocmd BufWritePre *.js :normal gggqG
+" autocmd FileType javascript set formatprg=prettier\ --stdin
+
 " autoformat Rust on save
 let g:rustfmt_autosave = 1
 
-" prettier for js
-" autocmd FileType javascript set formatprg=prettier\ --stdin
-" autocmd BufWritePre *.js :normal gggqG
 
 """"""""
-"""" deoplete.nvim
+"""" Code completions with deoplete.nvim
 """"""""
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#omni_patterns = {}
+
+" Java
 let g:deoplete#omni_patterns.java = '[^. *\t]\.\w*'
+
+" Rust
 let g:deoplete#sources#rust#racer_binary='/usr/bin/racer'
 let g:deoplete#sources#rust#rust_source_path='/home/skr/repos/rust/rust-src/src'
 let g:deoplete#sources#rust#show_duplicates=1
 let g:deoplete#sources#rust#disable_keymap=1
 let g:deoplete#sources#rust#documentation_max_height=20
 
+" ternjs: Add extra filetypes
+let g:deoplete#sources#ternjs#filetypes = [
+                \ 'jsx',
+                \ 'javascript.jsx',
+                \ 'vue',
+                \ 'typescript',
+                \ 'tsx'
+                \ ]
+
 " enable neosnippet to support func argument completion with autocomplete-flow
 let g:neosnippet#enable_completed_snippet = 1
 
 " Neoterm
 " let g:neoterm_position = 'vertical' " set the neoterm pos to vertical
-let g:neoterm_size=10
+" let g:neoterm_size=10
 
 " run Neomake asynchronously
-" autocmd! BufWritePost, BufEnter * Neomake
+autocmd! BufWritePost, BufEnter * Neomake
 " call neomake#configure#automake('nrw', 750)
 " :lopen when neomake runs
 " let g:neomake_open_list = 2
 " https://github.com/neomake/neomake/wiki/Makers
-" let g:neomake_python_enabled_makers = ['pylint']
-" let g:neomake_javascript_enabled_makers = ['eslint']
+let g:neomake_python_enabled_makers = ['flake8']
+let g:neomake_javascript_enabled_makers = ['eslint']
 
 """""
 " Gutter
@@ -313,19 +327,20 @@ set statusline+=%{fugitive#statusline()}
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Tabstops
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set softtabstop=4
 set tabstop=4
-set shiftwidth=4
 set expandtab
+set shiftwidth=4
+set softtabstop=4
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Indent
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " autoindent
 set ai
 " smartindent
-set si
+" set si
 " do c-style indenting
-set cindent
+" set cindent
 " show line numbers
 set number
 " show relative line number
@@ -346,11 +361,11 @@ let g:python_host_prog = '/home/skr/.virtualenvs/nvim2/bin/python'
 augroup python
     au!
     au BufNewFile /**/*.py 0r ~/.vim/skeleton/python.py|norm G
-    au FileType python set textwidth=79
     au FileType python set omnifunc=pythoncomplete#Complete
     au FileType python set number
     au FileType python set relativenumber
     au FileType python nnoremap <buffer> <localleader>c I#<esc>
+    au FileType python set textwidth=79
     au FileType python set colorcolumn=80
 augroup END
 
