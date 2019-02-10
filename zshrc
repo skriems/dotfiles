@@ -166,7 +166,7 @@ source /usr/share/nvm/init-nvm.sh
 [[ -f /home/skr/repos/react/lambda-react/node_modules/tabtab/.completions/sls.zsh ]] && . /home/skr/repos/react/lambda-react/node_modules/tabtab/.completions/sls.zsh
 
 # add ~/.local/bin to PATH scripts installed via `pip install --user`
-export PATH=$PATH:~/.local/bin
+export PATH=$PATH:~/.local/bin:~/.cargo/bin
 
 # enable python-jedi in REPL
 export PYTHONSTARTUP="$(python -m jedi repl)"
