@@ -195,8 +195,8 @@ bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 
 #set background image
-#exec_always feh  --bg-fill '/home/skr/ownCloud/bilder/background/earth_sunrise.png'
-exec_always feh  --bg-fill '/usr/share/backgrounds/gnome/SeaSunset.jpg'
+exec_always feh  --bg-fill '/home/skr/ownCloud/bilder/background/bennu.jpg'
+# exec_always feh  --bg-fill '/usr/share/backgrounds/gnome/SeaSunset.jpg'
 # use compton for opacity
 exec_always compton -f
 
