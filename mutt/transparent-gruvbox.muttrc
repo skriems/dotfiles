@@ -39,12 +39,10 @@ color quoted4     color250 default
 color quoted5     color108 default
 color search      default color208
 color signature   color108 default
-color status      default color250
+color status      black color250
 color tilde       color243 default
 color tree        color142 default
 color underline   color223 color239
-
-
 
 color sidebar_divider    color250 default
 color sidebar_new        color142 default
