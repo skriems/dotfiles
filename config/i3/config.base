@@ -90,7 +90,7 @@ bindsym $mod+a focus parent
 # set $fa_plug ""
 
 # wordspace names
-set $workspace1 "1 "
+set $workspace1 "1 "
 set $workspace2 "2 "
 set $workspace3 "3 "
 set $workspace4 "4 "
@@ -129,7 +129,7 @@ bindsym $mod+Shift+9 move container to workspace $workspace9
 bindsym $mod+Shift+0 move container to workspace $workspace10
 
 # assign apps to specific workspaces
-assign [class="Chromium"] $workspace1
+assign [class="Firefox"] $workspace1
 assign [class="Slack"] $workspace9
 assign [class="Spotify"] $workspace10
 
@@ -201,7 +201,7 @@ exec_always feh  --bg-fill '/home/skr/ownCloud/bilder/background/bennu.jpg'
 exec_always compton -f
 
 # startup applications
-exec chromium
+exec firefox
 exec slack
 
 # lockscreen
