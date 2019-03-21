@@ -41,6 +41,8 @@ Plug 'Nonius/cargo.vim'
 " Java
 Plug 'artur-shaik/vim-javacomplete2'
 
+" C
+Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh \| UpdateRemotePlugins' }
 """""
 " Code completion
 """""
@@ -253,6 +255,9 @@ imap <F7> <Plug>(JavaComplete-Imports-RemoveUnused)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " How many lines of history to remember
 set history=1000
+" Save undo history
+set undofile
+set undodir=~/.vim/undodir
 " enable error files and error jumping
 set cf
 " support all three, in this order

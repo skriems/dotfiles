@@ -94,6 +94,8 @@ let g:airline_powerline_fonts = 1
 " General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set history=1000 " How many lines of history to remember
+set undofile " Save undo history
+set undodir=~/.vim/undodir
 
 " use the clipboard even in terminal
 " NOTE: for nvim: install xsel to have the system clipboard
