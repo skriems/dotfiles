@@ -19,6 +19,7 @@ pactrap /mnt \
     jre-openjdk maven \
     jre8-openjdk java-openjfx \ # needed for MediathekView
     # gnome gnome-software-packagekit-plugin gnome-tweak-tool \
+    gdb \
     chromium owncloud-client vlc libreoffice-fresh libreoffice-fresh-de hunspell-de\
     gimp inkscape
 
