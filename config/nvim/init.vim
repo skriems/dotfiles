@@ -11,13 +11,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'mhinz/vim-signify'
 Plug 'vim-syntastic/syntastic'
 
-" Formatter
-" consider installing js-beautify, typescript-formatter, black, autopep8,
-" rustfmt
-Plug 'Chiel92/vim-autoformat'
-
 " Python
-" Plug 'ambv/black'
 Plug 'vim-python/python-syntax'
 
 " Markdown
@@ -26,7 +20,6 @@ Plug 'plasticboy/vim-markdown'
 Plug 'iamcco/markdown-preview.vim'
 
 " Typescript
-" Syntax
 Plug 'HerringtonDarkholme/yats.vim'
 Plug 'mhartington/nvim-typescript', { 'for': ['typescript', 'tsx'], 'do': ':!install.sh \| UpdateRemotePlugins'}
 
@@ -43,21 +36,23 @@ Plug 'artur-shaik/vim-javacomplete2'
 
 " C
 Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh \| UpdateRemotePlugins' }
-"""""
-" Code completion
-"""""
-Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
-Plug 'zchee/deoplete-jedi'
-Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
-Plug 'sebastianmarkow/deoplete-rust'
 
-" autocomplete-flow
-Plug 'wokalski/autocomplete-flow'
-" For func argument completion
-Plug 'Shougo/neosnippet'
-Plug 'Shougo/neosnippet-snippets'
-" autoclose
-" Plug 'Townk/vim-autoclose'
+"""""
+" Conquer of Completion
+"""""
+Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+" coc-css
+" coc-emmet
+" coc-highlight
+" coc-html
+" coc-java
+" coc-json
+" coc-python
+" coc-rls
+" coc-snippets
+" coc-tsserver
+" coc-yaml
+"""""
 
 """""
 " Tools
@@ -66,17 +61,20 @@ Plug 'tpope/vim-fugitive'
 Plug 'mattn/emmet-vim'
 
 Plug 'tpope/vim-dadbod'
-Plug 'jmcantrell/vim-virtualenv'
+"Plug 'jmcantrell/vim-virtualenv'
 
 "NERDTree
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 
+Plug 'Shougo/neosnippet'
+Plug 'Shougo/neosnippet-snippets'
+"
 " Terminal/REPL
 " Plug 'kassio/neoterm'
 
 " Neomake
-Plug 'neomake/neomake'
+"Plug 'neomake/neomake'
 
 """""
 " vim-orgmode
@@ -99,72 +97,145 @@ filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
 " filetype plugin on
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"""""" Plugin Config
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""
+" Plugin Config
+"""""""""
+" disable folding for vim-markdown
+let g:vim_markdown_folding_disabled = 1
 
 " Emmet in html,css,js, tsx files
 let g:user_emmet_install_global = 0
 autocmd FileType html,css,typescript,javascript EmmetInstall
 
-""""""""
-"""" Formatters for  vim-autoformat
-""""""""
-noremap <F3> :Autoformat<CR>
-" or invoke :Autoformat upon save
-" au BufWrite * :Autoformat
+"""""""""
+" CoC
+"""""""""
+" if hidden is not set, TextEdit might fail.
+set hidden
 
-" Python
-let g:formatters_python = ['autopep8', 'black']
-" Javascript
-let g:formatters_javascript = ['prettier']
-" autocmd BufWritePre *.js :normal gggqG
-" autocmd FileType javascript set formatprg=prettier\ --stdin
+" Better display for messages
+set cmdheight=2
 
-" autoformat Rust on save
-let g:rustfmt_autosave = 1
+" Smaller updatetime for CursorHold & CursorHoldI
+set updatetime=300
 
+" don't give |ins-completion-menu| messages.
+set shortmess+=c
 
-""""""""
-"""" Code completions with deoplete.nvim
-""""""""
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#omni_patterns = {}
+" always show signcolumns
+set signcolumn=yes
 
-" Java
-let g:deoplete#omni_patterns.java = '[^. *\t]\.\w*'
+" Use tab for trigger completion with characters ahead and navigate.
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
-" Rust
-let g:deoplete#sources#rust#racer_binary='/usr/bin/racer'
-let g:deoplete#sources#rust#rust_source_path='/home/skr/repos/rust/rust-src/src'
-let g:deoplete#sources#rust#show_duplicates=1
-let g:deoplete#sources#rust#disable_keymap=1
-let g:deoplete#sources#rust#documentation_max_height=20
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
 
-" ternjs: Add extra filetypes
-let g:deoplete#sources#ternjs#filetypes = [
-                \ 'jsx',
-                \ 'javascript.jsx',
-                \ 'vue',
-                \ 'typescript',
-                \ 'tsx'
-                \ ]
+" Use <c-space> for trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
+
+" Use <cr> for confirm completion, `<C-g>u` means break undo chain at current position.
+" Coc only does snippet and additional edit on confirm.
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+" Use `[c` and `]c` for navigate diagnostics
+nmap <silent> [c <Plug>(coc-diagnostic-prev)
+nmap <silent> ]c <Plug>(coc-diagnostic-next)
+
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K for show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if &filetype == 'vim'
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" Highlight symbol under cursor on CursorHold
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Remap for rename current word
+nmap <leader>rn <Plug>(coc-rename)
+
+" Remap for format selected region
+vmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+" Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
+vmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+" Remap for do codeAction of current line
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Fix autofix problem of current line
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+" Use `:Format` for format current buffer
+command! -nargs=0 Format :call CocAction('format')
+
+" Use `:Fold` for fold current buffer
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" Add diagnostic info for https://github.com/itchyny/lightline.vim
+let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'cocstatus', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'cocstatus': 'coc#status'
+      \ },
+      \ }
+
+" Using CocList
+" Show all diagnostics
+nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+" Manage extensions
+nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+" Show commands
+nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+" Find symbol of current document
+nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+" Search workspace symbols
+nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+" Resume latest coc list
+nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+
 
 " enable neosnippet to support func argument completion with autocomplete-flow
-let g:neosnippet#enable_completed_snippet = 1
+"let g:neosnippet#enable_completed_snippet = 1
 
 " Neoterm
 " let g:neoterm_position = 'vertical' " set the neoterm pos to vertical
 " let g:neoterm_size=10
-
-" run Neomake asynchronously
-autocmd! BufWritePost, BufEnter * Neomake
-" call neomake#configure#automake('nrw', 750)
-" :lopen when neomake runs
-" let g:neomake_open_list = 2
-" https://github.com/neomake/neomake/wiki/Makers
-let g:neomake_python_enabled_makers = ['flake8']
-let g:neomake_javascript_enabled_makers = ['eslint']
 
 """""
 " Gutter
@@ -174,10 +245,6 @@ let g:signify_vcs_list =  ['git']
 let g:signify_realtime = 1
 let g:signify_cursorhold_normal = 0
 let g:signify_cursorhold_insert = 0
-
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 0
@@ -189,6 +256,17 @@ let g:syntastic_error_symbol = "✗"
 let syntastic_style_error_symbol = "✗"
 let g:syntastic_warning_symbol = "∙∙"
 let syntastic_style_warning_symbol = "∙∙"
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Status line:
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" always show the status line
+set laststatus=2
+" show branch via fugitive
+set statusline+=%{fugitive#statusline()}
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
 
 """"""""
 " Java
@@ -287,6 +365,12 @@ let g:onedark_terminal_italics = 1
 let g:airline_theme='onedark'
 " let g:airline_theme='gruvbox'
 let g:airline_powerline_fonts = 1
+" if you want to disable auto detect, comment out those two lines
+"let g:airline#extensions#disable_rtp_load = 1
+"let g:airline_extensions = ['branch', 'hunks', 'coc']
+
+let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
+let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
 
 " highligh all from vim-python/python-syntax
 let g:python_highlight_all = 1
@@ -321,13 +405,6 @@ syntax enable
 " transparent background
 hi Normal ctermbg=None guibg=None
 hi NonText ctermbg=None guibg=None
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Status line:
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" always show the status line
-set laststatus=2
-" show branch via fugitive
-set statusline+=%{fugitive#statusline()}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Tabstops
@@ -343,7 +420,7 @@ set softtabstop=4
 " autoindent
 set ai
 " smartindent
-" set si
+set si
 " do c-style indenting
 " set cindent
 " show line numbers
@@ -449,7 +526,7 @@ nmap <Leader><Space>p :lprev<CR>      " previous error/warning
 
 " autoclose some chars
 inoremap " ""<left>
-inoremap ' ''<left>
+"inoremap ' ''<left>
 inoremap ( ()<left>
 inoremap [ []<left>
 inoremap { {}<left>
@@ -458,8 +535,8 @@ inoremap {;<CR> {<CR>};<ESC>O<Paste>
 inoremap <C-SPACE> <ESC>la
 
 " don't show these filetypes in NERDTree
-"set wildignore+=*/tmp/*,*.so,*.swp,*.pyc
-"let NERDTreeIgnore = ['\.pyc$', '\.so$', '\.swp$']
+set wildignore+=*/tmp/*,*.so,*.swp,*.pyc
+let NERDTreeIgnore = ['\.pyc$', '\.so$', '\.swp$']
 
 " ctrl-p
 "let g:ctrlp_clear_cache_on_exit = 0
