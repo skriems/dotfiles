@@ -34,6 +34,8 @@ set header_cache ="~/.mutt/cache/headers"
 set message_cachedir ="~/.mutt/cache/bodies"
 set certificate_file ="~/.mutt/certificates"
 
+set query_command="muttmates %s"
+
 # don't move read mails from spool to mbox
 set move=no # that's actuall default but...
 
