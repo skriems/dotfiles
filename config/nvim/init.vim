@@ -1,7 +1,9 @@
 set nocompatible
 filetype off
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vim-plug
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin('~/.local/share/nvim/plugged')
 
 """""
@@ -97,9 +99,105 @@ filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
 " filetype plugin on
 
-"""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" General Config
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" How many lines of history to remember
+set history=1000
+" Save undo history
+set undofile
+set undodir=~/.vim/undodir
+" enable error files and error jumping
+set cf
+" support all three, in this order
+set ffs=unix,mac,dos
+" make sure it can save viminfo
+set viminfo+=!
+" none of these should be word dividers, so make them not be
+set isk+=_,$,@,%,#,-
+" show wrapped lines:
+set sbr=>
+" Allow backspace in insert mode
+set backspace=indent,eol,start
+" realod on external writes
+set autoread
+
+" show matching brackets on search
+set showmatch
+" how many tenths of a second to blink matching brackets for
+set mat=5
+" do not highlight search for phrases
+set nohlsearch
+" BUT do highlight as you type your search phrase
+set incsearch
+set columns=80 " 80 cols wide
+" Keep 5 lines (top/bottom) for scope
+set so=5
+" do blink
+set visualbell
+" no noises
+set noerrorbells
+" show whitelist
+set listchars=tab:>-,trail:~,extends:>,precedes:<
+set list
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Style
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+""""""""
+" Status line:
+""""""""
+" always show the status line
+set laststatus=2
+" show branch via fugitive
+set statusline+=%{fugitive#statusline()}
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+""""
+" CoC
+""""
+let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
+let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
+" [CoC] if you want to disable auto detect, comment out those two lines
+"let g:airline#extensions#disable_rtp_load = 1
+"let g:airline_extensions = ['branch', 'hunks', 'coc']
+
+""""""""
+" Colorscheme etc
+""""""""
+if (has("termguicolors"))
+    set termguicolors
+endif
+
+colorscheme onedark
+set background=dark
+syntax enable
+
+" transparent background
+hi Normal ctermbg=None guibg=None
+hi NonText ctermbg=None guibg=None
+
+" enable italics for the colorschemes
+let g:gruvbox_italic = 1
+let g:onedark_terminal_italics = 1
+
+let g:airline_theme='onedark'
+" let g:airline_theme='gruvbox'
+let g:airline_powerline_fonts = 1
+
+" highligh all from vim-python/python-syntax
+let g:python_highlight_all = 1
+hi link pythonNone Boolean
+hi Statement cterm=italic gui=italic
+hi Conditional cterm=italic gui=italic
+hi Operator cterm=italic gui=italic
+hi Identifier cterm=italic gui=italic
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin Config
-"""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " disable folding for vim-markdown
 let g:vim_markdown_folding_disabled = 1
 
@@ -112,16 +210,12 @@ autocmd FileType html,css,typescript,javascript EmmetInstall
 """""""""
 " if hidden is not set, TextEdit might fail.
 set hidden
-
 " Better display for messages
 set cmdheight=2
-
 " Smaller updatetime for CursorHold & CursorHoldI
 set updatetime=300
-
 " don't give |ins-completion-menu| messages.
 set shortmess+=c
-
 " always show signcolumns
 set signcolumn=yes
 
@@ -200,16 +294,16 @@ command! -nargs=0 Format :call CocAction('format')
 command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 
 " Add diagnostic info for https://github.com/itchyny/lightline.vim
-let g:lightline = {
-      \ 'colorscheme': 'wombat',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'cocstatus', 'readonly', 'filename', 'modified' ] ]
-      \ },
-      \ 'component_function': {
-      \   'cocstatus': 'coc#status'
-      \ },
-      \ }
+"let g:lightline = {
+"      \ 'colorscheme': 'wombat',
+"      \ 'active': {
+"      \   'left': [ [ 'mode', 'paste' ],
+"      \             [ 'cocstatus', 'readonly', 'filename', 'modified' ] ]
+"      \ },
+"      \ 'component_function': {
+"      \   'cocstatus': 'coc#status'
+"      \ },
+"      \ }
 
 " Using CocList
 " Show all diagnostics
@@ -256,17 +350,6 @@ let g:syntastic_error_symbol = "✗"
 let syntastic_style_error_symbol = "✗"
 let g:syntastic_warning_symbol = "∙∙"
 let syntastic_style_warning_symbol = "∙∙"
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Status line:
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" always show the status line
-set laststatus=2
-" show branch via fugitive
-set statusline+=%{fugitive#statusline()}
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
 
 """"""""
 " Java
@@ -329,108 +412,12 @@ imap <F7> <Plug>(JavaComplete-Imports-RemoveUnused)
 " "let g:JavaComplete_EnableDefaultMappings = 0
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" General
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" How many lines of history to remember
-set history=1000
-" Save undo history
-set undofile
-set undodir=~/.vim/undodir
-" enable error files and error jumping
-set cf
-" support all three, in this order
-set ffs=unix,mac,dos
-" make sure it can save viminfo
-set viminfo+=!
-" none of these should be word dividers, so make them not be
-set isk+=_,$,@,%,#,-
-" show wrapped lines:
-set sbr=>
-" Allow backspace in insert mode
-set backspace=indent,eol,start
-" realod on external writes
-set autoread
-
-"""""""""""""""""""""""""""""""""
-" Style
-"""""""""""""""""""""""""""""""""
-if (has("termguicolors"))
-    set termguicolors
-endif
-
-" enable italics for the colorschemes
-let g:gruvbox_italic = 1
-let g:onedark_terminal_italics = 1
-
-let g:airline_theme='onedark'
-" let g:airline_theme='gruvbox'
-let g:airline_powerline_fonts = 1
-" if you want to disable auto detect, comment out those two lines
-"let g:airline#extensions#disable_rtp_load = 1
-"let g:airline_extensions = ['branch', 'hunks', 'coc']
-
-let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
-let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
-
-" highligh all from vim-python/python-syntax
-let g:python_highlight_all = 1
-hi link pythonNone Boolean
-hi Statement cterm=italic gui=italic
-hi Conditional cterm=italic gui=italic
-hi Operator cterm=italic gui=italic
-hi Identifier cterm=italic gui=italic
-" show matching brackets on search
-set showmatch
-" how many tenths of a second to blink matching brackets for
-set mat=5
-" do not highlight search for phrases
-set nohlsearch
-" BUT do highlight as you type your search phrase
-set incsearch
-set columns=80 " 80 cols wide
-" Keep 5 lines (top/bottom) for scope
-set so=5
-" do blink
-set visualbell
-" no noises
-set noerrorbells
-" show whitelist
-set listchars=tab:>-,trail:~,extends:>,precedes:<
-set list
-
-colorscheme onedark
-set background=dark
-syntax enable
-
-" transparent background
-hi Normal ctermbg=None guibg=None
-hi NonText ctermbg=None guibg=None
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Tabstops
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set tabstop=4
 set expandtab
 set shiftwidth=4
 set softtabstop=4
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Indent
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" autoindent
-set ai
-" smartindent
-set si
-" do c-style indenting
-" set cindent
-" show line numbers
-set number
-" show relative line number
-set relativenumber
-" width of 'gutter'
-set numberwidth=2
-" expand <CR>
-let delimitMate_expand_cr = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FileTypes
@@ -468,6 +455,24 @@ augroup js
     au FileType javascript set shiftwidth=2
     au FileType javascript set expandtab
 augroup END
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Indent
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" autoindent
+set ai
+" smartindent
+set si
+" do c-style indenting
+" set cindent
+" show line numbers
+set number
+" show relative line number
+set relativenumber
+" width of 'gutter'
+set numberwidth=2
+" expand <CR>
+let delimitMate_expand_cr = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Folding
