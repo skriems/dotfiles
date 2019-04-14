@@ -23,7 +23,7 @@ Plug 'iamcco/markdown-preview.vim'
 
 " Typescript
 Plug 'HerringtonDarkholme/yats.vim'
-Plug 'mhartington/nvim-typescript', { 'for': ['typescript', 'tsx'], 'do': ':!install.sh \| UpdateRemotePlugins'}
+"Plug 'mhartington/nvim-typescript', { 'for': ['typescript', 'tsx'], 'do': ':!install.sh \| UpdateRemotePlugins'}
 
 " javascript / react jsx
 Plug 'pangloss/vim-javascript'
@@ -53,6 +53,7 @@ Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 " coc-rls
 " coc-snippets
 " coc-tsserver
+" coc-tslint-plugin
 " coc-yaml
 """""
 
