@@ -1,6 +1,3 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
-
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
@@ -8,11 +5,14 @@ export ZSH=$HOME/.oh-my-zsh
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME="wezm"
-DEFAULT_USER="skr"
 
-# export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python
-# source /usr/bin/virtualenvwrapper_lazy.sh
-export WORKON_HOME=~/.virtualenvs
+export NVM_DIR="$HOME/.nvm"
+export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python
+export WORKON_HOME=$HOME/.virtualenvs
+[ -s "/usr/local/bin/virtualenvwrapper.sh" ] && . "/usr/local/bin/virtualenvwrapper.sh"
+
+# enable python-jedi in REPL
+export PYTHONSTARTUP="$(python -m jedi repl)"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -56,7 +56,7 @@ export WORKON_HOME=~/.virtualenvs
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git kubectl helm virtualenvwrapper)
+plugins=(git virtualenvwrapper)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -98,7 +98,7 @@ SAVEHIST=50000
 unsetopt beep
 bindkey -v
 
-zstyle :compinstall filename '/home/skr/.zshrc'
+zstyle :compinstall filename "$HOME/.zshrc"
 
 # prompt theme
 # autoload -Uz promptinit
@@ -112,19 +112,6 @@ setopt COMPLETE_ALIASES
 
 # make newly installed executables available to completion
 zstyle ':completion:*' rehash true
-
-alias l='ls --color=auto'
-alias ls='ls --color=auto'
-alias ll="ls -l --color=auto"
-alias la="ls -a --color=auto"
-alias lla="ls -la --color=auto"
-alias df="df -h"
-alias du="du -h"
-
-# kubernetes
-alias ktail='kubetail'
-alias kcns='kubectl config set-context $(kubectl config current-context) --namespace'
-alias kcgc='kubectl config get-contexts'
 
 # history search
 autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
@@ -154,19 +141,14 @@ zle -N down-line-or-beginning-search
 #
 # [end] remember the DIRSTACKSIZE last visited folders
 #
-source <(kubectl completion zsh)
-source <(helm completion zsh)
-source /usr/share/nvm/init-nvm.sh
+if type kubectl &>/dev/null; then
+    source <(kubectl completion zsh)
+fi
+if type helm &>/dev/null; then
+    source <(helm completion zsh)
+fi
 
-# tabtab source for serverless package
-# uninstall by removing these lines or running `tabtab uninstall serverless`
-[[ -f /home/skr/repos/react/lambda-react/node_modules/tabtab/.completions/serverless.zsh ]] && . /home/skr/repos/react/lambda-react/node_modules/tabtab/.completions/serverless.zsh
-# tabtab source for sls package
-# uninstall by removing these lines or running `tabtab uninstall sls`
-[[ -f /home/skr/repos/react/lambda-react/node_modules/tabtab/.completions/sls.zsh ]] && . /home/skr/repos/react/lambda-react/node_modules/tabtab/.completions/sls.zsh
-
-# add ~/.local/bin to PATH scripts installed via `pip install --user`
-export PATH=$PATH:~/.local/bin:~/.cargo/bin
-
-# enable python-jedi in REPL
-export PYTHONSTARTUP="$(python -m jedi repl)"
+# ~/.local/bin          # pip install --user
+# ~/.cargo/bin          # cargo
+# ~/tools/flutter/bin   # flutter
+export PATH=$PATH:~/.local/bin:~/.cargo/bin:~/tools/flutter/bin

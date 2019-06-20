@@ -1,0 +1,41 @@
+# brew completions; must be called before `.oh-my-zsh`
+if type brew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
+  source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi
+
+# suggested by $(brew doctor) + something brew <-> coreutils related
+export PATH="$PATH:/usr/local/sbin:/usr/local/opt/coreutils/libexec/gnubin"
+export MANPATH="$MANPATH:/usr/local/opt/coreutils/libexec/gnuman"
+
+# nvm
+[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/usr/local/opt/nvm/etc/bash_completion" ] && . "/usr/local/opt/nvm/etc/bash_completion"  # This loads nvm bash_completion
+
+# brew install
+# bash-completion
+# zsh zsh-completions zsh-syntax-highlighting
+# coreutils
+# encfs
+# neovim
+# -- HEAD neovim
+# pass
+# pinentry-mac
+# readline xz
+# wget
+# cmake
+# lua@5.1 luarocks
+# ninja libtool automake cmake pkg-config gettext
+# aws
+# s3cmd
+# jq
+# watchman
+# tldr
+# nvm
+# rustup-init
+# adoptopenjdk8
+# adoptopenjdk11
+# maven
+# tomcat
+
+# brew cask install
