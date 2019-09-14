@@ -7,4 +7,12 @@ alias df="df -h"
 alias du="du -h"
 
 # nvm
-[ -s "/usr/share/nvm/init-nvm.sh" ] && . "/usr/share/nvm/init-nvm.sh"
+[ -f /usr/share/nvm/init-nvm.sh ] && . /usr/share/nvm/init-nvm.sh
+
+# fzf
+export FZF_BASE="/usr/share/fzf"
+[ -s "$FZF_BASE/key-bindings.zsh" ] && . $FZF_BASE/key-bindings.zsh
+# [ -f /usr/share/fzf/key-bindings.zsh ] && . /usr/share/fzf/key-bindings.zsh
+
+# zsh-syntax-highlighting
+[ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && . /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

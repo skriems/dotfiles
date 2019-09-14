@@ -1,6 +1,9 @@
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
+# load the platform specific zshrc
+[ -s "$HOME/.zshrc_platform" ] && . "$HOME/.zshrc_platform"
+
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
@@ -9,7 +12,7 @@ ZSH_THEME="wezm"
 export NVM_DIR="$HOME/.nvm"
 export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python
 export WORKON_HOME=$HOME/.virtualenvs
-[ -s "/usr/local/bin/virtualenvwrapper.sh" ] && . "/usr/local/bin/virtualenvwrapper.sh"
+[ -f /usr/local/bin/virtualenvwrapper.sh ] && . /usr/local/bin/virtualenvwrapper.sh
 
 # enable python-jedi in REPL
 export PYTHONSTARTUP="$(python -m jedi repl)"
@@ -56,7 +59,7 @@ export PYTHONSTARTUP="$(python -m jedi repl)"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git virtualenvwrapper)
+plugins=(fzf git virtualenvwrapper)
 
 source $ZSH/oh-my-zsh.sh
 
