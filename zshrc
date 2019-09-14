@@ -1,9 +1,6 @@
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
-# load the platform specific zshrc
-[ -s "$HOME/.zshrc_platform" ] && . "$HOME/.zshrc_platform"
-
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
@@ -165,3 +162,6 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 # export FZF_CTRL_C_OPTS
 # export FZF_CTRL_R_OPTS
 # bind -x '"\C-p": nvim $(fzf);'
+
+# load the platform specific zshrc
+[ -f "$HOME/.zshrc_platform" ] && source "$HOME/.zshrc_platform"

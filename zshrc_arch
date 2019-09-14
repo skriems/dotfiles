@@ -11,8 +11,7 @@ alias du="du -h"
 
 # fzf
 export FZF_BASE="/usr/share/fzf"
-[ -s "$FZF_BASE/key-bindings.zsh" ] && . $FZF_BASE/key-bindings.zsh
-# [ -f /usr/share/fzf/key-bindings.zsh ] && . /usr/share/fzf/key-bindings.zsh
+[ -s "$FZF_BASE/key-bindings.zsh" ] && source $FZF_BASE/key-bindings.zsh
 
 # zsh-syntax-highlighting
 [ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && . /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
