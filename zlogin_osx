@@ -9,8 +9,21 @@ export PATH="$PATH:/usr/local/sbin:/usr/local/opt/coreutils/libexec/gnubin"
 export MANPATH="$MANPATH:/usr/local/opt/coreutils/libexec/gnuman"
 
 # nvm
-[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
-[ -s "/usr/local/opt/nvm/etc/bash_completion" ] && . "/usr/local/opt/nvm/etc/bash_completion"  # This loads nvm bash_completion
+[ -f "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+[ -f "/usr/local/opt/nvm/etc/bash_completion" ] && . "/usr/local/opt/nvm/etc/bash_completion"  # This loads nvm bash_completion
+
+export JAVA8_HOME=`/usr/libexec/java_home -v1.8`
+export JAVA11_HOME=`/usr/libexec/java_home -v11`
+export JAVA11_CONTENTS=`echo $JAVA11_HOME | sed 's/\(.*\)\/Home/\1/'`
+
+alias java8="export JAVA_HOME=$JAVA8_HOME; sudo mv $JAVA11_CONTENTS/Info.plist $JAVA11_CONTENTS/Info.plist.disabled"
+alias java11="export JAVA_HOME=$JAVA11_HOME; sudo mv $JAVA11_CONTENTS/Info.plist.disabled $JAVA11_CONTENTS/Info.plist"
+
+# php symfony
+export PATH="$HOME/.symfony/bin:$PATH"
+
+# mysql cli in case MYSQL Workbench is installed
+export PATH="$PATH:/Applications/MySQLWorkbench.app/Contents/MacOS"
 
 # brew install
 # bash-completion
@@ -37,5 +50,8 @@ export MANPATH="$MANPATH:/usr/local/opt/coreutils/libexec/gnuman"
 # adoptopenjdk11
 # maven
 # tomcat
+# composer
+# sampler
+# fzf
 
 # brew cask install

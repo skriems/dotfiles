@@ -132,7 +132,7 @@ echo ".gitconfig"
 cat > $userhome/.gitconfig <<EOF
 [user]
     name = Sebastian Kriems
-    email = sebastian.kriems@yougov.de
+    email = foo@bar.com
 [alias]
     co = checkout
     br = branch
