@@ -23,21 +23,34 @@ Plug 'iamcco/markdown-preview.vim'
 
 " Typescript
 Plug 'HerringtonDarkholme/yats.vim'
-"Plug 'mhartington/nvim-typescript', { 'for': ['typescript', 'tsx'], 'do': ':!install.sh \| UpdateRemotePlugins'}
 
 " javascript / react jsx
 Plug 'pangloss/vim-javascript'
 Plug 'maxmellon/vim-jsx-pretty'
+Plug 'styled-components/vim-styled-components', {'branch': 'main'}
+"Plug 'maxmellon/vim-jsx-improve'
 
 " Rust & Cargo
 Plug 'rust-lang/rust.vim'
 Plug 'Nonius/cargo.vim'
+Plug 'rhysd/vim-wasm'
 
 " Java
 Plug 'artur-shaik/vim-javacomplete2'
 
+" Dart
+"Plug 'dart-lang/dart-vim-plugin'
+
 " C
-Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh \| UpdateRemotePlugins' }
+" Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh \| UpdateRemotePlugins' }
+
+" Docker"
+Plug 'ekalinin/Dockerfile.vim'
+
+" PHP
+Plug 'StanAngeloff/php.vim', {'for': 'php'}
+" vim-vdebug
+Plug 'vim-vdebug/vdebug'
 
 """""
 " Conquer of Completion
@@ -60,7 +73,12 @@ Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 """""
 " Tools
 """""
+" Fuzzy Finder
+Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf.vim'
+
 Plug 'tpope/vim-fugitive'
+Plug 'rhysd/git-messenger.vim'
 Plug 'mattn/emmet-vim'
 
 Plug 'tpope/vim-dadbod'
@@ -77,7 +95,7 @@ Plug 'Shougo/neosnippet-snippets'
 " Plug 'kassio/neoterm'
 
 " Neomake
-"Plug 'neomake/neomake'
+Plug 'neomake/neomake'
 
 """""
 " vim-orgmode
@@ -103,6 +121,12 @@ filetype plugin indent on    " required
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " General Config
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" mouse scrolling in iTerm2
+set mouse=nicr
+" attempt to improve speed in iTerm2
+" set regexpengine=1
+" encoding
+set encoding=utf-8
 " How many lines of history to remember
 set history=1000
 " Save undo history
@@ -172,29 +196,42 @@ if (has("termguicolors"))
     set termguicolors
 endif
 
-colorscheme onedark
-set background=dark
-syntax enable
+function! MyHighlights() abort
+    highlight link pythonNone Boolean
+    highlight Statement cterm=italic gui=italic
+    highlight Conditional cterm=italic gui=italic
+    highlight Operator cterm=italic gui=italic
+    highlight Identifier cterm=italic gui=italic
+    highlight Normal ctermbg=None guibg=None
+    highlight NonText ctermbg=None guibg=None
+endfunction
 
-" transparent background
-hi Normal ctermbg=None guibg=None
-hi NonText ctermbg=None guibg=None
+augroup MyColors
+    autocmd!
+    autocmd ColorScheme * call MyHighlights()
+augroup END
+
+" colorscheme
+" colorscheme OceanicNext
+" colorscheme onedark
+colorscheme gruvbox
+set background=dark
 
 " enable italics for the colorschemes
+"let g:gruvbox_italicize_strings = 1
 let g:gruvbox_italic = 1
 let g:onedark_terminal_italics = 1
 
-let g:airline_theme='onedark'
-" let g:airline_theme='gruvbox'
+"let g:airline_theme='onedark'
+let g:airline_theme='gruvbox'
 let g:airline_powerline_fonts = 1
 
 " highligh all from vim-python/python-syntax
 let g:python_highlight_all = 1
-hi link pythonNone Boolean
-hi Statement cterm=italic gui=italic
-hi Conditional cterm=italic gui=italic
-hi Operator cterm=italic gui=italic
-hi Identifier cterm=italic gui=italic
+
+if !exists("g:syntax_on")
+    syntax enable
+endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin Config
@@ -202,9 +239,9 @@ hi Identifier cterm=italic gui=italic
 " disable folding for vim-markdown
 let g:vim_markdown_folding_disabled = 1
 
-" Emmet in html,css,js, tsx files
+" Emmet
 let g:user_emmet_install_global = 0
-autocmd FileType html,css,typescript,javascript EmmetInstall
+autocmd FileType html,css,javascript,typescript,typescript.tsx EmmetInstall
 
 """""""""
 " CoC
@@ -274,7 +311,7 @@ nmap <leader>f  <Plug>(coc-format-selected)
 augroup mygroup
   autocmd!
   " Setup formatexpr specified filetype(s).
-  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  autocmd FileType typescript,typescript.tsx,json setl formatexpr=CocAction('formatSelected')
   " Update signature help on jump placeholder
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup end
@@ -450,11 +487,11 @@ augroup END
 
 augroup js
     au!
-    au BufNewFile, BufRead *.js
-    au FileType javascript set softtabstop=2
-    au FileType javascript set tabstop=2
-    au FileType javascript set shiftwidth=2
-    au FileType javascript set expandtab
+    au BufNewFile, BufRead *.js,*.jsx,*.ts,*.tsx
+    au FileType javascript,typescript,typescript.tsx set softtabstop=2
+    au FileType javascript,typescript,typescript.tsx set tabstop=2
+    au FileType javascript,typescript,typescript.tsx set shiftwidth=2
+    au FileType javascript,typescript,typescript.tsx set expandtab
 augroup END
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -495,6 +532,23 @@ let delimitMate_expand_cr = 1
 "augroup END
 " }}}
 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" grep
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if executable('rg')
+  " Use ripgrep over grep
+  set grepprg=rg\ --vimgrep
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'rg --vimgrep %s'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+endif
+" bind K to grep word under cursor
+nnoremap F :grep! "\b<C-R><C-W>\b"<CR>:cw<CR><CR>
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Keybindings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -508,23 +562,22 @@ imap jj <ESC>
 :tnoremap <A-j> <C-\><C-n><C-w>j
 :tnoremap <A-k> <C-\><C-n><C-w>k
 :tnoremap <A-l> <C-\><C-n><C-w>l
-:nnoremap <A-h> <C-w>h
-:nnoremap <A-j> <C-w>j
-:nnoremap <A-k> <C-w>k
-:nnoremap <A-l> <C-w>l
-"nnoremap tr :tabprevious<CR>
-"nnoremap ty :tabnext<CR>
+:nnoremap <C-h> <C-w>h
+:nnoremap <C-j> <C-w>j
+:nnoremap <C-k> <C-w>k
+:nnoremap <C-l> <C-w>l
+nnoremap tr :tabprevious<CR>
+nnoremap tz :tabnext<CR>
 "nnoremap <C-L> :nohl<CR><C-L>
-"nnoremap <leader>n :NERDTreeToggle<CR>
-"nnoremap <leader>C :set background=light<CR>
-"nnoremap <leader>c :set background=dark<CR>
+nnoremap <leader>n :NERDTreeToggle<CR>
 "
 " neomake
-nmap <Leader><Space>o :lopen<CR>      " open location window
-nmap <Leader><Space>c :lclose<CR>     " close location window
-nmap <Leader><Space>, :ll<CR>         " go to current error/warning
-nmap <Leader><Space>n :lnext<CR>      " next error/warning
-nmap <Leader><Space>p :lprev<CR>      " previous error/warning
+let g:neomake_rust_cargo_command = ['cargo-clippy']
+" nmap <Leader><Space>o :lopen<CR>      " open location window
+" nmap <Leader><Space>c :lclose<CR>     " close location window
+" nmap <Leader><Space>, :ll<CR>         " go to current error/warning
+" nmap <Leader><Space>n :lnext<CR>      " next error/warning
+" nmap <Leader><Space>p :lprev<CR>      " previous error/warning
 
 " do not jump on wrapped lines
 "nnoremap j gj
@@ -544,5 +597,8 @@ inoremap <C-SPACE> <ESC>la
 set wildignore+=*/tmp/*,*.so,*.swp,*.pyc
 let NERDTreeIgnore = ['\.pyc$', '\.so$', '\.swp$']
 
+map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 " ctrl-p
 "let g:ctrlp_clear_cache_on_exit = 0

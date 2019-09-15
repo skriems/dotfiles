@@ -1,4 +1,42 @@
 {
-    "python.venvPath": "~/.virtualenvs",
-    "coc.preferences.formatOnSaveFiletypes": ["rust", "python"]
+  "coc.preferences.formatOnSaveFiletypes": ["rust", "python", "javascript", "javascriptreact", "typescript", "typescriptreact"],
+  "eslint.autoFixOnSave": true,
+  "javascript.suggestionActions.enabled": false,
+  "javascript.validate.enable": false,
+  "python.venvPath": "~/.virtualenvs",
+  "tsserver.enableJavascript": true,
+  "typescript.suggestionActions.enabled": true,
+  "typescript.validate.enable": true,
+  "languageserver": {
+    "flow": {
+      "command": "flow",
+      "args": ["lsp"],
+      "filetypes": ["javascript", "javascriptreact"],
+      "initializationOptions": {},
+      "requireRootPattern": true,
+      "settings": {},
+      "rootPatterns": [".flowconfig"]
+    },
+    "dart": {
+      "command": "dart_language_server",
+      "args": [],
+      "trace.server": "verbose",
+      "filetypes": ["dart"],
+      "initializationOptions": {},
+      "settings": {
+        "dart": {
+          "validation": {},
+          "completion": {}
+        }
+      }
+    },
+    "intelephense": {
+      "command": "intelephense",
+      "args": ["--stdio"],
+      "filetypes": ["php"],
+      "initializationOptions": {
+          "storagePath": "/tmp/intelephense"
+      }
+    }
+  }
 }
