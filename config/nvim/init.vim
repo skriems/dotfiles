@@ -425,8 +425,8 @@ set softtabstop=4
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " global interpreters for nvim so that we don't need to
 " 'pip install neovim' in every virtualenv
-let g:python3_host_prog = '/home/skr/.virtualenvs/nvim3/bin/python'
-let g:python_host_prog = '/home/skr/.virtualenvs/nvim2/bin/python'
+let g:python3_host_prog = "$HOME/.virtualenvs/nvim3/bin/python"
+let g:python_host_prog = "$HOME/.virtualenvs/nvim2/bin/python"
 
 augroup python
     au!
