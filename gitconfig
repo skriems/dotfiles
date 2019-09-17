@@ -1,0 +1,26 @@
+[user]
+	name = Sebastian Kriems
+	email = foo@bar.com
+[alias]
+    st = status
+    co = checkout
+    br = branch
+    ci = commit
+    cit = "!f() { ticket=$(git ticket); git commit -m \"${ticket}: $1\" ;}; f"
+    l = log --pretty=format:\"%C(auto)%h %Cgreen(%p)%Creset %cn (%ad) %C(auto)%d%Creset%n  %s\"
+    ll = log --pretty=format:\"%C(auto)%h %Cgreen(%p)%Creset %cn (%ad) %C(auto)%d%Creset%n  %s\" --stat
+    lg = log --pretty=format:\"%C(auto)%h %Cgreen(%p)%Creset %cn (%ad) %C(auto)%d%Creset%n  %s\" --graph
+    tia = !sh -c \"git tag -a  -m \"
+    ticket = "! git rev-parse --abbrev-ref HEAD | tr '/|-' ' ' | awk '{print $2 \"-\" $3}'"
+[push]
+    followTags = true
+[core]
+	excludesfile = /Users/skriems/.gitignore_global
+
+
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
