@@ -88,6 +88,7 @@ fi
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias gitmail="git config user.email 'foo@bar.com'"
 
 ###############################
 # original content
