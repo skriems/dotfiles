@@ -9,10 +9,6 @@ call plug#begin('~/.local/share/nvim/plugged')
 """""
 " Syntax Checking and Highlighting
 """""
-" Plug 'airblade/vim-gitgutter'
-Plug 'mhinz/vim-signify'
-Plug 'vim-syntastic/syntastic'
-
 " Python
 Plug 'vim-python/python-syntax'
 
@@ -90,6 +86,10 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 
 Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
+
+" Plug 'airblade/vim-gitgutter'
+Plug 'mhinz/vim-signify'
+Plug 'vim-syntastic/syntastic'
 "
 " Terminal/REPL
 " Plug 'kassio/neoterm'
@@ -118,9 +118,72 @@ filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
 " filetype plugin on
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""
 " General Config
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""
+" grep
+""""""""""
+if executable('rg')
+  " Use ripgrep over grep
+  set grepprg=rg\ --vimgrep
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'rg --vimgrep %s'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+endif
+" bind F to grep word under cursor
+nnoremap F :grep! "\b<C-R><C-W>\b"<CR>:cw<CR><CR>
+
+""""""""""
+" Tabstops
+""""""""""
+set tabstop=4
+set expandtab
+set shiftwidth=4
+set softtabstop=4
+
+""""""""""
+" Indent
+""""""""""
+" autoindent
+set ai
+" smartindent
+set si
+" do c-style indenting
+" set cindent
+" show line numbers
+set number
+" show relative line number
+set relativenumber
+" width of 'gutter'
+set numberwidth=2
+" expand <CR>
+let delimitMate_expand_cr = 1
+
+""""""""""
+" Folding
+""""""""""
+" set foldenable
+" Make folding indent sensitive
+" set foldmethod=indent
+" Don't autofold anything (but I can still fold manually)
+" set foldlevel=2
+" don't open folds when you search into them
+" set foldopen-=search
+" don't open folds when you undo stuff
+" set foldopen-=undo
+
+" vim filetype settings {{{
+"augroup filetype_vim
+"    au!
+"    au FileType vim setlocal foldmethod=marker
+"augroup END
+" }}}
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " mouse scrolling in iTerm2
 set mouse=nicr
 " attempt to improve speed in iTerm2
@@ -169,28 +232,8 @@ set list
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Style
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 """"""""
-" Status line:
-""""""""
-" always show the status line
-set laststatus=2
-" show branch via fugitive
-set statusline+=%{fugitive#statusline()}
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-""""
-" CoC
-""""
-let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
-let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
-" [CoC] if you want to disable auto detect, comment out those two lines
-"let g:airline#extensions#disable_rtp_load = 1
-"let g:airline_extensions = ['branch', 'hunks', 'coc']
-
-""""""""
-" Colorscheme etc
+" Colorscheme
 """"""""
 if (has("termguicolors"))
     set termguicolors
@@ -211,18 +254,12 @@ augroup MyColors
     autocmd ColorScheme * call MyHighlights()
 augroup END
 
-" colorscheme
-" colorscheme OceanicNext
-" colorscheme onedark
-colorscheme gruvbox
+colorscheme onedark
 set background=dark
 
-" enable italics for the colorschemes
-"let g:gruvbox_italicize_strings = 1
 let g:gruvbox_italic = 1
 let g:onedark_terminal_italics = 1
 
-"let g:airline_theme='onedark'
 let g:airline_theme='gruvbox'
 let g:airline_powerline_fonts = 1
 
@@ -232,6 +269,37 @@ let g:python_highlight_all = 1
 if !exists("g:syntax_on")
     syntax enable
 endif
+
+""""""""""
+" Gutter
+""""""""""
+" vim-signify
+let g:signify_vcs_list =  ['git']
+let g:signify_realtime = 1
+let g:signify_cursorhold_normal = 0
+let g:signify_cursorhold_insert = 0
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+" Error symbols
+let g:syntastic_enable_signs = 1
+let g:syntastic_error_symbol = "✗"
+let syntastic_style_error_symbol = "✗"
+let g:syntastic_warning_symbol = "∙∙"
+let syntastic_style_warning_symbol = "∙∙"
+
+""""""""""
+" Status line
+""""""""""
+" always show the status line
+set laststatus=2
+" show branch via fugitive
+set statusline+=%{fugitive#statusline()}
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin Config
@@ -246,6 +314,12 @@ autocmd FileType html,css,javascript,typescript,typescript.tsx EmmetInstall
 """""""""
 " CoC
 """""""""
+let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
+let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
+" [CoC] if you want to disable auto detect, comment out those two lines
+"let g:airline#extensions#disable_rtp_load = 1
+"let g:airline_extensions = ['branch', 'hunks', 'coc']
+
 " if hidden is not set, TextEdit might fail.
 set hidden
 " Better display for messages
@@ -361,38 +435,9 @@ nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
-
-" enable neosnippet to support func argument completion with autocomplete-flow
-"let g:neosnippet#enable_completed_snippet = 1
-
-" Neoterm
-" let g:neoterm_position = 'vertical' " set the neoterm pos to vertical
-" let g:neoterm_size=10
-
-"""""
-" Gutter
-"""""
-" vim-signify
-let g:signify_vcs_list =  ['git']
-let g:signify_realtime = 1
-let g:signify_cursorhold_normal = 0
-let g:signify_cursorhold_insert = 0
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-" Error symbols
-let g:syntastic_enable_signs = 1
-let g:syntastic_error_symbol = "✗"
-let syntastic_style_error_symbol = "✗"
-let g:syntastic_warning_symbol = "∙∙"
-let syntastic_style_warning_symbol = "∙∙"
-
-""""""""
-" Java
-" https://github.com/artur-shaik/vim-javacomplete2
-""""""""
+""""""""""
+" javacomplete2
+""""""""""
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
 
 " To enable smart (trying to guess import option) inserting class imports with F4, add:
@@ -409,9 +454,6 @@ imap <F6> <Plug>(JavaComplete-Imports-AddMissing)
 nmap <F7> <Plug>(JavaComplete-Imports-RemoveUnused)
 imap <F7> <Plug>(JavaComplete-Imports-RemoveUnused)
 
-""""""
-"" default mapping
-""""""
 " nmap <leader>jI <Plug>(JavaComplete-Imports-AddMissing)
 " nmap <leader>jR <Plug>(JavaComplete-Imports-RemoveUnused)
 " nmap <leader>ji <Plug>(JavaComplete-Imports-AddSmart)
@@ -449,13 +491,17 @@ imap <F7> <Plug>(JavaComplete-Imports-RemoveUnused)
 " disable the default mapping
 " "let g:JavaComplete_EnableDefaultMappings = 0
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Tabstops
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set tabstop=4
-set expandtab
-set shiftwidth=4
-set softtabstop=4
+""""""""""
+" Neosnippet
+""""""""""
+" enable neosnippet to support func argument completion with autocomplete-flow
+"let g:neosnippet#enable_completed_snippet = 1
+
+""""""""""
+" Neoterm
+""""""""""
+" let g:neoterm_position = 'vertical' " set the neoterm pos to vertical
+" let g:neoterm_size=10
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FileTypes
@@ -493,61 +539,6 @@ augroup js
     au FileType javascript,typescript,typescript.tsx set shiftwidth=2
     au FileType javascript,typescript,typescript.tsx set expandtab
 augroup END
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Indent
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" autoindent
-set ai
-" smartindent
-set si
-" do c-style indenting
-" set cindent
-" show line numbers
-set number
-" show relative line number
-set relativenumber
-" width of 'gutter'
-set numberwidth=2
-" expand <CR>
-let delimitMate_expand_cr = 1
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Folding
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" set foldenable
-" Make folding indent sensitive
-" set foldmethod=indent
-" Don't autofold anything (but I can still fold manually)
-" set foldlevel=2
-" don't open folds when you search into them
-" set foldopen-=search
-" don't open folds when you undo stuff
-" set foldopen-=undo
-
-" vim filetype settings {{{
-"augroup filetype_vim
-"    au!
-"    au FileType vim setlocal foldmethod=marker
-"augroup END
-" }}}
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" grep
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-if executable('rg')
-  " Use ripgrep over grep
-  set grepprg=rg\ --vimgrep
-
-  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'rg --vimgrep %s'
-
-  " ag is fast enough that CtrlP doesn't need to cache
-  let g:ctrlp_use_caching = 0
-endif
-" bind K to grep word under cursor
-nnoremap F :grep! "\b<C-R><C-W>\b"<CR>:cw<CR><CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Keybindings

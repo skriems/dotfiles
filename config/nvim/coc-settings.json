@@ -1,6 +1,14 @@
 {
-  "coc.preferences.formatOnSaveFiletypes": ["rust", "python", "javascript", "javascriptreact", "typescript", "typescriptreact"],
+  "coc.preferences.formatOnSaveFiletypes": [
+    "rust",
+    "python",
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
   "eslint.autoFixOnSave": true,
+  "java.jdt.ls.vmargs": "-javaagent:/Users/skriems/repos/dotfiles/lombok.jar -Xbootclasspath/a:/Users/skriems/repos/dotfiles/lombok.jar",
   "javascript.suggestionActions.enabled": false,
   "javascript.validate.enable": false,
   "python.venvPath": "~/.virtualenvs",
@@ -30,12 +38,17 @@
         }
       }
     },
+    "rust": {
+      "command": "ra_lsp_server",
+      "filetypes": ["rust"],
+      "rootPatterns": ["Cargo.toml"]
+    },
     "intelephense": {
       "command": "intelephense",
       "args": ["--stdio"],
       "filetypes": ["php"],
       "initializationOptions": {
-          "storagePath": "/tmp/intelephense"
+        "storagePath": "/tmp/intelephense"
       }
     }
   }
