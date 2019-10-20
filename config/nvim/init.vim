@@ -7,68 +7,27 @@ filetype off
 call plug#begin('~/.local/share/nvim/plugged')
 
 """""
-" Syntax Checking and Highlighting
+" Syntax and Highlighting
 """""
-" Python
-Plug 'vim-python/python-syntax'
-
-" Markdown
+Plug 'sheerun/vim-polyglot'
+Plug 'evanleck/vim-svelte'
 Plug 'godlygeek/tabular' " tabular needs be before markdown
 Plug 'plasticboy/vim-markdown'
-Plug 'iamcco/markdown-preview.vim'
-
-" Typescript
-Plug 'HerringtonDarkholme/yats.vim'
-
-" javascript / react jsx
-Plug 'pangloss/vim-javascript'
-Plug 'maxmellon/vim-jsx-pretty'
 Plug 'styled-components/vim-styled-components', {'branch': 'main'}
-"Plug 'maxmellon/vim-jsx-improve'
-
-" Rust & Cargo
-Plug 'rust-lang/rust.vim'
 Plug 'Nonius/cargo.vim'
 Plug 'rhysd/vim-wasm'
-
-" Java
 Plug 'artur-shaik/vim-javacomplete2'
-
-" Dart
-"Plug 'dart-lang/dart-vim-plugin'
-
-" C
-" Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh \| UpdateRemotePlugins' }
-
-" Docker"
-Plug 'ekalinin/Dockerfile.vim'
-
-" PHP
-Plug 'StanAngeloff/php.vim', {'for': 'php'}
-" vim-vdebug
-Plug 'vim-vdebug/vdebug'
 
 """""
 " Conquer of Completion
 """""
 Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
-" coc-css
-" coc-emmet
-" coc-highlight
-" coc-html
-" coc-java
-" coc-json
-" coc-python
-" coc-rls
-" coc-snippets
-" coc-tsserver
-" coc-tslint-plugin
-" coc-yaml
-"""""
 
 """""
 " Tools
 """""
+Plug 'iamcco/markdown-preview.vim'
+Plug 'vim-vdebug/vdebug'
 " Fuzzy Finder
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
@@ -87,12 +46,9 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
 
-" Plug 'airblade/vim-gitgutter'
+"Plug 'airblade/vim-gitgutter'
 Plug 'mhinz/vim-signify'
 Plug 'vim-syntastic/syntastic'
-"
-" Terminal/REPL
-" Plug 'kassio/neoterm'
 
 " Neomake
 Plug 'neomake/neomake'
@@ -304,6 +260,9 @@ set statusline+=%*
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin Config
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" diasble vim-polyglot syntax for specific filetypes
+"let g:polyglot_disabled = ['css']
+"
 " disable folding for vim-markdown
 let g:vim_markdown_folding_disabled = 1
 
@@ -331,6 +290,13 @@ set shortmess+=c
 " always show signcolumns
 set signcolumn=yes
 
+nmap <expr> <silent> <C-d> <SID>select_current_word()
+function! s:select_current_word()
+  if !get(g:, 'coc_cursors_activated', 0)
+    return "\<Plug>(coc-cursors-word)"
+  endif
+  return "*\<Plug>(coc-cursors-word):nohlsearch\<CR>"
+endfunc
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
 inoremap <silent><expr> <TAB>
@@ -379,8 +345,8 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 nmap <leader>rn <Plug>(coc-rename)
 
 " Remap for format selected region
-vmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
+vmap <leader>f  <Plug>(coc-format-selected)
 
 augroup mygroup
   autocmd!
@@ -419,22 +385,23 @@ command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 
 " Using CocList
 " Show all diagnostics
-nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+nnoremap <silent> <leader>a  :<C-u>CocList diagnostics<cr>
 " Manage extensions
-nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+nnoremap <silent> <leader>e  :<C-u>CocList extensions<cr>
 " Show commands
-nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+nnoremap <silent> <leader>c  :<C-u>CocList commands<cr>
 " Find symbol of current document
-nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+nnoremap <silent> <leader>o  :<C-u>CocList outline<cr>
 " Search workspace symbols
-nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+nnoremap <silent> <leader>s  :<C-u>CocList -I symbols<cr>
 " Do default action for next item.
-nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+nnoremap <silent> <leader>j  :<C-u>CocNext<CR>
 " Do default action for previous item.
-nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+nnoremap <silent> <leader>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
-nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+nnoremap <silent> <leader>p  :<C-u>CocListResume<CR>
 
+nnoremap <silent> <leader>sw <Plug>GenerateDiagram
 """"""""""
 " javacomplete2
 """"""""""
