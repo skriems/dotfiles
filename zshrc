@@ -56,7 +56,7 @@ export PYTHONSTARTUP="$(python -m jedi repl)"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(fzf git virtualenvwrapper)
+plugins=(docker docker-compose fzf git virtualenvwrapper)
 
 source $ZSH/oh-my-zsh.sh
 
