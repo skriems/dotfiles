@@ -156,6 +156,10 @@ export PATH=$PATH:~/.local/bin:~/.cargo/bin:~/tools/flutter/bin
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 # Following FZF env vars can be customized
+export FZF_DEFAULT_OPTS="--no-mouse --height 60% -1 --reverse --multi --inline-info \
+--preview='[[ \$(file --mime {}) =~ binary ]] && echo {} is a binary file || \
+(bat --style=numbers --color=always {} --theme base16 || cat {}) 2> /dev/null | head -300' \
+--bind='f3:execute(bat --style=numbers {} || less -f {}),f2:toggle-preview,ctrl-d:half-page-down,ctrl-u:half-page-up,ctrl-a:select-all+accept,ctrl-y:execute-silent(echo {+} | pbcopy)'"
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 # export FZF_CTRL_T_OPTS
@@ -163,6 +167,8 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 # export FZF_CTRL_C_OPTS
 # export FZF_CTRL_R_OPTS
 # bind -x '"\C-p": nvim $(fzf);'
+#
+export BAT_PAGER="less -R"
 
 # load the platform specific zshrc
 [ -f "$HOME/.zshrc_platform" ] && source "$HOME/.zshrc_platform"

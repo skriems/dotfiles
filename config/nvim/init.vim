@@ -84,14 +84,32 @@ if executable('rg')
   " Use ripgrep over grep
   set grepprg=rg\ --vimgrep
 
-  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  " Use rg in CtrlP for listing files. Lightning fast and respects .gitignore
   let g:ctrlp_user_command = 'rg --vimgrep %s'
 
-  " ag is fast enough that CtrlP doesn't need to cache
+  " rg is fast enough that CtrlP doesn't need to cache
   let g:ctrlp_use_caching = 0
 endif
 " bind F to grep word under cursor
-nnoremap F :grep! "\b<C-R><C-W>\b"<CR>:cw<CR><CR>
+nnoremap F :Rg! <C-R><C-W><CR>
+
+""""""""
+" fzf
+""""""""
+" Augmenting Rg command using fzf#vim#with_preview function
+"   * fzf#vim#with_preview([[options], [preview window], [toggle keys...]])
+"   :Rg  - Start fzf with hidden preview window that can be enabled with "?" key
+"   :Rg! - Start fzf in fullscreen and display the preview window above
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+  \   <bang>0 ? fzf#vim#with_preview('up:60%')
+  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+  \   <bang>0)
+
+" Likewise, Files command with preview window
+command! -bang -nargs=? -complete=dir Files
+  \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 
 """"""""""
 " Tabstops
@@ -402,6 +420,9 @@ nnoremap <silent> <leader>k  :<C-u>CocPrev<CR>
 nnoremap <silent> <leader>p  :<C-u>CocListResume<CR>
 
 nnoremap <silent> <leader>sw <Plug>GenerateDiagram
+
+" open with fzf
+nnoremap <silent> <leader>O :Files<CR>
 """"""""""
 " javacomplete2
 """"""""""
