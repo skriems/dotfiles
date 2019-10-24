@@ -4,7 +4,7 @@ pactrap /mnt \
     base base-devel intel-ucode networkmanger openconnect gnome-keyring libsecret sudo archey3 \
     mutt w3m pass pass-otp \
     xorg xorg-server xf86-video-intel \
-    zsh zsh-completions termite termite-terminfo \
+    zsh zsh-completions termite termite-terminfo bat \
     vim vim-spell-de vim-spell-en neovim typescript prettier \
     i3 compton dmenu rofi feh arandr lxappearance acpi pavucontrol playerctl maim \
     gdm gtk-engine-murrine gtk-engines arc-gtk-theme \
