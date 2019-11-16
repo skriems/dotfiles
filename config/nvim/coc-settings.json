@@ -7,8 +7,10 @@
     "typescript",
     "typescriptreact"
   ],
+  "codeLens.enable": true,
   "eslint.autoFixOnSave": true,
-  "java.jdt.ls.vmargs": "-javaagent:/Users/skriems/repos/dotfiles/lombok.jar -Xbootclasspath/a:/Users/skriems/repos/dotfiles/lombok.jar",
+  "java.jdt.ls.vmargs": "-javaagent:/Users/skriems/repos/dotfiles/lombok.jar",
+  "java.maven.downloadSources": true,
   "javascript.suggestionActions.enabled": false,
   "javascript.validate.enable": false,
   "python.venvPath": "~/.virtualenvs",

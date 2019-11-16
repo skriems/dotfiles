@@ -5,3 +5,5 @@ skr_*
 *.classpath
 .settings
 .factorypath
+.class
+.vim
