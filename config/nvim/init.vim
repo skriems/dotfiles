@@ -50,14 +50,15 @@ Plug 'mattn/emmet-vim'
 Plug 'tpope/vim-dadbod'
 "Plug 'jmcantrell/vim-virtualenv'
 Plug 'neomake/neomake'
-Plug 'Shougo/neosnippet'
-Plug 'Shougo/neosnippet-snippets'
 " Plug 'jceb/vim-orgmode'
 
 " Colorschemes
 Plug 'joshdick/onedark.vim'
+Plug 'tyrannicaltoucan/vim-deep-space'
+Plug 'danilo-augusto/vim-afterglow'
 Plug 'morhetz/gruvbox'
-" Plug 'mhartington/oceanic-next'
+Plug 'mhartington/oceanic-next'
+Plug 'ajmwagar/vim-deus'
 
 call plug#end()
 
@@ -78,7 +79,6 @@ let g:coc_global_extensions = [
     \ 'coc-html',
     \ 'coc-java',
     \ 'coc-json',
-    \ 'coc-neosnippet',
     \ 'coc-pairs',
     \ 'coc-phpls',
     \ 'coc-prettier',
@@ -254,7 +254,7 @@ set laststatus=2
 " set statusline+=%*
 
 let g:lightline = {
-    \ 'colorscheme': 'one',
+    \ 'colorscheme': 'gruvbox',
     \ 'active': {
     \   'left':[ [ 'mode', 'paste' ], [ 'readonly', 'filename', 'modified' ] ],
     \   'right': [ [ 'fugitive' ], [ 'filetype', 'fileencoding', 'fileformat', 'percent', 'cocstatus' ] ]
@@ -423,9 +423,6 @@ imap <F7> <Plug>(JavaComplete-Imports-RemoveUnused)
 """"""""""
 let g:vebugger_view_source_cmd='edit'
 
-" enable neosnippet to support func argument completion with autocomplete-flow
-"let g:neosnippet#enable_completed_snippet = 1
-
 " vim-polyglot disable syntax for specific filetypes
 "let g:polyglot_disabled = ['css']
 
@@ -450,6 +447,10 @@ let g:signify_vcs_list =  ['git']
 let g:signify_realtime = 1
 let g:signify_cursorhold_normal = 0
 let g:signify_cursorhold_insert = 0
+
+" vim-devicons: avoid unnecessary system() calls; most likely only necessary
+" on OSX
+let g:WebDevIconsOS = 'Darwin'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""
 " General Config
@@ -553,19 +554,28 @@ set list
 " Colorscheme
 """"""""
 if (has("termguicolors"))
+    " not sure if the below two are needed
+    set t_8f=\[[38;2;%lu;%lu;%lum
+    set t_8b=\[[48;2;%lu;%lu;%lum
     set termguicolors
 endif
 
 set background=dark
 
 function! MyHighlights() abort
-    highlight link pythonNone Boolean
-    highlight Statement cterm=italic gui=italic
-    highlight Conditional cterm=italic gui=italic
-    highlight Operator cterm=italic gui=italic
-    highlight Identifier cterm=italic gui=italic
-    highlight Normal ctermbg=None guibg=None
-    highlight NonText ctermbg=None guibg=None
+    hi link pythonNone Boolean
+    hi Statement cterm=italic gui=italic
+    hi Conditional cterm=italic gui=italic
+    hi Operator cterm=italic gui=italic
+    hi Identifier cterm=italic gui=italic
+    " transparency
+    hi Normal ctermbg=None guibg=None
+    hi NonText ctermbg=None guifg=#3c3836 guibg=None
+    hi SignColumn ctermbg=None guibg=None
+    hi CursorLineNr ctermbg=None guibg=None
+    hi GruvboxGreenSign ctermbg=None guibg=None "SignifySignAdd
+    hi GruvboxAquaSign ctermbg=None guibg=None "SignifySignChange
+    hi GruvboxRedSign ctermbg=None guibg=None " SignifySignDelete
 endfunction
 
 augroup MyColors
@@ -573,8 +583,8 @@ augroup MyColors
     autocmd ColorScheme * call MyHighlights()
 augroup END
 
-colorscheme gruvbox
-
+let g:afterglow_italic_comments = 1
+let g:deepspace_italics = 1
 let g:gruvbox_italic = 1
 let g:onedark_terminal_italics = 1
 
@@ -585,6 +595,7 @@ if !exists("g:syntax_on")
     syntax enable
 endif
 
+colorscheme gruvbox
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FileTypes
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -616,10 +627,10 @@ augroup END
 augroup js
     au!
     au BufNewFile, BufRead *.js,*.jsx,*.ts,*.tsx
-    au FileType javascript,typescript,typescript.tsx set softtabstop=2
-    au FileType javascript,typescript,typescript.tsx set tabstop=2
-    au FileType javascript,typescript,typescript.tsx set shiftwidth=2
-    au FileType javascript,typescript,typescript.tsx set expandtab
+    au FileType javascript,javascriptreact,typescript,typescriptreact set softtabstop=2
+    au FileType javascript,javascriptreact,typescript,typescriptreact set tabstop=2
+    au FileType javascript,javascriptreact,typescript,typescriptreact set shiftwidth=2
+    au FileType javascript,javascriptreact,typescript,typescriptreact set expandtab
 augroup END
 
 """""""""""""""""""""""""""""""""""""""""""""""""""

@@ -8,6 +8,7 @@
     "typescriptreact"
   ],
   "codeLens.enable": true,
+  "css.filetypes": ["css", "less", "scss", "wxss", "tsx", "jsx"],
   "eslint.autoFixOnSave": true,
   "java.jdt.ls.vmargs": "-javaagent:/Users/skriems/repos/dotfiles/lombok.jar",
   "java.maven.downloadSources": true,
