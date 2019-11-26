@@ -18,6 +18,15 @@
   "tsserver.enableJavascript": true,
   "typescript.suggestionActions.enabled": true,
   "typescript.validate.enable": true,
+  "diagnostic-languageserver.filetypes": {
+      "vim": "vint",
+      "markdown": ["write-good", "markdown-lint"],
+      "sh": "shellcheck",
+      "php": "php-cs-fixer"
+  },
+  "diagnostic-languageserver.formatFiletypes": {
+      "php": "php-cs-fixer"
+  },
   "languageserver": {
     "flow": {
       "command": "flow",

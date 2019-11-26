@@ -1,6 +1,7 @@
 set nocompatible
 filetype off
 
+let mapleader = ','
 """""""""""""""""""""""""""""""""""""""""""""""""""
 " vim-plug
 """""""""""""""""""""""""""""""""""""""""""""""""""
@@ -72,6 +73,7 @@ filetype plugin on
 let g:coc_global_extensions = [
     \ 'coc-angular',
     \ 'coc-css',
+    \ 'coc-diagnostic',
     \ 'coc-emmet',
     \ 'coc-eslint',
     \ 'coc-flow',
@@ -297,7 +299,7 @@ function! LightLineFugitive()
     if expand('%:t') !~? 'Tagbar\|Gundo\|NERD' && &ft !~? 'vimfiler' && exists('*fugitive#head')
       let mark = ' '  " edit here for cool mark
       let _ = fugitive#head()
-      return strlen(_) ? mark._ : ''
+      return winwidth(0) > 70 ? strlen(_) ? mark._ : '': ''
     endif
   catch
   endtry
@@ -310,7 +312,7 @@ endfunction
 
 function! LightLineFiletype()
   if exists('*WebDevIconsGetFileTypeSymbol')
-    let l:filetype = WebDevIconsGetFileTypeSymbol()
+    let l:filetype = WebDevIconsGetFileTypeSymbol() . ' ' . &filetype
   else
     let l:filetype = &filetype
   endif
@@ -337,8 +339,9 @@ function! LightLineMode()
 endfunction
 
 """"""""""
-" nerdcommenter
+" NERDstuff
 """"""""""
+:let g:NERDTreeWinSize=60
 " Add spaces after comment delimiters by default
 let g:NERDSpaceDelims = 1
 " Use compact syntax for prettified multi-line comments
@@ -652,6 +655,7 @@ nnoremap <leader>t :tabnew<CR>
 :tnoremap <A-j> <C-\><C-n><C-w>j
 :tnoremap <A-k> <C-\><C-n><C-w>k
 :tnoremap <A-l> <C-\><C-n><C-w>l
+
 :nnoremap <C-h> <C-w>h
 :nnoremap <C-j> <C-w>j
 :nnoremap <C-k> <C-w>k
