@@ -43,8 +43,7 @@
 # capability, uncomment this line and replace the keyid with your
 # signing keyid.
 #
-set pgp_sign_as="BA770F1B6CECCCFE86885475EC2FE3BCD6C1262D"
-
+set pgp_sign_as="7E224FB79715D00222094E8A8558B4EDE54E7452"
 
 # Section B: Commands
 
