@@ -1,0 +1,4 @@
+#! /bin/bash
+FILE=$1
+OUTPUT="$(pmd pmd -rulesets rulesets/java/quickstart.xml,category/java/codestyle.xml -dir $FILE -format xml 2> /dev/null | xml2json)"
+echo $OUTPUT

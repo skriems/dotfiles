@@ -9,6 +9,30 @@
   ],
   "codeLens.enable": true,
   "diagnostic-languageserver.linters": {
+      "pmd": {
+          "sourceName": "pmd",
+          "command": "runpmd",
+          "args": [
+              "%filepath"
+          ],
+          "debounce": 100,
+          "isStdout": true,
+          "parseJson": {
+              "errorsRoot": "pmd.file.violation",
+              "line": "beginline",
+              "endLine": "endline",
+              "column": "begincolumn",
+              "endColumn": "endcolumn",
+              "message": "${$t} [${rule}]",
+              "security": "priority"
+          },
+          "securities": {
+              "1": "error",
+              "2": "warning",
+              "3": "info",
+              "4": "hint"
+          }
+      },
       "checkstyle": {
           "command": "checkstyle",
           "args": ["-c", ".checkstyle.xml", "%filepath"],
@@ -35,7 +59,7 @@
   },
   "diagnostic-languageserver.filetypes": {
       "css": "stylelint",
-      "java": ["checkstyle", "pmd"],
+      "java": ["pmd", "checkstyle"],
       "javascript": "eslint",
       "markdown": ["write-good", "markdown-lint"],
       "php": ["php-cs-fixer", "phpcs", "phpstan"],
@@ -91,5 +115,5 @@
   "python.venvPath": "~/.virtualenvs",
   "tsserver.enableJavascript": true,
   "typescript.suggestionActions.enabled": true,
-  "typescript.validate.enable": true,
+  "typescript.validate.enable": true
 }
