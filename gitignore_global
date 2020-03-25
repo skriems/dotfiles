@@ -7,3 +7,5 @@ skr_*
 .factorypath
 .class
 .vim
+.checkstyle.xml
+.env

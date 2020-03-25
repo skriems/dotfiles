@@ -8,16 +8,14 @@ let mapleader = ','
 call plug#begin('~/.local/share/nvim/plugged')
 
 " Conquer of Completion
-Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Syntax and Highlighting
 Plug 'evanleck/vim-svelte'
 Plug 'godlygeek/tabular' " tabular needs be before markdown
 Plug 'plasticboy/vim-markdown'
 Plug 'styled-components/vim-styled-components', {'branch': 'main'}
-Plug 'Nonius/cargo.vim'
 Plug 'rhysd/vim-wasm'
-Plug 'artur-shaik/vim-javacomplete2'
 
 " UX
 Plug 'sheerun/vim-polyglot'
@@ -26,14 +24,13 @@ Plug 'itchyny/lightline.vim'
 Plug 'ryanoasis/vim-devicons'
 
 " NERD
-Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
 " Fuzzy Finder
 Plug '/usr/local/opt/fzf'
-Plug 'junegunn/fzf.vim'
+Plug 'junegunn/fzf.vim', { 'do': './install --bin' }
 
 " Git
 Plug 'tpope/vim-fugitive'
@@ -52,6 +49,7 @@ Plug 'tpope/vim-dadbod'
 "Plug 'jmcantrell/vim-virtualenv'
 Plug 'neomake/neomake'
 " Plug 'jceb/vim-orgmode'
+Plug 'tpope/vim-commentary'
 
 " Colorschemes
 Plug 'joshdick/onedark.vim'
@@ -68,6 +66,10 @@ filetype plugin on
 """""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin Config
 """""""""""""""""""""""""""""""""""""""""""""""""""
+set statusline+=%#warningmsg#
+set statusline+=%*
+
+"""""""""
 " Conquer of Completion
 """""""""
 let g:coc_global_extensions = [
@@ -85,17 +87,20 @@ let g:coc_global_extensions = [
     \ 'coc-phpls',
     \ 'coc-prettier',
     \ 'coc-python',
-    \ 'coc-rls',
     \ 'coc-rust-analyzer',
     \ 'coc-snippets',
     \ 'coc-stylelint',
     \ 'coc-svg',
-    \ 'coc-tslint',
+    \ 'coc-tslint-plugin',
     \ 'coc-tsserver',
     \ 'coc-yaml', ]
 
 " if hidden is not set, TextEdit might fail.
 set hidden
+
+" Some servers have issues with backup files, see #649.
+set nobackup
+set nowritebackup
 " Better display for messages
 set cmdheight=2
 " Smaller updatetime for CursorHold & CursorHoldI
@@ -114,7 +119,8 @@ function! s:select_current_word()
 endfunc
 
 " Use tab for trigger completion with characters ahead and navigate.
-" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
       \ <SID>check_back_space() ? "\<TAB>" :
@@ -126,8 +132,17 @@ function! s:check_back_space() abort
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-" Use <c-space> for trigger completion.
+" Use <c-space> to trigger completion.
 inoremap <silent><expr> <c-space> coc#refresh()
+
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
+" position. Coc only does snippet and additional edit on confirm.
+if has('patch8.1.1068')
+  " Use `complete_info` if your (Neo)Vim version supports it.
+  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+else
+  imap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+endif
 
 " Use <cr> for confirm completion, `<C-g>u` means break undo chain at current position.
 " Coc only does snippet and additional edit on confirm.
@@ -158,7 +173,7 @@ endfunction
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Remap for rename current word
-nmap <F2> <Plug>(coc-rename)
+nmap <leader>rn <Plug>(coc-rename)
 
 " Remap for format selected region
 nmap <leader>f  <Plug>(coc-format-selected)
@@ -172,20 +187,42 @@ augroup mygroup
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup end
 
-" Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
-vmap <leader>a  <Plug>(coc-codeaction-selected)
+" Applying codeAction to the selected region.
+" Example: `<leader>aap` for current paragraph
+xmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>a  <Plug>(coc-codeaction-selected)
 
-" Remap for do codeAction of current line
+" Remap keys for applying codeAction to the current line.
 nmap <leader>ac  <Plug>(coc-codeaction)
-" Fix autofix problem of current line
+" Apply AutoFix to problem on the current line.
 nmap <leader>qf  <Plug>(coc-fix-current)
+
+" Introduce function text object
+" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+xmap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap if <Plug>(coc-funcobj-i)
+omap af <Plug>(coc-funcobj-a)
+
+" Use <TAB> for selections ranges.
+" NOTE: Requires 'textDocument/selectionRange' support from the language server.
+" coc-tsserver, coc-python are the examples of servers that support it.
+nmap <silent> <TAB> <Plug>(coc-range-select)
+xmap <silent> <TAB> <Plug>(coc-range-select)
 
 " Use `:Format` for format current buffer
 command! -nargs=0 Format :call CocAction('format')
 
 " Use `:Fold` for fold current buffer
 command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" Add `:OR` command for organize imports of the current buffer.
+command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+
+" Add (Neo)Vim's native statusline support.
+" NOTE: Please see `:h coc-status` for integrations with external plugins that
+" provide custom statusline: lightline.vim, vim-airline.
+" set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 " Using CocList
 " Show all diagnostics
@@ -256,7 +293,7 @@ set laststatus=2
 " set statusline+=%*
 
 let g:lightline = {
-    \ 'colorscheme': 'gruvbox',
+    \ 'colorscheme': 'wombat',
     \ 'active': {
     \   'left':[ [ 'mode', 'paste' ], [ 'readonly', 'filename', 'modified' ] ],
     \   'right': [ [ 'fugitive' ], [ 'filetype', 'fileencoding', 'fileformat', 'percent', 'cocstatus' ] ]
@@ -341,24 +378,7 @@ endfunction
 """"""""""
 " NERDstuff
 """"""""""
-:let g:NERDTreeWinSize=60
-" Add spaces after comment delimiters by default
-let g:NERDSpaceDelims = 1
-" Use compact syntax for prettified multi-line comments
-let g:NERDCompactSexyComs = 1
-" Align line-wise comment delimiters flush left instead of following code indentation
-let g:NERDDefaultAlign = 'left'
-" Set a language to use its alternate delimiters by default
-let g:NERDAltDelims_java = 1
-" Add your own custom formats or override the defaults
-let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
-" Allow commenting and inverting empty lines (useful when commenting a region)
-let g:NERDCommentEmptyLines = 1
-" Enable trimming of trailing whitespace when uncommenting
-let g:NERDTrimTrailingWhitespace = 1
-" Enable NERDCommenterToggle to check all selected lines is commented or not 
-let g:NERDToggleCheckAllLines = 1
-
+:let g:NERDTreeWinSize=40
 """"""""""
 " Emmet
 """"""""""
@@ -442,7 +462,7 @@ let g:neomake_rust_cargo_command = ['cargo-clippy']
 " nmap <Leader><Space>p :lprev<CR>      " previous error/warning
 
 " don't show these filetypes in NERDTree
-let NERDTreeIgnore = ['\.pyc$', '\.so$', '\.swp$']
+let NERDTreeIgnore = ['\.pyc$', '\.so$', '\.swp$', '\.DS_Store']
 set wildignore+=*/tmp/*,*.so,*.swp,*.pyc
 
 " vim-signify
@@ -573,12 +593,12 @@ function! MyHighlights() abort
     hi Identifier cterm=italic gui=italic
     " transparency
     hi Normal ctermbg=None guibg=None
-    hi NonText ctermbg=None guifg=#3c3836 guibg=None
-    hi SignColumn ctermbg=None guibg=None
-    hi CursorLineNr ctermbg=None guibg=None
-    hi GruvboxGreenSign ctermbg=None guibg=None "SignifySignAdd
-    hi GruvboxAquaSign ctermbg=None guibg=None "SignifySignChange
-    hi GruvboxRedSign ctermbg=None guibg=None " SignifySignDelete
+    " hi NonText ctermbg=None guifg=#3c3836 guibg=None
+    " hi SignColumn ctermbg=None guibg=None
+    " hi CursorLineNr ctermbg=None guibg=None
+    " hi GruvboxGreenSign ctermbg=None guibg=None "SignifySignAdd
+    " hi GruvboxAquaSign ctermbg=None guibg=None "SignifySignChange
+    " hi GruvboxRedSign ctermbg=None guibg=None " SignifySignDelete
 endfunction
 
 augroup MyColors
@@ -598,7 +618,7 @@ if !exists("g:syntax_on")
     syntax enable
 endif
 
-colorscheme gruvbox
+colorscheme onedark
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FileTypes
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -635,6 +655,13 @@ augroup js
     au FileType javascript,javascriptreact,typescript,typescriptreact set shiftwidth=2
     au FileType javascript,javascriptreact,typescript,typescriptreact set expandtab
 augroup END
+
+augroup markdown
+    au!
+    au BufNewFile, BufRead *.md,*.mdx
+    au FileType markdown,markdown.mdx set textwidth=79
+augroup end
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""
 " Keybindings

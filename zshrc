@@ -58,7 +58,7 @@ export PYTHONSTARTUP="$(python -m jedi repl)"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(docker docker-compose fzf git virtualenvwrapper)
+plugins=(kubectl helm docker docker-compose fzf git virtualenvwrapper)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -97,8 +97,8 @@ alias rust-musl-builder='docker run --rm -it -v "$(pwd)":/home/rust/src ekidd/ru
 # original content
 ###############################
 HISTFILE=~/.histfile
-HISTSIZE=50000
-SAVEHIST=50000
+HISTSIZE=500000
+SAVEHIST=500000
 unsetopt beep
 bindkey -v
 
