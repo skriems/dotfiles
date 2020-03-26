@@ -10,23 +10,21 @@ call plug#begin('~/.local/share/nvim/plugged')
 " Conquer of Completion
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
+" UI
+Plug 'mhinz/vim-signify'
+Plug 'itchyny/lightline.vim'
+Plug 'ryanoasis/vim-devicons'
+Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+
 " Syntax and Highlighting
-Plug 'evanleck/vim-svelte'
+Plug 'sheerun/vim-polyglot'
+" Plug 'evanleck/vim-svelte'
 Plug 'godlygeek/tabular' " tabular needs be before markdown
 Plug 'plasticboy/vim-markdown'
 Plug 'styled-components/vim-styled-components', {'branch': 'main'}
 Plug 'rhysd/vim-wasm'
-
-" UX
-Plug 'sheerun/vim-polyglot'
-Plug 'mhinz/vim-signify'
-Plug 'itchyny/lightline.vim'
-Plug 'ryanoasis/vim-devicons'
-
-" NERD
-Plug 'scrooloose/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
 " Fuzzy Finder
 Plug '/usr/local/opt/fzf'
@@ -37,10 +35,10 @@ Plug 'tpope/vim-fugitive'
 Plug 'rhysd/git-messenger.vim'
 
 " Debugger
-Plug 'Shougo/vimproc.vim', {'do' : 'make'}
-Plug '~/repos/vim-vebugger'
-"Plug 'idanarye/vim-vebugger', { 'branch': 'develop' }
-Plug 'vim-vdebug/vdebug'
+" Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+" Plug '~/repos/vim-vebugger'
+" Plug 'idanarye/vim-vebugger', { 'branch': 'develop' }
+" Plug 'vim-vdebug/vdebug'
 
 " Misc
 Plug 'iamcco/markdown-preview.vim'
@@ -64,11 +62,153 @@ call plug#end()
 filetype plugin on
 
 """""""""""""""""""""""""""""""""""""""""""""""""""
+" General
+"""""""""""""""""""""""""""""""""""""""""""""""""""
+" encoding
+set encoding=utf-8
+" mouse scrolling in iTerm2
+set mouse=nicr
+" attempt to improve speed in iTerm2
+" set regexpengine=1
+" How many lines of history to remember
+set history=1000
+" Save undo history
+set undofile
+set undodir=~/.vim/undodir
+" enable error files and error jumping
+set cf
+" support all three, in this order
+set ffs=unix,mac,dos
+" make sure it can save viminfo
+set viminfo+=!
+" none of these should be word dividers, so make them not be
+set isk+=_,$,@,%,#,-
+" show wrapped lines:
+set sbr=>
+" Allow backspace in insert mode
+set backspace=indent,eol,start
+" realod on external writes
+set autoread
+" show matching brackets on search
+set showmatch
+" how many tenths of a second to blink matching brackets for
+set mat=5
+" do not highlight search for phrases
+set nohlsearch
+" BUT do highlight as you type your search phrase
+set incsearch
+" 80 cols wide
+set columns=80
+" Keep 5 lines (top/bottom) for scope
+set so=5
+" do blink
+set visualbell
+" no noises
+set noerrorbells
+" show whitelist
+set listchars=tab:>-,trail:~,extends:>,precedes:<
+set list
+
+""""""""""""""""""""
+" Default Tabstops
+""""""""""""""""""""
+set tabstop=4
+set expandtab
+set shiftwidth=4
+set softtabstop=4
+
+""""""""""""""""""""
+" Indentation
+""""""""""""""""""""
+set ai
+" smartindent
+set si
+" do c-style indenting
+" set cindent
+" show line numbers
+set number
+" show relative line number
+set relativenumber
+" width of 'gutter'
+set numberwidth=3
+" expand <CR>
+let delimitMate_expand_cr = 1
+
+""""""""""""""""""""
+" Folding
+""""""""""""""""""""
+set foldenable
+" fold based on syntax files
+set foldmethod=syntax
+
+" Don't autofold anything (but I can still fold manually)
+" set foldlevel=2
+" don't open folds when you search into them
+" set foldopen-=search
+" don't open folds when you undo stuff
+" set foldopen-=undo
+
+" vim filetype settings {{{
+"augroup filetype_vim
+"    au!
+"    au FileType vim setlocal foldmethod=marker
+"augroup END
+" }}}
+
+""""""""""""""""""""
+" Style
+""""""""""""""""""""
+if (has("termguicolors"))
+    " not sure if the below two are needed (in neovim)
+    set t_8f=\[[38;2;%lu;%lu;%lum
+    set t_8b=\[[48;2;%lu;%lu;%lum
+    set termguicolors
+endif
+
+set background=dark
+
+function! MyHighlights() abort
+    hi link pythonNone Boolean
+    hi Statement cterm=italic gui=italic
+    hi Conditional cterm=italic gui=italic
+    hi Operator cterm=italic gui=italic
+    hi Identifier cterm=italic gui=italic
+    " transparency
+    hi Normal ctermbg=None guibg=None
+    hi NonText ctermbg=None guifg=#3c3836 guibg=None
+    hi SignColumn ctermbg=None guibg=None
+    hi CursorLineNr ctermbg=None guibg=None
+    hi GruvboxRedSign ctermbg=None guibg=None " SignifySignDelete
+    hi GruvboxGreenSign ctermbg=None guibg=None "SignifySignAdd
+    hi GruvboxYellowSign ctermbg=None guibg=None
+    hi GruvboxBlueSign ctermbg=None guibg=None
+    hi GruvboxPurpleSign ctermbg=None guibg=None
+    hi GruvboxAquaSign ctermbg=None guibg=None "SignifySignChange
+    hi GruvboxOrangeSign ctermbg=None guibg=None
+endfunction
+
+augroup MyColors
+    autocmd!
+    autocmd ColorScheme * call MyHighlights()
+augroup END
+
+let g:afterglow_italic_comments = 1
+let g:deepspace_italics = 1
+let g:gruvbox_italic = 1
+let g:onedark_terminal_italics = 1
+
+" highligh all from vim-python/python-syntax
+let g:python_highlight_all = 1
+
+if !exists("g:syntax_on")
+    syntax enable
+endif
+
+colorscheme gruvbox
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin Config
 """""""""""""""""""""""""""""""""""""""""""""""""""
-set statusline+=%#warningmsg#
-set statusline+=%*
-
 """""""""
 " Conquer of Completion
 """""""""
@@ -291,9 +431,11 @@ set laststatus=2
 " set statusline+=%#warningmsg#
 " set statusline+=%{SyntasticStatuslineFlag()}
 " set statusline+=%*
+set statusline+=%#warningmsg#
+set statusline+=%*
 
 let g:lightline = {
-    \ 'colorscheme': 'wombat',
+    \ 'colorscheme': 'gruvbox',
     \ 'active': {
     \   'left':[ [ 'mode', 'paste' ], [ 'readonly', 'filename', 'modified' ] ],
     \   'right': [ [ 'fugitive' ], [ 'filetype', 'fileencoding', 'fileformat', 'percent', 'cocstatus' ] ]
@@ -386,62 +528,6 @@ let g:user_emmet_install_global = 0
 autocmd FileType html,css,javascript,typescript,typescript.tsx EmmetInstall
 
 """"""""""
-" javacomplete2
-""""""""""
-autocmd FileType java setlocal omnifunc=javacomplete#Complete
-
-" To enable smart (trying to guess import option) inserting class imports with F4, add:
-nmap <F4> <Plug>(JavaComplete-Imports-AddSmart)
-imap <F4> <Plug>(JavaComplete-Imports-AddSmart)
-" To enable usual (will ask for import option) inserting class imports with F5, add:
-nmap <F5> <Plug>(JavaComplete-Imports-Add)
-imap <F5> <Plug>(JavaComplete-Imports-Add)
-" To add all missing imports with F6:
-nmap <F6> <Plug>(JavaComplete-Imports-AddMissing)
-imap <F6> <Plug>(JavaComplete-Imports-AddMissing)
-
-" To remove all unused imports with F7:
-nmap <F7> <Plug>(JavaComplete-Imports-RemoveUnused)
-imap <F7> <Plug>(JavaComplete-Imports-RemoveUnused)
-
-" nmap <leader>jI <Plug>(JavaComplete-Imports-AddMissing)
-" nmap <leader>jR <Plug>(JavaComplete-Imports-RemoveUnused)
-" nmap <leader>ji <Plug>(JavaComplete-Imports-AddSmart)
-" nmap <leader>jii <Plug>(JavaComplete-Imports-Add)
-"
-" imap <C-j>I <Plug>(JavaComplete-Imports-AddMissing)
-" imap <C-j>R <Plug>(JavaComplete-Imports-RemoveUnused)
-" imap <C-j>i <Plug>(JavaComplete-Imports-AddSmart)
-" imap <C-j>ii <Plug>(JavaComplete-Imports-Add)
-"
-" nmap <leader>jM <Plug>(JavaComplete-Generate-AbstractMethods)
-"
-" imap <C-j>jM <Plug>(JavaComplete-Generate-AbstractMethods)
-"
-" nmap <leader>jA <Plug>(JavaComplete-Generate-Accessors)
-" nmap <leader>js <Plug>(JavaComplete-Generate-AccessorSetter)
-" nmap <leader>jg <Plug>(JavaComplete-Generate-AccessorGetter)
-" nmap <leader>ja <Plug>(JavaComplete-Generate-AccessorSetterGetter)
-" nmap <leader>jts <Plug>(JavaComplete-Generate-ToString)
-" nmap <leader>jeq <Plug>(JavaComplete-Generate-EqualsAndHashCode)
-" nmap <leader>jc <Plug>(JavaComplete-Generate-Constructor)
-" nmap <leader>jcc <Plug>(JavaComplete-Generate-DefaultConstructor)
-"
-" imap <C-j>s <Plug>(JavaComplete-Generate-AccessorSetter)
-" imap <C-j>g <Plug>(JavaComplete-Generate-AccessorGetter)
-" imap <C-j>a <Plug>(JavaComplete-Generate-AccessorSetterGetter)
-"
-" vmap <leader>js <Plug>(JavaComplete-Generate-AccessorSetter)
-" vmap <leader>jg <Plug>(JavaComplete-Generate-AccessorGetter)
-" vmap <leader>ja <Plug>(JavaComplete-Generate-AccessorSetterGetter)
-"
-" nmap <silent> <buffer> <leader>jn <Plug>(JavaComplete-Generate-NewClass)
-" nmap <silent> <buffer> <leader>jN <Plug>(JavaComplete-Generate-ClassInFile)
-
-" disable the default mapping
-" "let g:JavaComplete_EnableDefaultMappings = 0
-
-""""""""""
 " Misc
 """"""""""
 let g:vebugger_view_source_cmd='edit'
@@ -475,150 +561,6 @@ let g:signify_cursorhold_insert = 0
 " on OSX
 let g:WebDevIconsOS = 'Darwin'
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""
-" General Config
-"""""""""""""""""""""""""""""""""""""""""""""""""""
-""""""""""
-" Tabstops
-""""""""""
-set tabstop=4
-set expandtab
-set shiftwidth=4
-set softtabstop=4
-
-""""""""""
-" Indent
-""""""""""
-" autoindent
-set ai
-" smartindent
-set si
-" do c-style indenting
-" set cindent
-" show line numbers
-set number
-" show relative line number
-set relativenumber
-" width of 'gutter'
-set numberwidth=2
-" expand <CR>
-let delimitMate_expand_cr = 1
-
-""""""""""
-" Folding
-""""""""""
-set foldenable
-" fold based on syntax files
-set foldmethod=syntax
-" Don't autofold anything (but I can still fold manually)
-" set foldlevel=2
-" don't open folds when you search into them
-" set foldopen-=search
-" don't open folds when you undo stuff
-" set foldopen-=undo
-
-" vim filetype settings {{{
-"augroup filetype_vim
-"    au!
-"    au FileType vim setlocal foldmethod=marker
-"augroup END
-" }}}
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" mouse scrolling in iTerm2
-set mouse=nicr
-" attempt to improve speed in iTerm2
-" set regexpengine=1
-" encoding
-set encoding=utf-8
-" How many lines of history to remember
-set history=1000
-" Save undo history
-set undofile
-set undodir=~/.vim/undodir
-" enable error files and error jumping
-set cf
-" support all three, in this order
-set ffs=unix,mac,dos
-" make sure it can save viminfo
-set viminfo+=!
-" none of these should be word dividers, so make them not be
-set isk+=_,$,@,%,#,-
-" show wrapped lines:
-set sbr=>
-" Allow backspace in insert mode
-set backspace=indent,eol,start
-" realod on external writes
-set autoread
-
-" show matching brackets on search
-set showmatch
-" how many tenths of a second to blink matching brackets for
-set mat=5
-" do not highlight search for phrases
-set nohlsearch
-" BUT do highlight as you type your search phrase
-set incsearch
-set columns=80 " 80 cols wide
-" Keep 5 lines (top/bottom) for scope
-set so=5
-" do blink
-set visualbell
-" no noises
-set noerrorbells
-" show whitelist
-set listchars=tab:>-,trail:~,extends:>,precedes:<
-set list
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Style
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""""""""
-" Colorscheme
-""""""""
-if (has("termguicolors"))
-    " not sure if the below two are needed
-    set t_8f=\[[38;2;%lu;%lu;%lum
-    set t_8b=\[[48;2;%lu;%lu;%lum
-    set termguicolors
-endif
-
-set background=dark
-
-function! MyHighlights() abort
-    hi link pythonNone Boolean
-    hi Statement cterm=italic gui=italic
-    hi Conditional cterm=italic gui=italic
-    hi Operator cterm=italic gui=italic
-    hi Identifier cterm=italic gui=italic
-    " transparency
-    hi Normal ctermbg=None guibg=None
-    " hi NonText ctermbg=None guifg=#3c3836 guibg=None
-    " hi SignColumn ctermbg=None guibg=None
-    " hi CursorLineNr ctermbg=None guibg=None
-    " hi GruvboxGreenSign ctermbg=None guibg=None "SignifySignAdd
-    " hi GruvboxAquaSign ctermbg=None guibg=None "SignifySignChange
-    " hi GruvboxRedSign ctermbg=None guibg=None " SignifySignDelete
-endfunction
-
-augroup MyColors
-    autocmd!
-    autocmd ColorScheme * call MyHighlights()
-augroup END
-
-let g:afterglow_italic_comments = 1
-let g:deepspace_italics = 1
-let g:gruvbox_italic = 1
-let g:onedark_terminal_italics = 1
-
-" highligh all from vim-python/python-syntax
-let g:python_highlight_all = 1
-
-if !exists("g:syntax_on")
-    syntax enable
-endif
-
-colorscheme onedark
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FileTypes
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -662,7 +604,6 @@ augroup markdown
     au FileType markdown,markdown.mdx set textwidth=79
 augroup end
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""
 " Keybindings
 """""""""""""""""""""""""""""""""""""""""""""""""""
@@ -673,39 +614,28 @@ augroup end
 
 nnoremap <leader>n :NERDTreeToggle<CR>
 nnoremap <leader>t :tabnew<CR>
+nnoremap tr :tabprevious<CR>
+nnoremap tz :tabnext<CR>
 
-" TERMINAL mode
-" map <ESC> to exit terminal mode and navigate throug windows
-" via Alt + [hjkl]
-:tnoremap <Esc> <C-\><C-n>
-:tnoremap <A-h> <C-\><C-n><C-w>h
-:tnoremap <A-j> <C-\><C-n><C-w>j
-:tnoremap <A-k> <C-\><C-n><C-w>k
-:tnoremap <A-l> <C-\><C-n><C-w>l
-
+" navigation
 :nnoremap <C-h> <C-w>h
 :nnoremap <C-j> <C-w>j
 :nnoremap <C-k> <C-w>k
 :nnoremap <C-l> <C-w>l
-nnoremap tr :tabprevious<CR>
-nnoremap tz :tabnext<CR>
 
 " do not jump on wrapped lines
 "nnoremap j gj
 "nnoremap k gk
 
-" autoclose some chars
-" inoremap " ""<left>
-" inoremap ' ''<left>
-" inoremap ( ()<left>
-" inoremap [ []<left>
-" inoremap { {}<left>
-" inoremap {<CR> {<CR>}<ESC>O
-" inoremap {;<CR> {<CR>};<ESC>O<Paste>
-" inoremap <C-SPACE> <ESC>la
+" navigation in TERMINAL mode
+" map <ESC> to exit terminal mode and navigate throug windows
+" via Alt + [hjkl]
+" :tnoremap <Esc> <C-\><C-n>
+" :tnoremap <A-h> <C-\><C-n><C-w>h
+" :tnoremap <A-j> <C-\><C-n><C-w>j
+" :tnoremap <A-k> <C-\><C-n><C-w>k
+" :tnoremap <A-l> <C-\><C-n><C-w>l
 
-" map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
-" \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
-" \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
-" ctrl-p
-"let g:ctrlp_clear_cache_on_exit = 0
+map <F9> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>

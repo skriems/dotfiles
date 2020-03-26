@@ -8,6 +8,51 @@
     "typescriptreact"
   ],
   "codeLens.enable": true,
+  "eslint.autoFixOnSave": true,
+  "java.configuration.updateBuildConfiguration": "automatic",
+  "java.implementationsCodeLens.enabled": true,
+  "java.jdt.ls.vmargs": "-javaagent:/Users/skriems/repos/dotfiles/lombok.jar",
+  "java.maven.downloadSources": true,
+  "java.referencesCodeLens.enabled": true,
+  "javascript.suggestionActions.enabled": false,
+  "javascript.validate.enable": false,
+  "python.venvPath": "~/.virtualenvs",
+  "tsserver.enableJavascript": true,
+  "typescript.suggestionActions.enabled": true,
+  "typescript.validate.enable": true,
+  "languageserver": {
+    "flow": {
+      "command": "flow",
+      "args": ["lsp"],
+      "filetypes": ["javascript", "javascriptreact"],
+      "initializationOptions": {},
+      "requireRootPattern": true,
+      "settings": {},
+      "rootPatterns": [".flowconfig"]
+    },
+    "dart": {
+      "command": "dart_language_server",
+      "args": [],
+      "trace.server": "verbose",
+      "filetypes": ["dart"],
+      "initializationOptions": {},
+      "settings": {
+        "dart": {
+          "validation": {},
+          "completion": {}
+        }
+      }
+    },
+    "intelephense": {
+      "command": "intelephense",
+      "args": ["--stdio"],
+      "filetypes": ["php"],
+      "initializationOptions": {
+        "storagePath": "/tmp/intelephense"
+      }
+    }
+  },
+  "diagnostic-languageserver.trace.server": "verbose",
   "diagnostic-languageserver.linters": {
       "pmd": {
           "sourceName": "pmd",
@@ -59,7 +104,7 @@
   },
   "diagnostic-languageserver.filetypes": {
       "css": "stylelint",
-      "java": ["pmd", "checkstyle"],
+      "java": ["pmd"],
       "javascript": "eslint",
       "markdown": ["write-good", "markdown-lint"],
       "php": ["php-cs-fixer", "phpcs", "phpstan"],
@@ -70,50 +115,5 @@
   },
   "diagnostic-languageserver.formatFiletypes": {
       "php": "php-cs-fixer"
-  },
-  "diagnostic-languageserver.trace.server": "verbose",
-  "eslint.autoFixOnSave": true,
-  "java.configuration.updateBuildConfiguration": "automatic",
-  "java.implementationsCodeLens.enabled": true,
-  "java.jdt.ls.vmargs": "-javaagent:/Users/skriems/repos/dotfiles/lombok.jar",
-  "java.maven.downloadSources": true,
-  "java.referencesCodeLens.enabled": true,
-  "javascript.suggestionActions.enabled": false,
-  "javascript.validate.enable": false,
-  "languageserver": {
-    "flow": {
-      "command": "flow",
-      "args": ["lsp"],
-      "filetypes": ["javascript", "javascriptreact"],
-      "initializationOptions": {},
-      "requireRootPattern": true,
-      "settings": {},
-      "rootPatterns": [".flowconfig"]
-    },
-    "dart": {
-      "command": "dart_language_server",
-      "args": [],
-      "trace.server": "verbose",
-      "filetypes": ["dart"],
-      "initializationOptions": {},
-      "settings": {
-        "dart": {
-          "validation": {},
-          "completion": {}
-        }
-      }
-    },
-    "intelephense": {
-      "command": "intelephense",
-      "args": ["--stdio"],
-      "filetypes": ["php"],
-      "initializationOptions": {
-        "storagePath": "/tmp/intelephense"
-      }
-    }
-  },
-  "python.venvPath": "~/.virtualenvs",
-  "tsserver.enableJavascript": true,
-  "typescript.suggestionActions.enabled": true,
-  "typescript.validate.enable": true
+  }
 }
