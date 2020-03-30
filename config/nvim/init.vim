@@ -537,7 +537,7 @@ autocmd FileType html,css,javascript,typescript,typescript.tsx EmmetInstall
 """"""""""
 " vim-dadbod-ui
 let g:db_ui_dotenv_variable_prefix = 'DBUI_'
-let g:db_ui_save_location = '$HOME/.config/nvim/dbui_queries'
+let g:db_ui_save_location = '~/.config/nvim/dbui'
 
 let g:vebugger_view_source_cmd='edit'
 
