@@ -128,6 +128,11 @@ export WORKON_HOME=$userhome/.virtualenvs
 source /usr/bin/virtualenvwrapper_lazy.sh
 EOF
 
+echo ".gitignore"
+cat > $userhome/.gitconfig <<EOF
+skr_*
+EOF
+
 echo ".gitconfig"
 cat > $userhome/.gitconfig <<EOF
 [user]
@@ -144,6 +149,8 @@ cat > $userhome/.gitconfig <<EOF
     tia = !sh -c \"git tag -a $(python setup.py --version) -m $(git log -1 --pretty=%B)\"
 [push]
     followTags = true
+[core]
+    excludesfile = ~/.gitignore
 EOF
 
 # ---- AUR
