@@ -43,7 +43,9 @@ Plug 'rhysd/git-messenger.vim'
 " Misc
 Plug 'iamcco/markdown-preview.vim'
 Plug 'mattn/emmet-vim'
+Plug 'tpope/vim-dotenv'
 Plug 'tpope/vim-dadbod'
+Plug 'kristijanhusak/vim-dadbod-ui'
 "Plug 'jmcantrell/vim-virtualenv'
 Plug 'neomake/neomake'
 " Plug 'jceb/vim-orgmode'
@@ -64,6 +66,9 @@ filetype plugin on
 """""""""""""""""""""""""""""""""""""""""""""""""""
 " General
 """""""""""""""""""""""""""""""""""""""""""""""""""
+" use project local .exrc files (i.e for setting project local table helpers
+" for vim-dadbod-ui)
+set exrc
 " encoding
 set encoding=utf-8
 " mouse scrolling in iTerm2
@@ -530,6 +535,10 @@ autocmd FileType html,css,javascript,typescript,typescript.tsx EmmetInstall
 """"""""""
 " Misc
 """"""""""
+" vim-dadbod-ui
+let g:db_ui_dotenv_variable_prefix = 'DBUI_'
+let g:db_ui_save_location = '$HOME/.config/nvim/dbui_queries'
+
 let g:vebugger_view_source_cmd='edit'
 
 " vim-polyglot disable syntax for specific filetypes

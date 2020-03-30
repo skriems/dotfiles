@@ -1,11 +1,15 @@
-*~
-.DS_Store
+# general prefix to ignore
 skr_*
-*.project
+
+.DS_Store
+
+# neovim
 *.classpath
-.settings
-.factorypath
-.class
-.vim
+*.project
 .checkstyle.xml
+.class
 .env
+.exrc
+.factorypath
+.settings
+.vim
