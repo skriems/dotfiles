@@ -205,6 +205,10 @@ let g:onedark_terminal_italics = 1
 " highligh all from vim-python/python-syntax
 let g:python_highlight_all = 1
 
+" improve default java highlighting
+let java_highlight_functions = 1
+let java_highlight_all = 1
+
 if !exists("g:syntax_on")
     syntax enable
 endif
