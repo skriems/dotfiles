@@ -11,7 +11,7 @@
   "eslint.autoFixOnSave": true,
   "java.configuration.updateBuildConfiguration": "automatic",
   "java.implementationsCodeLens.enabled": true,
-  "java.jdt.ls.vmargs": "-javaagent:/Users/skriems/repos/dotfiles/lombok.jar",
+  "java.jdt.ls.vmargs": "-javaagent:/Users/skriems/repos/dotfiles/java/lombok.jar",
   "java.maven.downloadSources": true,
   "java.referencesCodeLens.enabled": true,
   "javascript.suggestionActions.enabled": false,
