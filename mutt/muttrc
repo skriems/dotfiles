@@ -19,10 +19,8 @@ macro index G "<list-reply>" "reply to mailing list"
 # mail accounts
 macro index <f3> "<sync-mailbox><enter-command>source ~/.mutt/acc1<enter><change-folder>!<enter>"
 macro index <f4> "<sync-mailbox><enter-command>source ~/.mutt/acc2<enter><change-folder>!<enter>"
-macro index <f5> "<sync-mailbox><enter-command>source ~/.mutt/acc3<enter><change-folder>!<enter>"
 folder-hook 'acc1' 'source ~/.mutt/acc1'
 folder-hook 'acc2' 'source ~/.mutt/acc2'
-folder-hook 'acc3' 'source ~/.mutt/acc3'
 
 # switch to default account on startup
 source ~/.mutt/acc1
