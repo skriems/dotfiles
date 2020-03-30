@@ -15,7 +15,7 @@
 [push]
     followTags = true
 [core]
-	excludesfile = /Users/skriems/.gitignore_global
+    excludesfile = ~/.gitignore_global
 
 
 [difftool "sourcetree"]
