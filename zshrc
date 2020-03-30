@@ -16,6 +16,10 @@ export WORKON_HOME=$HOME/.virtualenvs
 # enable python-jedi in REPL
 export PYTHONSTARTUP="$(python -m jedi repl)"
 
+# work email and repository dir used in global git commit hook
+export JOB_REPOSITORIES_DIR="<COPORATION>"
+export JOB_EMAIL="bar@foo.com"
+
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
@@ -86,11 +90,8 @@ fi
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-alias gitmail="git config user.email 'foo@bar.com'"
+
+# aliases
 alias rust-musl-builder='docker run --rm -it -v "$(pwd)":/home/rust/src ekidd/rust-musl-builder'
 
 ###############################

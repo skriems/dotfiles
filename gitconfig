@@ -1,6 +1,8 @@
 [user]
     name = Sebastian Kriems
     email = foo@bar.com
+[init]
+    templatedir = ~/.git-templates
 [alias]
     st = status
     co = checkout
@@ -16,8 +18,6 @@
     followTags = true
 [core]
     excludesfile = ~/.gitignore_global
-
-
 [difftool "sourcetree"]
     cmd = opendiff \"$LOCAL\" \"$REMOTE\"
     path = 

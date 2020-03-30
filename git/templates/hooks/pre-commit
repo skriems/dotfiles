@@ -1,0 +1,7 @@
+#! /bin/bash
+# if the $JOB_REPOSITORIES_DIR env variable is part of the current working
+# directory, configure the repo to use the $JOB_EMAIL
+
+if [[ "$PWD" == *"$JOB_REPOSITORIES_DIR"* ]]; then
+    git config user.email $JOB_EMAIL
+fi
