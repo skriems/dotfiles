@@ -1,10 +1,7 @@
 set nocompatible
 filetype off
 
-let mapleader = ','
-"""""""""""""""""""""""""""""""""""""""""""""""""""
-" vim-plug
-"""""""""""""""""""""""""""""""""""""""""""""""""""
+" vim-plug {{{
 call plug#begin('~/.local/share/nvim/plugged')
 
 " Conquer of Completion
@@ -60,12 +57,16 @@ Plug 'mhartington/oceanic-next'
 Plug 'ajmwagar/vim-deus'
 
 call plug#end()
+" }}}
+
+" General {{{
+
+let mapleader = ','
+" let maplocalleader = '_'
+:nnoremap <leader>sv :source $MYVIMRC<cr>
+:nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 
 filetype plugin on
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""
-" General
-"""""""""""""""""""""""""""""""""""""""""""""""""""
 " use project local .exrc files (i.e for setting project local table helpers
 " for vim-dadbod-ui)
 set exrc
@@ -114,17 +115,13 @@ set noerrorbells
 set listchars=tab:>-,trail:~,extends:>,precedes:<
 set list
 
-""""""""""""""""""""
-" Default Tabstops
-""""""""""""""""""""
+"""""""""" Tabstops
 set tabstop=4
 set expandtab
 set shiftwidth=4
 set softtabstop=4
 
-""""""""""""""""""""
-" Indentation
-""""""""""""""""""""
+"""""""""" Indentation
 set ai
 " smartindent
 set si
@@ -139,13 +136,10 @@ set numberwidth=3
 " expand <CR>
 let delimitMate_expand_cr = 1
 
-""""""""""""""""""""
-" Folding
-""""""""""""""""""""
+"""""""""" Folding
 set foldenable
 " fold based on syntax files
 set foldmethod=syntax
-
 " Don't autofold anything (but I can still fold manually)
 " set foldlevel=2
 " don't open folds when you search into them
@@ -153,16 +147,13 @@ set foldmethod=syntax
 " don't open folds when you undo stuff
 " set foldopen-=undo
 
-" vim filetype settings {{{
-"augroup filetype_vim
-"    au!
-"    au FileType vim setlocal foldmethod=marker
-"augroup END
+augroup filetype_vim
+    au!
+    au FileType vim setlocal foldmethod=marker
+augroup END
 " }}}
 
-""""""""""""""""""""
-" Style
-""""""""""""""""""""
+" ColorScheme {{{
 if (has("termguicolors"))
     " not sure if the below two are needed (in neovim)
     set t_8f=\[[38;2;%lu;%lu;%lum
@@ -214,13 +205,11 @@ if !exists("g:syntax_on")
 endif
 
 colorscheme gruvbox
+" }}}
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""
-" Plugin Config
-"""""""""""""""""""""""""""""""""""""""""""""""""""
-"""""""""
-" Conquer of Completion
-"""""""""
+" Plugin Config {{{
+
+" Conquer of Completion {{{
 let g:coc_global_extensions = [
     \ 'coc-angular',
     \ 'coc-css',
@@ -392,10 +381,9 @@ nnoremap <silent> <leader>k  :<C-u>CocPrev<CR>
 nnoremap <silent> <leader>p  :<C-u>CocListResume<CR>
 
 nnoremap <silent> <leader>sw <Plug>GenerateDiagram
+" }}}
 
-""""""""""
-" grep and fzf
-""""""""""
+" grep and fzf {{{
 if executable('rg')
   " Use ripgrep over grep
   set grepprg=rg\ --vimgrep
@@ -426,10 +414,10 @@ command! -bang -nargs=? -complete=dir Files
 nnoremap F :Rg! <C-R><C-W><CR>
 " open :Files with fzf
 nnoremap <silent> <leader>O :Files<CR>
+" }}}
 
-"""""""""""""""
-" Lightline aka Statusline
-"""""""""""""""
+" Lightline {{{
+
 " mode is shown in the statusline
 set noshowmode
 
@@ -440,8 +428,8 @@ set laststatus=2
 " set statusline+=%#warningmsg#
 " set statusline+=%{SyntasticStatuslineFlag()}
 " set statusline+=%*
-set statusline+=%#warningmsg#
-set statusline+=%*
+" set statusline+=%#warningmsg#
+" set statusline+=%*
 
 let g:lightline = {
     \ 'colorscheme': 'gruvbox',
@@ -525,24 +513,21 @@ function! LightLineMode()
         \ &ft == 'vimshell' ? 'VimShell' :
         \ winwidth(0) > 60 ? lightline#mode() : ''
 endfunction
+" }}}
 
-""""""""""
-" NERDstuff
-""""""""""
-:let g:NERDTreeWinSize=40
-""""""""""
-" Emmet
-""""""""""
+" Others {{{
+
 let g:user_emmet_install_global = 0
-autocmd FileType html,css,javascript,typescript,typescript.tsx EmmetInstall
+augroup emmet
+    au!
+    au FileType html,css,javascript,typescript,typescript.tsx EmmetInstall
+augroup END
 
-""""""""""
-" Misc
-""""""""""
 " vim-dadbod-ui
 let g:db_ui_dotenv_variable_prefix = 'DBUI_'
 let g:db_ui_save_location = '~/.config/nvim/dbui'
 
+" vebugger
 let g:vebugger_view_source_cmd='edit'
 
 " vim-polyglot disable syntax for specific filetypes
@@ -560,7 +545,8 @@ let g:neomake_rust_cargo_command = ['cargo-clippy']
 " nmap <Leader><Space>n :lnext<CR>      " next error/warning
 " nmap <Leader><Space>p :lprev<CR>      " previous error/warning
 
-" don't show these filetypes in NERDTree
+" NERD 
+let g:NERDTreeWinSize=40
 let NERDTreeIgnore = ['\.pyc$', '\.so$', '\.swp$', '\.DS_Store']
 set wildignore+=*/tmp/*,*.so,*.swp,*.pyc
 
@@ -573,10 +559,10 @@ let g:signify_cursorhold_insert = 0
 " vim-devicons: avoid unnecessary system() calls; most likely only necessary
 " on OSX
 let g:WebDevIconsOS = 'Darwin'
+" }}}
+" }}}
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" FileTypes
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" FileTypes {{{
 " global interpreters for nvim so that we don't need to
 " 'pip install neovim' in every virtualenv
 let g:python3_host_prog = "$HOME/.virtualenvs/nvim3/bin/python"
@@ -616,10 +602,9 @@ augroup markdown
     au BufNewFile, BufRead *.md,*.mdx
     au FileType markdown,markdown.mdx set textwidth=79
 augroup end
+" }}}
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""
-" Keybindings
-"""""""""""""""""""""""""""""""""""""""""""""""""""
+" Keybindings {{{
 " exit INSERT mode
 :inoremap jk <ESC>
 " i.e. 'dp' -> delete inside parentheses
@@ -652,3 +637,4 @@ nnoremap tz :tabnext<CR>
 map <F9> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+" }}}
