@@ -1,7 +1,7 @@
 [user]
     name = Sebastian Kriems
     email = foo@bar.com
-[includeIf "gitdir:~/repos/work"]
+[includeIf "gitdir:~/repos/work/"]
     path = ~/repos/work/.gitconfig
 [alias]
     st = status
