@@ -33,8 +33,7 @@ Plug 'rhysd/git-messenger.vim'
 
 " Debugger
 " Plug 'Shougo/vimproc.vim', {'do' : 'make'}
-" Plug '~/repos/vim-vebugger'
-" Plug 'idanarye/vim-vebugger', { 'branch': 'develop' }
+Plug 'idanarye/vim-vebugger', { 'branch': 'develop' }
 " Plug 'vim-vdebug/vdebug'
 
 " Misc
@@ -579,22 +578,13 @@ augroup python
     au FileType python set colorcolumn=80
 augroup END
 
-augroup html
+augroup tabstop2
     au!
-    au BufNewFile, BufRead *.html
-    au FileType html set softtabstop=2
-    au FileType html set tabstop=2
-    au FileType html set shiftwidth=2
-    au FileType html set expandtab
-augroup END
-
-augroup js
-    au!
-    au BufNewFile, BufRead *.js,*.jsx,*.ts,*.tsx
-    au FileType javascript,javascriptreact,typescript,typescriptreact set softtabstop=2
-    au FileType javascript,javascriptreact,typescript,typescriptreact set tabstop=2
-    au FileType javascript,javascriptreact,typescript,typescriptreact set shiftwidth=2
-    au FileType javascript,javascriptreact,typescript,typescriptreact set expandtab
+    au BufNewFile, BufRead *.js,*.jsx,*.ts,*.tsx,*.html,*.json
+    au FileType html,json,javascript,javascriptreact,typescript,typescriptreact set softtabstop=2
+    au FileType html,json,javascript,javascriptreact,typescript,typescriptreact set tabstop=2
+    au FileType html,json,javascript,javascriptreact,typescript,typescriptreact set shiftwidth=2
+    au FileType html,json,javascript,javascriptreact,typescript,typescriptreact set expandtab
 augroup END
 
 augroup markdown
