@@ -32,7 +32,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'rhysd/git-messenger.vim'
 
 " Debugger
-" Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'idanarye/vim-vebugger', { 'branch': 'develop' }
 " Plug 'vim-vdebug/vdebug'
 
@@ -415,6 +415,25 @@ nnoremap F :Rg! <C-R><C-W><CR>
 nnoremap <silent> <leader>O :Files<CR>
 " }}}
 
+" vebugger {{{
+let g:vebugger_leader = "<"
+"'i':'VBGstepIn',
+"'o':'VBGstepOver',
+"'O':'VBGstepOut',
+"'c':'VBGcontinue',
+"'t':'VBGtoggleTerminalBuffer',
+"'b':'VBGtoggleBreakpointThisLine',
+"'B':'VBGclearBreakpoints',
+"'e':'VBGevalWordUnderCursor',
+"'E':'exe "VBGeval ".input("VBG-Eval> ")',
+"'x':'exe "VBGexecute ".getline(".")',
+"'X':'exe "VBGexecute ".input("VBG-Exec> ")',
+"'R':'exe "VBGrawWrite ".input("VBG> ")'})
+"'e':'VBGevalSelectedText',
+"'x':'VBGexecuteSelectedText',
+"'r':'VBGrawWriteSelectedText'})
+" }}}
+
 " Lightline {{{
 
 " mode is shown in the statusline
@@ -606,10 +625,10 @@ nnoremap tr :tabprevious<CR>
 nnoremap tz :tabnext<CR>
 
 " navigation
-:nnoremap <C-h> <C-w>h
-:nnoremap <C-j> <C-w>j
-:nnoremap <C-k> <C-w>k
-:nnoremap <C-l> <C-w>l
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
 
 " do not jump on wrapped lines
 "nnoremap j gj
