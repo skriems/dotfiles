@@ -209,6 +209,10 @@ colorscheme gruvbox
 " Plugin Config {{{
 
 " Conquer of Completion {{{
+
+" let g:coc_force_debug = 1
+" and invoke `yarn install/build` to use build files
+
 let g:coc_global_extensions = [
     \ 'coc-angular',
     \ 'coc-css',
@@ -535,6 +539,10 @@ endfunction
 
 " Others {{{
 
+" neovide
+let g:neovide_transparency=0.8
+" let g:neovide_fullscreen=v:true
+
 let g:user_emmet_install_global = 0
 augroup emmet
     au!
@@ -544,8 +552,16 @@ augroup END
 " vim-dadbod-ui
 let g:db_ui_dotenv_variable_prefix = 'DBUI_'
 let g:db_ui_save_location = '~/.config/nvim/dbui'
+let g:db_ui_table_helpers = {
+    \   'postgresql': {
+    \     'Explain': 'EXPLAIN ANALYZE {last_query}'
+    \   },
+    \   'mysql': {
+    \     'Explain': 'EXPLAIN ANALYZE {last_query}'
+    \   }
+    \ }
 
-" vebugger
+" vim-vebugger
 let g:vebugger_view_source_cmd='edit'
 
 " vim-polyglot disable syntax for specific filetypes
