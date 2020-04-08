@@ -65,7 +65,7 @@ let mapleader = ','
 :nnoremap <leader>sv :source $MYVIMRC<cr>
 :nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 
-filetype plugin on
+filetype plugin indent on
 " use project local .exrc files (i.e for setting project local table helpers
 " for vim-dadbod-ui)
 set exrc
@@ -123,9 +123,9 @@ set softtabstop=4
 """""""""" Indentation
 set ai
 " smartindent
-set si
+" set si
 " do c-style indenting
-" set cindent
+set cindent
 " show line numbers
 set number
 " show relative line number
@@ -133,7 +133,7 @@ set relativenumber
 " width of 'gutter'
 set numberwidth=3
 " expand <CR>
-let delimitMate_expand_cr = 1
+" let delimitMate_expand_cr = 1
 
 """""""""" Folding
 set foldenable
@@ -613,14 +613,34 @@ augroup python
     au FileType python set colorcolumn=80
 augroup END
 
-augroup tabstop2
+augroup html
     au!
-    au BufNewFile, BufRead *.js,*.jsx,*.ts,*.tsx,*.html,*.json
-    au FileType html,json,javascript,javascriptreact,typescript,typescriptreact set softtabstop=2
-    au FileType html,json,javascript,javascriptreact,typescript,typescriptreact set tabstop=2
-    au FileType html,json,javascript,javascriptreact,typescript,typescriptreact set shiftwidth=2
-    au FileType html,json,javascript,javascriptreact,typescript,typescriptreact set expandtab
+    au BufNewFile, BufRead *.html
+    au FileType html set softtabstop=2
+    au FileType html set tabstop=2
+    au FileType html set shiftwidth=2
+    au FileType html set expandtab
 augroup END
+
+augroup javascript
+    au!
+    au BufNewFile, BufRead *.js,*.jsx
+    au FileType javascript,javascriptreact set softtabstop=2
+    au FileType javascript,javascriptreact set tabstop=2
+    au FileType javascript,javascriptreact set shiftwidth=2
+    au FileType javascript,javascriptreact set expandtab
+ augroup END
+
+
+augroup typescript
+    au!
+    au BufNewFile, BufRead *.ts,*.tsx
+    au FileType typescript,typescriptreact set softtabstop=2
+    au FileType typescript,typescriptreact set tabstop=2
+    au FileType typescript,typescriptreact set shiftwidth=2
+    au FileType typescript,typescriptreact set expandtab
+    au FileType typescript,typescriptreact set indentexpr=  " fixes indenting(/shrug)
+ augroup END
 
 augroup markdown
     au!
