@@ -46,6 +46,7 @@ Plug 'kristijanhusak/vim-dadbod-ui'
 Plug 'neomake/neomake'
 " Plug 'jceb/vim-orgmode'
 Plug 'tpope/vim-commentary'
+Plug 'vifm/vifm.vim'
 
 " Colorschemes
 Plug 'joshdick/onedark.vim'
@@ -656,6 +657,7 @@ augroup end
 :onoremap p i(
 
 nnoremap <leader>n :NERDTreeToggle<CR>
+nnoremap <leader>v :Vifm<CR>
 nnoremap <leader>t :tabnew<CR>
 nnoremap tr :tabprevious<CR>
 nnoremap tz :tabnext<CR>
@@ -678,6 +680,8 @@ nnoremap <C-l> <C-w>l
 " :tnoremap <A-j> <C-\><C-n><C-w>j
 " :tnoremap <A-k> <C-\><C-n><C-w>k
 " :tnoremap <A-l> <C-\><C-n><C-w>l
+
+nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
 
 map <F9> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
