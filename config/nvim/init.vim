@@ -10,10 +10,6 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " UI
 Plug 'mhinz/vim-signify'
 Plug 'itchyny/lightline.vim'
-Plug 'ryanoasis/vim-devicons'
-Plug 'scrooloose/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
 " Syntax and Highlighting
 Plug 'sheerun/vim-polyglot'
@@ -484,7 +480,7 @@ function! LightLineFilename()
   let fname = expand('%:t')
   return fname == 'ControlP' && has_key(g:lightline, 'ctrlp_item') ? g:lightline.ctrlp_item :
         \ fname == '__Tagbar__' ? g:lightline.fname :
-        \ fname =~ '__Gundo\|NERD_tree' ? '' :
+        \ fname =~ '__Gundo' ? '' :
         \ &ft == 'vimfiler' ? vimfiler#get_status_string() :
         \ &ft == 'unite' ? unite#get_status_string() :
         \ &ft == 'vimshell' ? vimshell#get_status_string() :
@@ -495,7 +491,7 @@ endfunction
 
 function! LightLineFugitive()
   try
-    if expand('%:t') !~? 'Tagbar\|Gundo\|NERD' && &ft !~? 'vimfiler' && exists('*fugitive#head')
+    if expand('%:t') !~? 'Tagbar\|Gundo' && &ft !~? 'vimfiler' && exists('*fugitive#head')
       let mark = ' '  " edit here for cool mark
       let _ = fugitive#head()
       return winwidth(0) > 70 ? strlen(_) ? mark._ : '': ''
@@ -530,7 +526,6 @@ function! LightLineMode()
         \ fname == 'ControlP' ? 'CtrlP' :
         \ fname == '__Gundo__' ? 'Gundo' :
         \ fname == '__Gundo_Preview__' ? 'Gundo Preview' :
-        \ fname =~ 'NERD_tree' ? 'NERDTree' :
         \ &ft == 'unite' ? 'Unite' :
         \ &ft == 'vimfiler' ? 'VimFiler' :
         \ &ft == 'vimshell' ? 'VimShell' :
@@ -580,10 +575,7 @@ let g:neomake_rust_cargo_command = ['cargo-clippy']
 " nmap <Leader><Space>n :lnext<CR>      " next error/warning
 " nmap <Leader><Space>p :lprev<CR>      " previous error/warning
 
-" NERD 
-let g:NERDTreeWinSize=40
-let NERDTreeIgnore = ['\.pyc$', '\.so$', '\.swp$', '\.DS_Store']
-set wildignore+=*/tmp/*,*.so,*.swp,*.pyc
+" set wildignore+=*/tmp/*,*.so,*.swp,*.pyc
 
 " vim-signify
 let g:signify_vcs_list =  ['git']
@@ -656,7 +648,6 @@ augroup end
 " i.e. 'dp' -> delete inside parentheses
 :onoremap p i(
 
-nnoremap <leader>n :NERDTreeToggle<CR>
 nnoremap <leader>v :Vifm<CR>
 nnoremap <leader>t :tabnew<CR>
 nnoremap tr :tabprevious<CR>
