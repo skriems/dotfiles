@@ -33,7 +33,7 @@ Plug 'rhysd/git-messenger.vim'
 
 " Debugger
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
-Plug 'idanarye/vim-vebugger', { 'branch': 'develop' }
+Plug 'skriems/vim-vebugger', { 'branch': 'fix-locale' }
 " Plug 'vim-vdebug/vdebug'
 
 " Misc
@@ -681,7 +681,9 @@ nnoremap <C-l> <C-w>l
 " :tnoremap <A-k> <C-\><C-n><C-w>k
 " :tnoremap <A-l> <C-\><C-n><C-w>l
 
+" surround with quotes
 nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
+vnoremap <leader>" c"<c-r>""<esc>l
 
 map <F9> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
