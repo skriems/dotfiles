@@ -43,6 +43,7 @@ Plug 'neomake/neomake'
 " Plug 'jceb/vim-orgmode'
 Plug 'tpope/vim-commentary'
 Plug 'vifm/vifm.vim'
+Plug 'vimwiki/vimwiki'
 
 " Colorschemes
 Plug 'joshdick/onedark.vim'
@@ -583,9 +584,9 @@ let g:signify_realtime = 1
 let g:signify_cursorhold_normal = 0
 let g:signify_cursorhold_insert = 0
 
-" vim-devicons: avoid unnecessary system() calls; most likely only necessary
-" on OSX
-let g:WebDevIconsOS = 'Darwin'
+let g:vimwiki_list = [{'path': '~/Nextcloud/docs/vimwiki/',
+                      \ 'syntax': 'markdown', 'ext': '.md'}]
+
 " }}}
 " }}}
 
