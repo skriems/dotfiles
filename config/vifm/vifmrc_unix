@@ -167,131 +167,6 @@ command! reload :write | restart
 " You can also add %CLEAR if you want to clear screen before running FUSE
 " program.
 
-" Pdf
-" filetype *.pdf
-"        \ {Open in Preview}
-"        \ open -a Preview.app,
-"        \ {Open in Skim}
-"        \ open -a Skim.app,
-" fileviewer *.pdf pdftotext -nopgbrk %c -
-
-" PostScript
-" filetype *.ps,*.eps open -a Preview.app
-
-" Djvu
-" filetype *.djvu open -a MacDjView.app
-
-" Audio
-" filetype *.wav,*.mp3,*.flac,*.m4a,*.wma,*.ape,*.ac3,*.og[agx],*.spx,*.opus
-"        \ {Play using MPlayerX}
-"        \ open -a MPlayerX.app,
-"        \ {Open in iTunes}
-"        \ open -a iTunes.app,
-"        \ {Open in QuickTime Player}
-"        \ open -a QuickTime\ Player.app,
-" fileviewer *.mp3 mp3info
-" fileviewer *.flac soxi
-
-" Video
-" filetype *.avi,*.mp4,*.wmv,*.dat,*.3gp,*.ogv,*.mkv,*.mpg,*.mpeg,*.vob,
-"         \*.fl[icv],*.m2v,*.mov,*.webm,*.mts,*.m4v,*.r[am],*.qt,*.divx,
-"         \*.as[fx]
-"        \ {Open in VLC}
-"        \ open -a VLC.app,
-"        \ {Open in QuickTime Player}
-"        \ open -a QuickTime\ Player.app,
-"        \ {Open in MPlayerX}
-"        \ open -a MPlayerX.app,
-" fileviewer *.avi,*.mp4,*.wmv,*.dat,*.3gp,*.ogv,*.mkv,*.mpg,*.mpeg,*.vob,
-"           \*.fl[icv],*.m2v,*.mov,*.webm,*.mts,*.m4v,*.r[am],*.qt,*.divx,
-"           \*.as[fx]
-"          \ ffprobe -pretty %c 2>&1
-
-" Web
-" filetype *.html,*.htm
-"        \ {Open in Safari}
-"        \ open -a Safari.app,
-"        \ {Open in Firefox}
-"        \ open -a Firefox.app,
-"        \ {Open in Chrome}
-"        \ open -a Google\ Chrome.app,
-"        \ {Open in neovim}
-"        \ nvim,
-" fileviewer *.html,*.htm w3m -dump -T text/html
-
-" Object
-" filetype *.o nm %f | less
-
-" Man page
-" filetype *.[1-8] man ./%c
-" fileviewer *.[1-8] man ./%c | col -b
-
-" Image
-" filetype *.bmp,*.jpg,*.jpeg,*.png,*.gif,*.xpm,
-"        \ open -a Preview.app,
-" fileviewer *.bmp,*.jpg,*.jpeg,*.png,*.gif,*.xpm
-"          \ identify %f
-
-" MD5
-filetype *.md5
-       \ {Check MD5 hash sum}
-       \ md5sum -c %f %S,
-
-" SHA1
-filetype *.sha1
-       \ {Check SHA1 hash sum}
-       \ sha1sum -c %f %S,
-
-" SHA256
-filetype *.sha256
-       \ {Check SHA256 hash sum}
-       \ sha256sum -c %f %S,
-
-" SHA512
-filetype *.sha512
-       \ {Check SHA512 hash sum}
-       \ sha512sum -c %f %S,
-
-" Torrent
-" filetype *.torrent open -a Transmission.app
-" fileviewer *.torrent dumptorrent -v %c
-
-" Extract zip files
-filetype *.zip unzip %f
-fileviewer *.zip,*.jar,*.war,*.ear zip -sf %c
-
-" Extract tar archives
-filetype *.tar,*.tar.bz2,*.tbz2,*.tgz,*.tar.gz,*.tar.xz tar -xf %f
-fileviewer *.tar,*.tar.bz2,*.tbz2,*.tgz,*.tar.gz,*.tar.xz tar -tf %f
-
-" Extract .bz2 archives
-filetype *.bz2 bzip2 -d %f
-
-" Extract .gz files
-filetype *.gz gunzip %f
-
-" Mount .dmg archives
-" filetype *.dmg open
-
-" Mount disk .img
-" filetype *.img open
-
-" Open .pkg binaries
-" filetype *.pkg open
-
-" Office files
-filetype *.odt,*.ott,*.ods,*.doc,*.docx,*.xls,*.xlsx,*.odp,*.pptx,*.ppt libreoffice
-fileviewer *.odt,*.ott,*.ods,*.doc,*.docx,*.xls,*.xlsx,*.odp,*.pptx,*.ppt libreoffice
-" fileviewer *.doc libreoffice
-" fileviewer *.docx libreoffice
-
-" Mbox
-filetype *.mbox mutt -f
-
-" KeePass
-" filextype *.kdb keepassx
-" filetype *.kdbx kdbx-viewer
-
 " Syntax highlighting in preview
 "
 " Explicitly set highlight type for some extensions
@@ -420,21 +295,52 @@ nnoremap <f8> :delete<cr>
 " ------------------------------------------------------------------------------
 " vifmimg config
 
-fileview *.pdf
+" Web
+filetype *.html,*.htm
+    \ {Open in Firefox}
+    \ firefox
+    \ {Open in neovim}
+    \ neovim
+fileviewer *.html,*.htm w3m -dump -T text/html
+
+" PDF
+filetype *.pdf
+    \ {Open in Evince}
+    \ evince
+fileviewer *.pdf
     \ vifmimg pdfpreview %px %py %pw %ph %c
     \ %pc
     \ vifmimg clear
 
+" TODO calibre
 fileviewer *.epub
     \ vifmimg epubpreview %px %py %pw %ph %c
     \ %pc
     \ vifmimg clear
 
+" Video
+filetype *.avi,*.mp4,*.wmv,*.dat,*.3gp,*.ogv,*.mkv,*.mpg,*.mpeg,*.vob,
+    \*.fl[icv],*.m2v,*.mov,*.webm,*.ts,*.mts,*.m4v,*.r[am],*.qt,*.divx,
+    \ {Open in VLC}
+    \ vlc
 fileviewer *.avi,*.mp4,*.wmv,*.dat,*.3gp,*.ogv,*.mkv,*.mpg,*.mpeg,*.vob,
     \*.fl[icv],*.m2v,*.mov,*.webm,*.ts,*.mts,*.m4v,*.r[am],*.qt,*.divx,
     \ vifmimg videopreview %px %py %pw %ph %c
     \ %pc
     \ vifmimg clear
+" filetype *.avi,*.mp4,*.wmv,*.dat,*.3gp,*.ogv,*.mkv,*.mpg,*.mpeg,*.vob,
+"         \*.fl[icv],*.m2v,*.mov,*.webm,*.mts,*.m4v,*.r[am],*.qt,*.divx,
+"         \*.as[fx]
+"        \ {Open in VLC}
+"        \ open -a VLC.app,
+"        \ {Open in QuickTime Player}
+"        \ open -a QuickTime\ Player.app,
+"        \ {Open in MPlayerX}
+"        \ open -a MPlayerX.app,
+" fileviewer *.avi,*.mp4,*.wmv,*.dat,*.3gp,*.ogv,*.mkv,*.mpg,*.mpeg,*.vob,
+"           \*.fl[icv],*.m2v,*.mov,*.webm,*.mts,*.m4v,*.r[am],*.qt,*.divx,
+"           \*.as[fx]
+"          \ ffprobe -pretty %c 2>&1
 
 fileviewer *.bmp,*.jpg,*.jpeg,*.png,*.xpm
     \ vifmimg draw %px %py %pw %ph %c
@@ -461,6 +367,73 @@ fileviewer <font/*>
     \ %pc
     \ vifmimg clear
 
+" Man page
+filetype *.[1-8] man ./%c
+fileviewer *.[1-8] man ./%c | col -b
+
+
+" MD5
+filetype *.md5
+       \ {Check MD5 hash sum}
+       \ md5sum -c %f %S,
+
+" SHA1
+filetype *.sha1
+       \ {Check SHA1 hash sum}
+       \ sha1sum -c %f %S,
+
+" SHA256
+filetype *.sha256
+       \ {Check SHA256 hash sum}
+       \ sha256sum -c %f %S,
+
+" SHA512
+filetype *.sha512
+       \ {Check SHA512 hash sum}
+       \ sha512sum -c %f %S,
+
+" Torrent
+" filetype *.torrent open -a Transmission.app
+" fileviewer *.torrent dumptorrent -v %c
+
+" Extract zip files
+filetype *.zip unzip %f
+fileviewer *.zip,*.jar,*.war,*.ear zip -sf %c
+
+" Extract tar archives
+filetype *.tar,*.tar.bz2,*.tbz2,*.tgz,*.tar.gz,*.tar.xz tar -xf %f
+fileviewer *.tar,*.tar.bz2,*.tbz2,*.tgz,*.tar.gz,*.tar.xz tar -tf %f
+
+" Extract .bz2 archives
+filetype *.bz2 bzip2 -d %f
+
+" Extract .gz files
+filetype *.gz gunzip %f
+
+" Mount .dmg archives
+" filetype *.dmg open
+
+" Mount disk .img
+" filetype *.img open
+
+" Open .pkg binaries
+" filetype *.pkg open
+
+" Office files
+filetype *.odt,*.ott,*.ods,*.doc,*.docx,*.xls,*.xlsx,*.odp,*.pptx,*.ppt libreoffice
+" fileviewer *.odt,*.ott,*.ods,*.doc,*.docx,*.xls,*.xlsx,*.odp,*.pptx,*.ppt libreoffice
+" fileviewer *.doc libreoffice
+" fileviewer *.docx libreoffice
+
+" Mbox
+filetype *.mbox mutt -f
+
+" KeePass
+" filextype *.kdb keepassx
+" filetype *.kdbx kdbx-viewer
+
+
+" fallback: bat
 fileviewer *.* env -uCOLORTERM bat --color=always --wrap never --pager never %c -p
 
 
