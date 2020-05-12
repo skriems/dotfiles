@@ -15,3 +15,6 @@ export FZF_BASE="/usr/share/fzf"
 
 # zsh-syntax-highlighting
 [ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && . /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# vifm
+export MYVIFMRC=~/.config/vifm/vifmrc_unix

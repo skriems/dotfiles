@@ -54,4 +54,5 @@ export PATH="$PATH:/Applications/MySQLWorkbench.app/Contents/MacOS"
 # sampler
 # fzf
 
-# brew cask install
+# vifm
+export MYVIFMRC=~/.config/vifm/vifmrc_osx

@@ -1,4 +1,6 @@
 mutt/cache
 config/nvim/dbui
 config/vifm/vifminfo
+config/vifm/vifmimgpdffile
+config/vifm/vifmimgpdfpage
 config/i3/config
