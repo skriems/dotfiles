@@ -14,6 +14,7 @@
     lg = log --pretty=format:\"%C(auto)%h %Cgreen(%p)%Creset %cn (%ad) %C(auto)%d%Creset%n  %s\" --graph
     tia = !sh -c \"git tag -a  -m \"
     ticket = "! git rev-parse --abbrev-ref HEAD | tr '/|-' ' ' | awk '{print $2 \"-\" $3}'"
+    cleanup = "! git branch --merged master | grep -v '^[ *]*\\(master\\|develop\\)$' | xargs git branch -d"
 [push]
     followTags = true
 [core]
