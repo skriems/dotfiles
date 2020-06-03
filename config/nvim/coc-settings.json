@@ -1,10 +1,11 @@
 {
   "coc.preferences.formatOnSaveFiletypes": [
-    "rust",
-    "python",
+    "css",
     "javascript",
     "javascriptreact",
     "json",
+    "python",
+    "rust",
     "typescript",
     "typescriptreact"
   ],
@@ -59,66 +60,62 @@
   },
   "diagnostic-languageserver.trace.server": "verbose",
   "diagnostic-languageserver.linters": {
-      "pmd": {
-          "sourceName": "pmd",
-          "command": "runpmd",
-          "args": [
-              "%filepath"
-          ],
-          "debounce": 100,
-          "isStdout": true,
-          "parseJson": {
-              "errorsRoot": "pmd.file.violation",
-              "line": "beginline",
-              "endLine": "endline",
-              "column": "begincolumn",
-              "endColumn": "endcolumn",
-              "message": "${$t} [${rule}]",
-              "security": "priority"
-          },
-          "securities": {
-              "1": "error",
-              "2": "warning",
-              "3": "info",
-              "4": "hint"
-          }
+    "pmd": {
+      "sourceName": "pmd",
+      "command": "runpmd",
+      "args": ["%filepath"],
+      "debounce": 100,
+      "isStdout": true,
+      "parseJson": {
+        "errorsRoot": "pmd.file.violation",
+        "line": "beginline",
+        "endLine": "endline",
+        "column": "begincolumn",
+        "endColumn": "endcolumn",
+        "message": "${$t} [${rule}]",
+        "security": "priority"
       },
-      "checkstyle": {
-          "command": "checkstyle",
-          "args": ["-c", ".checkstyle.xml", "%filepath"],
-          "rootPatterns": [
-              ".git"
-          ],
-          "debounce": 100,
-          "sourceName": "checkstyle",
-          "formatLines": 1,
-          "formatPattern": [
-            "^.*(WARN|ERROR).*\\.java:(\\d+)(.*)$",
-            {
-              "line": 2,
-              "message": 3,
-              "security": 1
-            }
-          ],
-          "securities": {
-            "ERROR": "error",
-            "WARN": "warning"
-          },
-          "requiredFiles": [".checkstyle.xml"]
+      "securities": {
+        "1": "error",
+        "2": "warning",
+        "3": "info",
+        "4": "hint"
       }
+    },
+    "checkstyle": {
+      "command": "checkstyle",
+      "args": ["-c", ".checkstyle.xml", "%filepath"],
+      "rootPatterns": [".git"],
+      "debounce": 100,
+      "sourceName": "checkstyle",
+      "formatLines": 1,
+      "formatPattern": [
+        "^.*(WARN|ERROR).*\\.java:(\\d+)(.*)$",
+        {
+          "line": 2,
+          "message": 3,
+          "security": 1
+        }
+      ],
+      "securities": {
+        "ERROR": "error",
+        "WARN": "warning"
+      },
+      "requiredFiles": [".checkstyle.xml"]
+    }
   },
   "diagnostic-languageserver.filetypes": {
-      "css": "stylelint",
-      "java": ["pmd"],
-      "javascript": "eslint",
-      "markdown": ["write-good", "markdown-lint"],
-      "php": ["php-cs-fixer", "phpcs", "phpstan"],
-      "rust": "cargo-clippy",
-      "sh": "shellcheck",
-      "typescript": "eslint",
-      "vim": "vint"
+    "css": "stylelint",
+    "java": ["pmd"],
+    "javascript": "eslint",
+    "markdown": ["write-good", "markdown-lint"],
+    "php": ["php-cs-fixer", "phpcs", "phpstan"],
+    "rust": "cargo-clippy",
+    "sh": "shellcheck",
+    "typescript": "eslint",
+    "vim": "vint"
   },
   "diagnostic-languageserver.formatFiletypes": {
-      "php": "php-cs-fixer"
+    "php": "php-cs-fixer"
   }
 }
