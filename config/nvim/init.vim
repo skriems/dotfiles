@@ -37,6 +37,8 @@ Plug 'iamcco/markdown-preview.vim'
 Plug 'mattn/emmet-vim'
 Plug 'tpope/vim-dotenv'
 Plug 'tpope/vim-dadbod'
+Plug 'tpope/vim-surround'
+Plug 'mbbill/undotree'
 Plug 'kristijanhusak/vim-dadbod-ui'
 "Plug 'jmcantrell/vim-virtualenv'
 Plug 'neomake/neomake'
@@ -111,19 +113,23 @@ set noerrorbells
 " show whitelist
 set listchars=tab:>-,trail:~,extends:>,precedes:<
 set list
+" more 'natural' split opening
+set splitright
+set splitbelow
 
 """""""""" Tabstops
 set tabstop=4
-set expandtab
 set shiftwidth=4
-set softtabstop=4
+set expandtab
+
+set softtabstop=0
 
 """""""""" Indentation
 set ai
 " smartindent
-" set si
+set si
 " do c-style indenting
-set cindent
+" set cindent
 " show line numbers
 set number
 " show relative line number
@@ -214,6 +220,7 @@ colorscheme gruvbox
 let g:coc_global_extensions = [
     \ 'coc-angular',
     \ 'coc-css',
+    \ 'coc-db',
     \ 'coc-diagnostic',
     \ 'coc-emmet',
     \ 'coc-eslint',
@@ -543,10 +550,11 @@ let g:neovide_transparency=0.8
 let g:user_emmet_install_global = 0
 augroup emmet
     au!
-    au FileType html,css,javascript,typescript,typescript.tsx EmmetInstall
+    au FileType html,javascript,javascriptreact,typescript,typescriptreact EmmetInstall
 augroup END
 
 " vim-dadbod-ui
+let g:db_ui_show_database_icon = 1
 let g:db_ui_dotenv_variable_prefix = 'DBUI_'
 let g:db_ui_save_location = '~/.config/nvim/dbui'
 let g:db_ui_table_helpers = {
@@ -623,6 +631,7 @@ augroup javascript
     au FileType javascript,javascriptreact set tabstop=2
     au FileType javascript,javascriptreact set shiftwidth=2
     au FileType javascript,javascriptreact set expandtab
+    " au FileType javascript set indentexpr=  " fixes indenting(/shrug)
  augroup END
 
 
@@ -653,6 +662,9 @@ nnoremap <leader>v :Vifm<CR>
 nnoremap <leader>t :tabnew<CR>
 nnoremap tr :tabprevious<CR>
 nnoremap tz :tabnext<CR>
+nnoremap <leader>u :UndotreeToggle<CR>
+nnoremap <leader>db :DBUIToggle<CR>
+nnoremap <leader>s :%s/\<<C-r><C-w>\>/
 
 " navigation
 nnoremap <C-h> <C-w>h
@@ -674,8 +686,8 @@ nnoremap <C-l> <C-w>l
 " :tnoremap <A-l> <C-\><C-n><C-w>l
 
 " surround with quotes
-nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
-vnoremap <leader>" c"<c-r>""<esc>l
+" nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
+" vnoremap <leader>" c"<c-r>""<esc>l
 
 map <F9> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
