@@ -12,11 +12,7 @@ set $mod Mod4
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-<<<<<<< Updated upstream
-font pango: System San Francisco Display 12
-=======
-font pango: FuraCode Nerd Font Retina 10
->>>>>>> Stashed changes
+font pango: FuraCode Nerd Font Retina 12
 
 # Before i3 v4.8, we used to recommend this one as the default:
 # font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
@@ -40,11 +36,7 @@ bindsym $mod+y exec kitty --single-instance vifmrun
 bindsym $mod+Shift+q kill
 
 # start rofi (a program launcher)
-<<<<<<< Updated upstream
-bindsym $mod+d exec rofi -show run -lines 5 -eh 2 -width 100 -padding 500 -opacity "80" -font "System San Francisco Display 12" -config ~/.config/i3/rofi.conf
-=======
-bindsym $mod+d exec rofi -show run -lines 15 -eh 2 -width 70 -padding 500 -opacity "80" -font "Operator Mono 16" -config ~/.config/i3/rofi.conf
->>>>>>> Stashed changes
+bindsym $mod+d exec rofi -show run -lines 15 -eh 2 -width 70 -padding 500 -opacity "80" -font "FuraCode Nerd Font Retina 12" -config ~/.config/i3/rofi.conf
 
 # change focus
 bindsym $mod+h focus left
@@ -106,16 +98,16 @@ bindsym $mod+a focus parent
 # set $fa_plug ""
 
 # wordspace names
-set $workspace1 "www"
-set $workspace2 "code"
-set $workspace3 "term"
-set $workspace4 "term"
-set $workspace5 "term"
-set $workspace6 "misc"
-set $workspace7 "misc"
-set $workspace8 "misc"
-set $workspace9 "music"
-set $workspace10 "chat"
+set $workspace1 "1:www"
+set $workspace2 "2:code"
+set $workspace3 "3:term"
+set $workspace4 "4:term"
+set $workspace5 "5:term"
+set $workspace6 "6:misc"
+set $workspace7 "7:misc"
+set $workspace8 "8:misc"
+set $workspace9 "9:music"
+set $workspace10 "10:chat"
 
 # switch to workspace
 bindsym $mod+1 workspace $workspace1
@@ -237,15 +229,9 @@ bindsym XF86AudioPause exec playerctl pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 
-<<<<<<< Updated upstream
-#set background image
-exec_always feh  --bg-fill '/home/skr/ownCloud/bilder/background/bennu.jpg'
-# exec_always feh  --bg-fill '/usr/share/backgrounds/gnome/SeaSunset.jpg'
-=======
 # set background image
 exec_always feh  --bg-fill '/home/basto/Dokumente/bilder/background/sunrise-in-space-3.jpg'
 
->>>>>>> Stashed changes
 # use compton for opacity
 exec_always compton -f
 
