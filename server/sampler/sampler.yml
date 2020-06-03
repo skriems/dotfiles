@@ -1,0 +1,50 @@
+runcharts:
+  - title: Response Time
+    position: [[0, 5], [40, 17]]
+    rate-ms: 5000
+    legend:
+        enabled: true
+        details: true
+    scale: 3
+    items:
+      - label: cloud.kriemskrams
+        color: 178
+        sample: curl -o /dev/null -s -w '%{time_total}'  https://cloud.kriemskrams.de
+      - label: gitlab.kriemskrams
+        sample: curl -o /dev/null -s -w '%{time_total}'  https://gitlab.kriemskrams.de
+barcharts:
+  - title: Local network activity
+    position: [[41, 32], [26, 8]]
+    rate-ms: 500
+    scale: 0
+    items:
+      - label: UDP bytes in
+        sample: nettop -J bytes_in -l 1 -m udp | awk '{sum += $4} END {print sum}'
+      - label: UDP bytes out
+        sample: nettop -J bytes_out -l 1 -m udp | awk '{sum += $4} END {print sum}'
+      - label: TCP bytes in
+        sample: nettop -J bytes_in -l 1 -m tcp | awk '{sum += $4} END {print sum}'
+      - label: TCP bytes out
+        sample: nettop -J bytes_out -l 1 -m tcp | awk '{sum += $4} END {print sum}'
+sparklines:
+  - title: CPU usage
+    position: [[0, 0], [40, 5]]
+    rate-ms: 200
+    scale: 0
+    sample: ps -A -o %cpu | awk '{s+=$1} END {print s}'
+  - title: Free memory pages
+    position: [[40, 0], [40, 5]]
+    rate-ms: 200
+    scale: 0
+    sample: memory_pressure | grep 'Pages free' | awk '{print $3}'
+textboxes:
+  - title: Local weather
+    position: [[67, 32], [13, 8]]
+    rate-ms: 10000
+    color: 178
+    sample: curl -s 'wttr.in/{Cologne,Hamburg,Berlin}?format=3'
+    border: false
+  - title: Docker containers stats
+    position: [[0, 28], [41, 12]]
+    rate-ms: 500
+    sample: docker stats --no-stream --format "table {{.Name}}\t{{.CPUPerc}}  {{.MemUsage}}\t{{.NetIO}}\t{{.BlockIO}}"

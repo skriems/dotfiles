@@ -1,0 +1,97 @@
+variables:
+    ssh: ssh skriems.de
+
+runcharts:
+  - title: Response Times
+    position: [[0, 8], [40, 20]]
+    rate-ms: 5000
+    triggers:
+      - title: Latency threshold exceeded
+        condition: echo "$prev < 0.3 && $cur > 0.3" | bc -l
+        actions:
+            terminal-bell: true
+            sound: true
+            visual: true
+            script: 'say alert: ${label} latency exceeded ${cur} second'
+    legend:
+        enabled: true
+        details: true
+    scale: 3
+    items:
+      - label: cloud.skriems
+        color: 178
+        sample: curl -o /dev/null -s -w '%{time_total}'  https://cloud.skriems.de
+      - label: lab.skriems
+        sample: curl -o /dev/null -s -w '%{time_total}'  https://lab.skriems.de
+
+  - title: tx/rx
+    rate-ms: 4000
+    legend:
+      enabled: true
+      details: true
+    scale: 5
+    items:
+      - label: rx KB/s
+        init: $ssh
+        sample: nethogs -tc 4 | awk '/Refreshing/,/<np>/' | awk '$1 ~ /^[0-9]/ {s+=$3} END {print s}'
+      - label: tx KB/s
+        init: $ssh
+        sample: nethogs -tc 4 | awk '/Refreshing/,/<np>/' | awk '$1 ~ /^[0-9]/ {s+=$2} END {print s}'
+gauges:
+
+  - title: swap
+    init: $ssh
+    position: [[61, 0], [19, 3]]
+    rate-ms: 1000
+    scale: 0
+    color: 200
+    percent-only: true
+    cur:
+        sample: top -b -n 1 | head -n 5 | awk 'END {print $5}'
+    max:
+        sample: top -b -n 1 | head -n 5 | awk 'END {print $3}'
+    min:
+        sample: echo 0
+
+  - title: mem
+    init: $ssh
+    position: [[40, 0], [21, 3]]
+    rate-ms: 1000
+    scale: 0
+    color: 30
+    percent-only: true
+    cur:
+        sample: top -b -n 1 | head -n 4 | awk 'END {print $5}'
+    max:
+        sample: top -b -n 1 | head -n 4 | awk 'END {print $3}'
+    min:
+        sample: echo 0
+
+sparklines:
+  - title: CPU
+    init: $ssh
+    position: [[0, 0], [40, 8]]
+    rate-ms: 500
+    scale: 0
+    sample: ps -A -o %cpu | awk '{s+=$1} END {print s}'
+
+textboxes:
+  - title: container stats
+    init: $ssh
+    position: [[0, 28], [64, 12]]
+    rate-ms: 500
+    sample: docker stats --no-stream --format "table {{.Name}}\t{{.CPUPerc}}\t{{.MemUsage}}\t{{.NetIO}}\t{{.BlockIO}}"
+  - title: top
+    init: $ssh
+    position: [[40, 3], [40, 8]]
+    rate-ms: 5000
+    sample: top -b -n 1 -o %CPU | head -n 12 | tail -n 6
+  - title: Weather
+    position: [[65, 23], [15, 9]]
+    rate-ms: 10000
+    color: 178
+    sample: curl -s 'wttr.in/{Cologne,Hamburg,Berlin}?format=3'
+    border: false
+  - title: iotop
+    init: $ssh
+    sample: sudo iotop -Po
