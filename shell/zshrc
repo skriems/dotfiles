@@ -16,10 +16,6 @@ export WORKON_HOME=$HOME/.virtualenvs
 # enable python-jedi in REPL
 export PYTHONSTARTUP="$(python -m jedi repl)"
 
-# work email and repository dir used in global git commit hook
-export JOB_REPOSITORIES_DIR="<COPORATION>"
-export JOB_EMAIL="bar@foo.com"
-
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
