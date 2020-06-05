@@ -604,6 +604,10 @@ let g:vimwiki_list = [{'path': '~/Nextcloud/docs/vimwiki/',
 let g:python3_host_prog = "$HOME/.virtualenvs/nvim3/bin/python"
 let g:python_host_prog = "$HOME/.virtualenvs/nvim2/bin/python"
 
+augroup rust
+    au BufNewFile /**/*.rs 0r ~/.vim/skeleton/rust.rs|norm G
+augroup END
+
 augroup python
     au!
     au BufNewFile /**/*.py 0r ~/.vim/skeleton/python.py|norm G
