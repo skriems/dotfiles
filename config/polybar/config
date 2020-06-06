@@ -110,7 +110,7 @@ modules-right = system-bluetooth-bluetoothctl aur-updates filesystem memory cpu
 
 [module/aur-updates]
 type = custom/script
-exec = ~/.config/i3/polybar/aur-updates.sh
+exec = ~/.config/polybar/aur-updates.sh
 interval = 600
 
 [module/spotify]
@@ -118,15 +118,15 @@ type = custom/script
 interval = 1
 format-prefix = " "
 format = <label>
-exec = python ~/.config/i3/polybar/spotify.py -f '{artist}: {song}'
+exec = python ~/.config/polybar/spotify.py -f '{artist}: {song}'
 format-underline = #1db954
 
 [module/bluetooth]
 type = custom/script
-exec = ~/.config/i3/polybar/bluetooth.sh
+exec = ~/.config/polybar/bluetooth.sh
 interval = 2
 click-left = exec blueberry
-click-right = exec ~/.config/i3/polybar/toggle_bluetooth.sh
+click-right = exec ~/.config/polybar/toggle_bluetooth.sh
 format-padding = 1
 
 format-background = ${gruvbox.background}
@@ -137,20 +137,20 @@ type = custom/script
 tail = true
 label= %output%
 
-exec = ~/.config/i3/polybar/pulseaudio.sh listen
+exec = ~/.config/polybar/pulseaudio.sh listen
 click-right = exec pavucontrol &
-click-left = ~/.config/i3/polybar/pulseaudio.sh togmute
-click-middle = ~/.config/i3/polybar/pulseaudio.sh next-sink
-scroll-up = ~/.config/i3/polybar/pulseaudio.sh up
-scroll-down = ~/.config/i3/polybar/pulseaudio.sh down
+click-left = ~/.config/polybar/pulseaudio.sh togmute
+click-middle = ~/.config/polybar/pulseaudio.sh next-sink
+scroll-up = ~/.config/polybar/pulseaudio.sh up
+scroll-down = ~/.config/polybar/pulseaudio.sh down
 label-padding = 2
 label-foreground = ${gruvbox.foreground}
 
 [module/system-bluetooth-bluetoothctl]
 type = custom/script
-exec = ~/.config/i3/polybar/system-bluetooth-bluetoothctl.sh
+exec = ~/.config/polybar/system-bluetooth-bluetoothctl.sh
 tail = true
-click-left = ~/.config/i3/polybar/system-bluetooth-bluetoothctl.sh --toggle &
+click-left = ~/.config/polybar/system-bluetooth-bluetoothctl.sh --toggle &
 
 [module/backlight]
 type = internal/xbacklight

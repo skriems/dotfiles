@@ -236,8 +236,9 @@ exec_always feh  --bg-fill '/home/basto/Dokumente/bilder/background/sunrise-in-s
 exec_always compton -f
 
 # startup applications
-exec --no-startup-id polybar -c ~/.config/i3/polybar/polybar.conf top
-exec --no-startup-id polybar -c ~/.config/i3/polybar/polybar.conf bottom
+exec --no-startup-id polybar top
+exec --no-startup-id polybar bottom
+
 # Restore GNOME's settings
 # exec --no-startup-id /usr/libexec/gnome-settings-daemon-localeexec
 exec --no-startup-id redshift-gtk
