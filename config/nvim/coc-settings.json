@@ -23,6 +23,8 @@
   "javascript.suggestionActions.enabled": false,
   "javascript.validate.enable": false,
   "python.venvPath": "~/.virtualenvs",
+  "python.jediEnabled": true,
+  "python.jediPath": "~/.virtualenvs/nvim3/lib/python3.8/site-packages",
   "tsserver.enableJavascript": true,
   "typescript.suggestionActions.enabled": true,
   "typescript.validate.enable": true,
