@@ -28,6 +28,7 @@
   "tsserver.enableJavascript": true,
   "typescript.suggestionActions.enabled": true,
   "typescript.validate.enable": true,
+  "prettier.singleQuote": true,
   "languageserver": {
     "flow": {
       "command": "flow",
