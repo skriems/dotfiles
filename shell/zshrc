@@ -16,6 +16,9 @@ export WORKON_HOME=$HOME/.virtualenvs
 # enable python-jedi in REPL
 export PYTHONSTARTUP="$(python -m jedi repl)"
 
+# use `keychain` to manage ssh-keys
+eval $(keychain --eval --quiet --confhost ~/.ssh/id_rsa)
+
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
