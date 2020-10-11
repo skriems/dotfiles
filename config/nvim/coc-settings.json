@@ -1,21 +1,12 @@
 {
-  "coc.preferences.formatOnSaveFiletypes": [
-    "css",
-    "javascript",
-    "javascriptreact",
-    "json",
-    "python",
-    "rust",
-    "typescript",
-    "typescriptreact"
-  ],
+  "coc.preferences.formatOnSaveFiletypes": ["css", "html", "json", "python", "rust"],
   "codeLens.enable": true,
   "eslint.autoFixOnSave": true,
   "java.configuration.updateBuildConfiguration": "automatic",
   "java.completion.guessMethodArguments": true,
   "java.implementationsCodeLens.enabled": true,
   "java.import.maven.enabled": true,
-  "java.jdt.ls.vmargs": "-javaagent:/Users/skriems/repos/dotfiles/java/lombok.jar",
+  "java.jdt.ls.vmargs": "-javaagent:/home/skriems/repos/dotfiles/java/lombok.jar",
   "java.maven.downloadSources": true,
   "java.referencesCodeLens.enabled": true,
   "java.signatureHelp.enabled": true,
@@ -29,6 +20,7 @@
   "typescript.suggestionActions.enabled": true,
   "typescript.validate.enable": true,
   "prettier.singleQuote": true,
+  "prettier.printWidth": 120,
   "languageserver": {
     "flow": {
       "command": "flow",
@@ -42,7 +34,7 @@
     "dart": {
       "command": "dart_language_server",
       "args": [],
-      "trace.server": "verbose",
+      "trace.server": "off",
       "filetypes": ["dart"],
       "initializationOptions": {},
       "settings": {
@@ -61,7 +53,7 @@
       }
     }
   },
-  "diagnostic-languageserver.trace.server": "verbose",
+  "diagnostic-languageserver.trace.server": "messages",
   "diagnostic-languageserver.linters": {
     "pmd": {
       "sourceName": "pmd",
@@ -109,7 +101,7 @@
   },
   "diagnostic-languageserver.filetypes": {
     "css": "stylelint",
-    "java": ["pmd"],
+    "java": ["pmd", "checkstyle"],
     "javascript": "eslint",
     "markdown": ["write-good", "markdown-lint"],
     "php": ["php-cs-fixer", "phpcs", "phpstan"],

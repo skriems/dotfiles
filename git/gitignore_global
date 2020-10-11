@@ -13,3 +13,5 @@ skr_*
 .factorypath
 .settings
 .vim
+
+**/main/generated

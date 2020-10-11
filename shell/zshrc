@@ -178,3 +178,5 @@ export BAT_THEME="Monokai Extended"
 export CARGO_TARGET_DIR="$HOME/.cargo/target"
 # load the platform specific zshrc
 [ -f "$HOME/.zshrc_platform" ] && source "$HOME/.zshrc_platform"
+
+alias passw="PASSWORD_STORE_DIR=~/.password-store-work pass"

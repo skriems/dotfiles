@@ -20,8 +20,8 @@ Plug 'styled-components/vim-styled-components', {'branch': 'main'}
 Plug 'rhysd/vim-wasm'
 
 " Fuzzy Finder
-Plug '/usr/local/opt/fzf'
-Plug 'junegunn/fzf.vim', { 'do': './install --bin' }
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 
 " Git
 Plug 'tpope/vim-fugitive'
@@ -696,4 +696,8 @@ nnoremap <C-l> <C-w>l
 map <F9> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+" }}}
+
+" Commands {{{
+command! -bar LocalTodo :lvimgrep /\v\CTODO|FIXME|HACK|DEV/g % <bar> normal <F4>
 " }}}
