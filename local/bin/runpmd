@@ -1,5 +1,5 @@
 #! /bin/bash
 FILE=$1
 PMD="${PMD_DIR-/opt/pmd}/bin/run.sh pmd"
-OUTPUT="$($PMD -rulesets rulesets/java/quickstart.xml,category/java/codestyle.xml -format json -dir $FILE 2> /dev/null)"
+OUTPUT="$($PMD -rulesets rulesets/java/quickstart.xml,category/java/performance.xml -format json -dir $FILE 2> /dev/null)"
 echo $OUTPUT

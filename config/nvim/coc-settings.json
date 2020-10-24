@@ -1,59 +1,71 @@
 {
   "coc.preferences.formatOnSaveFiletypes": ["css", "html", "json", "python", "rust"],
   "codeLens.enable": true,
+  // Javascript
   "eslint.autoFixOnSave": true,
-  "java.configuration.updateBuildConfiguration": "automatic",
-  "java.completion.guessMethodArguments": true,
-  "java.implementationsCodeLens.enabled": true,
-  "java.import.maven.enabled": true,
-  "java.jdt.ls.vmargs": "-javaagent:/home/skriems/repos/dotfiles/java/lombok.jar",
-  "java.maven.downloadSources": true,
-  "java.referencesCodeLens.enabled": true,
-  "java.signatureHelp.enabled": true,
-  "java.trace.server": "verbose",
   "javascript.suggestionActions.enabled": false,
   "javascript.validate.enable": false,
-  "python.venvPath": "~/.virtualenvs",
-  "python.jediEnabled": true,
-  "python.jediPath": "~/.virtualenvs/nvim3/lib/python3.8/site-packages",
   "tsserver.enableJavascript": true,
   "typescript.suggestionActions.enabled": true,
   "typescript.validate.enable": true,
   "prettier.singleQuote": true,
   "prettier.printWidth": 120,
+  // CSS stylelintplus needs coc-css to disable validation
+  "stylelintplus.autoFixOnSave": true,
+  "stylelintplus.cssInJs": true,
+  "css.validate": false,
+  "less.validate": false,
+  "scss.validate": false,
+  "wxss.validate": false,
+  // Java
+  "java.format.enabled": true,
+  "java.configuration.updateBuildConfiguration": "automatic",
+  "java.completion.guessMethodArguments": true,
+  "java.implementationsCodeLens.enabled": true,
+  "java.import.maven.enabled": true,
+  "java.import.gradle.enabled": true,
+  "java.import.gradle.wrapper.enabled": true,
+  "java.imports.gradle.wrapper.checksums": [
+    {
+      "sha256": "70239e6ca1f0d5e3b2808ef6d82390cf9ad58d3a3a0d271677a51d1b89475857",
+      "allowed": true
+    }
+  ],
+  "java.jdt.ls.vmargs": "-javaagent:/home/skriems/repos/dotfiles/java/lombok.jar",
+  "java.maven.downloadSources": true,
+  "java.referencesCodeLens.enabled": true,
+  "java.signatureHelp.enabled": true,
+  "java.trace.server": "verbose",
+  // Python
+  "python.venvPath": "~/.virtualenvs",
+  "python.jediEnabled": true,
+  "python.jediPath": "~/.virtualenvs/nvim3/lib/python3.8/site-packages",
   "languageserver": {
-    "flow": {
-      "command": "flow",
-      "args": ["lsp"],
-      "filetypes": ["javascript", "javascriptreact"],
-      "initializationOptions": {},
-      "requireRootPattern": true,
-      "settings": {},
-      "rootPatterns": [".flowconfig"]
-    },
-    "dart": {
-      "command": "dart_language_server",
-      "args": [],
-      "trace.server": "off",
-      "filetypes": ["dart"],
-      "initializationOptions": {},
-      "settings": {
-        "dart": {
-          "validation": {},
-          "completion": {}
-        }
-      }
-    },
-    "intelephense": {
-      "command": "intelephense",
-      "args": ["--stdio"],
-      "filetypes": ["php"],
-      "initializationOptions": {
-        "storagePath": "/tmp/intelephense"
-      }
+    "rust": {
+      "command": "rust-analyzer",
+      "filetypes": ["rust"],
+      "rootPatterns": ["Cargo.toml"]
     }
   },
-  "diagnostic-languageserver.trace.server": "messages",
+  // Diagnostics
+  "diagnostic-languageserver.debug": true,
+  "diagnostic-languageserver.trace.server": "verbose",
+  // filetypes for linters
+  "diagnostic-languageserver.filetypes": {
+    "css": "stylelint",
+    "java": ["pmd", "checkstyle"],
+    "javascript": "eslint",
+    "markdown": ["write-good", "markdown-lint"],
+    "php": ["php-cs-fixer", "phpcs", "phpstan"],
+    "rust": "cargo-clippy",
+    "sh": "shellcheck",
+    "typescript": "eslint",
+    "vim": "vint"
+  },
+  // filetypes for formatters
+  "diagnostic-languageserver.formatFiletypes": {
+    "php": "php-cs-fixer"
+  },
   "diagnostic-languageserver.linters": {
     "pmd": {
       "sourceName": "pmd",
@@ -62,7 +74,7 @@
       "debounce": 100,
       "isStdout": true,
       "parseJson": {
-        "errorsRoot": "pmd.file.violation",
+        "errorsRoot": "files[0].violations",
         "line": "beginline",
         "endLine": "endline",
         "column": "begincolumn",
@@ -98,19 +110,5 @@
       },
       "requiredFiles": [".checkstyle.xml"]
     }
-  },
-  "diagnostic-languageserver.filetypes": {
-    "css": "stylelint",
-    "java": ["pmd", "checkstyle"],
-    "javascript": "eslint",
-    "markdown": ["write-good", "markdown-lint"],
-    "php": ["php-cs-fixer", "phpcs", "phpstan"],
-    "rust": "cargo-clippy",
-    "sh": "shellcheck",
-    "typescript": "eslint",
-    "vim": "vint"
-  },
-  "diagnostic-languageserver.formatFiletypes": {
-    "php": "php-cs-fixer"
   }
 }

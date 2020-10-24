@@ -50,10 +50,7 @@ Plug 'vimwiki/vimwiki'
 " Colorschemes
 Plug 'joshdick/onedark.vim'
 Plug 'tyrannicaltoucan/vim-deep-space'
-Plug 'danilo-augusto/vim-afterglow'
 Plug 'morhetz/gruvbox'
-Plug 'mhartington/oceanic-next'
-Plug 'ajmwagar/vim-deus'
 
 call plug#end()
 " }}}
@@ -167,23 +164,25 @@ endif
 set background=dark
 
 function! MyHighlights() abort
-    hi link pythonNone Boolean
-    hi Statement cterm=italic gui=italic
-    hi Conditional cterm=italic gui=italic
-    hi Operator cterm=italic gui=italic
-    hi Identifier cterm=italic gui=italic
+    " hi link pythonNone Boolean
+    " hi Statement cterm=italic gui=italic
+    " hi Conditional cterm=italic gui=italic
+    " hi Operator cterm=italic gui=italic
+    " hi Identifier cterm=italic gui=italic
+    hi Type gui=italic
+    " hi GruvboxRedSign ctermbg=None guibg=None " SignifySignDelete
+    " hi GruvboxGreenSign ctermbg=None guibg=None "SignifySignAdd
+    " hi GruvboxYellowSign ctermbg=None guibg=None
+    " hi GruvboxBlueSign ctermbg=None guibg=None
+    " hi GruvboxPurpleSign ctermbg=None guibg=None
+    " hi GruvboxAquaSign ctermbg=None guibg=None "SignifySignChange
+    " hi GruvboxOrangeSign ctermbg=None guibg=None
     " transparency
     hi Normal ctermbg=None guibg=None
     hi NonText ctermbg=None guifg=#3c3836 guibg=None
     hi SignColumn ctermbg=None guibg=None
     hi CursorLineNr ctermbg=None guibg=None
-    hi GruvboxRedSign ctermbg=None guibg=None " SignifySignDelete
-    hi GruvboxGreenSign ctermbg=None guibg=None "SignifySignAdd
-    hi GruvboxYellowSign ctermbg=None guibg=None
-    hi GruvboxBlueSign ctermbg=None guibg=None
-    hi GruvboxPurpleSign ctermbg=None guibg=None
-    hi GruvboxAquaSign ctermbg=None guibg=None "SignifySignChange
-    hi GruvboxOrangeSign ctermbg=None guibg=None
+
 endfunction
 
 augroup MyColors
@@ -207,7 +206,7 @@ if !exists("g:syntax_on")
     syntax enable
 endif
 
-colorscheme gruvbox
+colorscheme deep-space
 " }}}
 
 " Plugin Config {{{
@@ -218,7 +217,6 @@ colorscheme gruvbox
 " and invoke `yarn install/build` to use build files
 
 let g:coc_global_extensions = [
-    \ 'coc-angular',
     \ 'coc-css',
     \ 'coc-db',
     \ 'coc-diagnostic',
@@ -235,7 +233,7 @@ let g:coc_global_extensions = [
     \ 'coc-python',
     \ 'coc-rust-analyzer',
     \ 'coc-snippets',
-    \ 'coc-stylelint',
+    \ 'coc-stylelintplus',
     \ 'coc-svg',
     \ 'coc-tslint-plugin',
     \ 'coc-tsserver',
@@ -346,15 +344,26 @@ nmap <leader>qf  <Plug>(coc-fix-current)
 " Introduce function text object
 " NOTE: Requires 'textDocument.documentSymbol' support from the language server.
 xmap if <Plug>(coc-funcobj-i)
-xmap af <Plug>(coc-funcobj-a)
 omap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
 omap af <Plug>(coc-funcobj-a)
+xmap ic <Plug>(coc-classobj-i)
+omap ic <Plug>(coc-classobj-i)
+xmap ac <Plug>(coc-classobj-a)
+omap ac <Plug>(coc-classobj-a)
+
+" Remap <C-f> and <C-b> for scroll float windows/popups.
+" Note coc#float#scroll works on neovim >= 0.4.3 or vim >= 8.2.0750
+nnoremap <nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+nnoremap <nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+inoremap <nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+inoremap <nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
 
 " Use <TAB> for selections ranges.
 " NOTE: Requires 'textDocument/selectionRange' support from the language server.
 " coc-tsserver, coc-python are the examples of servers that support it.
-nmap <silent> <TAB> <Plug>(coc-range-select)
-xmap <silent> <TAB> <Plug>(coc-range-select)
+nmap <silent> <C-s> <Plug>(coc-range-select)
+xmap <silent> <C-s> <Plug>(coc-range-select)
 
 " Use `:Format` for format current buffer
 command! -nargs=0 Format :call CocAction('format')
@@ -368,7 +377,7 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 " Add (Neo)Vim's native statusline support.
 " NOTE: Please see `:h coc-status` for integrations with external plugins that
 " provide custom statusline: lightline.vim, vim-airline.
-" set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 " Using CocList
 " Show all diagnostics
@@ -459,10 +468,10 @@ set laststatus=2
 " set statusline+=%*
 
 let g:lightline = {
-    \ 'colorscheme': 'gruvbox',
+    \ 'colorscheme': 'deepspace',
     \ 'active': {
     \   'left':[ [ 'mode', 'paste' ], [ 'readonly', 'filename', 'modified' ] ],
-    \   'right': [ [ 'fugitive' ], [ 'filetype', 'fileencoding', 'fileformat', 'percent', 'cocstatus' ] ]
+    \   'right': [ [ 'fugitive' ], [ 'cocstatus', 'filetype', 'fileencoding', 'fileformat', 'percent' ] ]
     \ },
     \ 'component_function': {
     \   'cocstatus': 'coc#status',
@@ -549,8 +558,8 @@ let g:neovide_transparency=0.8
 
 let g:user_emmet_install_global = 0
 augroup emmet
-    au!
-    au FileType html,javascript,javascriptreact,typescript,typescriptreact EmmetInstall
+    autocmd!
+    autocmd FileType html,javascript,javascriptreact,typescript,typescriptreact EmmetInstall
 augroup END
 
 " vim-dadbod-ui
@@ -699,5 +708,11 @@ map <F9> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<
 " }}}
 
 " Commands {{{
+
+augroup jsonc
+    autocmd!
+    autocmd FileType json syntax match Comment +\/\/.\+$+
+augroup END
+
 command! -bar LocalTodo :lvimgrep /\v\CTODO|FIXME|HACK|DEV/g % <bar> normal <F4>
 " }}}
