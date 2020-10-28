@@ -170,10 +170,8 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 # export FZF_CTRL_C_OPTS
 # export FZF_CTRL_R_OPTS
 # bind -x '"\C-p": nvim $(fzf);'
-#
-export BAT_PAGER="less -R"
-export BAT_STYLE="numbers,changes,header"
-export BAT_THEME="Monokai Extended"
+
+export BAT_CONFIG_DIR="~/.config/bat/config"
 
 export CARGO_TARGET_DIR="$HOME/.cargo/target"
 # load the platform specific zshrc

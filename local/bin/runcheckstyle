@@ -1,0 +1,7 @@
+#! /bin/bash
+
+JAR="${CHECKSTYLE_JAR-$HOME/repos/dotfiles/java/checkstyle-8.25-all.jar}"
+CONFIG=$1
+FILE=$2
+OUTPUT="$(java -jar $JAR -c $CONFIG $FILE)"
+echo $OUTPUT

@@ -40,13 +40,6 @@
   "python.venvPath": "~/.virtualenvs",
   "python.jediEnabled": true,
   "python.jediPath": "~/.virtualenvs/nvim3/lib/python3.8/site-packages",
-  "languageserver": {
-    "rust": {
-      "command": "rust-analyzer",
-      "filetypes": ["rust"],
-      "rootPatterns": ["Cargo.toml"]
-    }
-  },
   // Diagnostics
   "diagnostic-languageserver.debug": true,
   "diagnostic-languageserver.trace.server": "verbose",

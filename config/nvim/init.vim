@@ -32,18 +32,20 @@ Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'skriems/vim-vebugger', { 'branch': 'fix-locale' }
 " Plug 'vim-vdebug/vdebug'
 
+" tpope section ;)
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-dadbod'
+Plug 'tpope/vim-dotenv'
+Plug 'tpope/vim-surround'
+
 " Misc
+Plug 'kristijanhusak/vim-dadbod-ui'
 Plug 'iamcco/markdown-preview.vim'
 Plug 'mattn/emmet-vim'
-Plug 'tpope/vim-dotenv'
-Plug 'tpope/vim-dadbod'
-Plug 'tpope/vim-surround'
 Plug 'mbbill/undotree'
-Plug 'kristijanhusak/vim-dadbod-ui'
 "Plug 'jmcantrell/vim-virtualenv'
 Plug 'neomake/neomake'
 " Plug 'jceb/vim-orgmode'
-Plug 'tpope/vim-commentary'
 Plug 'vifm/vifm.vim'
 Plug 'vimwiki/vimwiki'
 
@@ -135,7 +137,8 @@ set relativenumber
 set numberwidth=3
 " expand <CR>
 " let delimitMate_expand_cr = 1
-
+" gloabl colorcolumn
+set colorcolumn=120
 """""""""" Folding
 set foldenable
 " fold based on syntax files
@@ -146,11 +149,6 @@ set foldmethod=syntax
 " set foldopen-=search
 " don't open folds when you undo stuff
 " set foldopen-=undo
-
-augroup filetype_vim
-    au!
-    au FileType vim setlocal foldmethod=marker
-augroup END
 " }}}
 
 " ColorScheme {{{
@@ -169,14 +167,21 @@ function! MyHighlights() abort
     " hi Conditional cterm=italic gui=italic
     " hi Operator cterm=italic gui=italic
     " hi Identifier cterm=italic gui=italic
-    hi Type gui=italic
-    " hi GruvboxRedSign ctermbg=None guibg=None " SignifySignDelete
-    " hi GruvboxGreenSign ctermbg=None guibg=None "SignifySignAdd
-    " hi GruvboxYellowSign ctermbg=None guibg=None
-    " hi GruvboxBlueSign ctermbg=None guibg=None
-    " hi GruvboxPurpleSign ctermbg=None guibg=None
-    " hi GruvboxAquaSign ctermbg=None guibg=None "SignifySignChange
-    " hi GruvboxOrangeSign ctermbg=None guibg=None
+    " hi Type gui=italic
+
+    if (g:colors_name == "gruvbox")
+        " ligatures
+        hi GruvboxYellow gui=italic
+        " transparency
+        hi GruvboxRedSign ctermbg=None guibg=None " SignifySignDelete
+        hi GruvboxGreenSign ctermbg=None guibg=None "SignifySignAdd
+        hi GruvboxYellowSign ctermbg=None guibg=None
+        hi GruvboxBlueSign ctermbg=None guibg=None
+        hi GruvboxPurpleSign ctermbg=None guibg=None
+        hi GruvboxAquaSign ctermbg=None guibg=None "SignifySignChange
+        hi GruvboxOrangeSign ctermbg=None guibg=None
+    endif
+
     " transparency
     hi Normal ctermbg=None guibg=None
     hi NonText ctermbg=None guifg=#3c3836 guibg=None
@@ -206,7 +211,7 @@ if !exists("g:syntax_on")
     syntax enable
 endif
 
-colorscheme deep-space
+colorscheme gruvbox
 " }}}
 
 " Plugin Config {{{
@@ -468,7 +473,7 @@ set laststatus=2
 " set statusline+=%*
 
 let g:lightline = {
-    \ 'colorscheme': 'deepspace',
+    \ 'colorscheme': 'gruvbox',
     \ 'active': {
     \   'left':[ [ 'mode', 'paste' ], [ 'readonly', 'filename', 'modified' ] ],
     \   'right': [ [ 'fugitive' ], [ 'cocstatus', 'filetype', 'fileencoding', 'fileformat', 'percent' ] ]
@@ -613,6 +618,11 @@ let g:vimwiki_list = [{'path': '~/Nextcloud/docs/vimwiki/',
 let g:python3_host_prog = "$HOME/.virtualenvs/nvim3/bin/python"
 let g:python_host_prog = "$HOME/.virtualenvs/nvim2/bin/python"
 
+augroup filetype_vim
+    au!
+    au FileType vim setlocal foldmethod=marker
+augroup END
+
 augroup rust
     au BufNewFile /**/*.rs 0r ~/.vim/skeleton/rust.rs|norm G
 augroup END
@@ -621,8 +631,6 @@ augroup python
     au!
     au BufNewFile /**/*.py 0r ~/.vim/skeleton/python.py|norm G
     au FileType python set omnifunc=pythoncomplete#Complete
-    au FileType python set number
-    au FileType python set relativenumber
     au FileType python nnoremap <buffer> <localleader>c I#<esc>
     au FileType python set textwidth=79
     au FileType python set colorcolumn=80
@@ -635,6 +643,11 @@ augroup html
     au FileType html set tabstop=2
     au FileType html set shiftwidth=2
     au FileType html set expandtab
+augroup END
+
+augroup jsonc
+    autocmd!
+    autocmd FileType json syntax match Comment +\/\/.\+$+
 augroup END
 
 augroup javascript
@@ -656,7 +669,16 @@ augroup typescript
     au FileType typescript,typescriptreact set shiftwidth=2
     au FileType typescript,typescriptreact set expandtab
     au FileType typescript,typescriptreact set indentexpr=  " fixes indenting(/shrug)
- augroup END
+augroup END
+
+augroup java
+    au!
+    au BufNewFile, BufRead *.java
+    au FileType java set softtabstop=4
+    au FileType java set tabstop=4
+    au FileType java set shiftwidth=4
+    au FileType java set expandtab
+augroup END
 
 augroup markdown
     au!
@@ -708,11 +730,6 @@ map <F9> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<
 " }}}
 
 " Commands {{{
-
-augroup jsonc
-    autocmd!
-    autocmd FileType json syntax match Comment +\/\/.\+$+
-augroup END
 
 command! -bar LocalTodo :lvimgrep /\v\CTODO|FIXME|HACK|DEV/g % <bar> normal <F4>
 " }}}
