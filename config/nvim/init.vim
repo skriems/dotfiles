@@ -138,7 +138,7 @@ set numberwidth=3
 " expand <CR>
 " let delimitMate_expand_cr = 1
 " gloabl colorcolumn
-set colorcolumn=120
+" set colorcolumn=120
 """""""""" Folding
 set foldenable
 " fold based on syntax files

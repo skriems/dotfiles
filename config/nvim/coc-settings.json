@@ -50,7 +50,6 @@
     "javascript": "eslint",
     "markdown": ["write-good", "markdown-lint"],
     "php": ["php-cs-fixer", "phpcs", "phpstan"],
-    "rust": "cargo-clippy",
     "sh": "shellcheck",
     "typescript": "eslint",
     "vim": "vint"
