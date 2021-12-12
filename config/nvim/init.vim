@@ -5,7 +5,7 @@ filetype off
 call plug#begin('~/.local/share/nvim/plugged')
 
 " Conquer of Completion
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
 
 " UI
 Plug 'mhinz/vim-signify'
@@ -27,9 +27,10 @@ Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'rhysd/git-messenger.vim'
 
-" Debugger
-Plug 'Shougo/vimproc.vim', {'do' : 'make'}
-Plug 'skriems/vim-vebugger', { 'branch': 'fix-locale' }
+" debugger
+Plug 'puremourning/vimspector'
+" Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+" Plug 'skriems/vim-vebugger', { 'branch': 'fix-locale' }
 " Plug 'vim-vdebug/vdebug'
 
 " tpope section ;)
@@ -40,7 +41,7 @@ Plug 'tpope/vim-surround'
 
 " Misc
 Plug 'kristijanhusak/vim-dadbod-ui'
-Plug 'iamcco/markdown-preview.vim'
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'mattn/emmet-vim'
 Plug 'mbbill/undotree'
 "Plug 'jmcantrell/vim-virtualenv'
@@ -227,10 +228,10 @@ let g:coc_global_extensions = [
     \ 'coc-diagnostic',
     \ 'coc-emmet',
     \ 'coc-eslint',
-    \ 'coc-flow',
     \ 'coc-highlight',
     \ 'coc-html',
     \ 'coc-java',
+    \ 'coc-java-debug',
     \ 'coc-json',
     \ 'coc-pairs',
     \ 'coc-phpls',
@@ -240,7 +241,6 @@ let g:coc_global_extensions = [
     \ 'coc-snippets',
     \ 'coc-stylelintplus',
     \ 'coc-svg',
-    \ 'coc-tslint-plugin',
     \ 'coc-tsserver',
     \ 'coc-yaml', ]
 
@@ -297,9 +297,9 @@ endif
 " Coc only does snippet and additional edit on confirm.
 inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
-" Use `[c` and `]c` for navigate diagnostics
-nmap <silent> [c <Plug>(coc-diagnostic-prev)
-nmap <silent> ]c <Plug>(coc-diagnostic-next)
+" Use `[g` and `]g` for navigate diagnostics
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)
@@ -370,8 +370,8 @@ inoremap <nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(
 nmap <silent> <C-s> <Plug>(coc-range-select)
 xmap <silent> <C-s> <Plug>(coc-range-select)
 
-" Use `:Format` for format current buffer
-command! -nargs=0 Format :call CocAction('format')
+" Use `<leader>ff` for format current buffer
+nnoremap <silent> <leader>ff :call CocAction('format')<cr>
 
 " Use `:Fold` for fold current buffer
 command! -nargs=? Fold :call     CocAction('fold', <f-args>)
@@ -438,8 +438,28 @@ nnoremap F :Rg! <C-R><C-W><CR>
 nnoremap <silent> <leader>O :Files<CR>
 " }}}
 
-" vebugger {{{
-let g:vebugger_leader = "<"
+" debugger {{{
+
+" vimspector
+:packadd termdebug
+let termdebugger='rust-gdb'
+let g:vimspector_enable_mappings = 'HUMAN'
+let g:vimspector_install_gadgets = [ 'debugpy', 'vscode-go', 'CodeLLDB' ]
+
+nmap <leader>dd :call vimspector#Launch()<CR>
+nmap <leader>dx :VimspectorReset<CR>
+nmap <leader>de :VimspectorEval
+nmap <leader>dw :VimspectorWatch
+nmap <leader>do :VimspectorShowOutput
+
+" mnemonic 'di' = 'debug inspect' (pick your own, if you prefer!)
+" for normal mode - the word under the cursor
+nmap <Leader>di <Plug>VimspectorBalloonEval
+" for visual mode, the visually selected text
+xmap <Leader>di <Plug>VimspectorBalloonEval
+
+" vebugger
+" let g:vebugger_leader = "<"
 "'i':'VBGstepIn',
 "'o':'VBGstepOver',
 "'O':'VBGstepOut',
@@ -606,7 +626,7 @@ let g:signify_realtime = 1
 let g:signify_cursorhold_normal = 0
 let g:signify_cursorhold_insert = 0
 
-let g:vimwiki_list = [{'path': '~/Nextcloud/docs/vimwiki/',
+let g:vimwiki_list = [{'path': '~/nextcloud/docs/vimwiki/',
                       \ 'syntax': 'markdown', 'ext': '.md'}]
 
 " }}}
@@ -668,7 +688,7 @@ augroup typescript
     au FileType typescript,typescriptreact set tabstop=2
     au FileType typescript,typescriptreact set shiftwidth=2
     au FileType typescript,typescriptreact set expandtab
-    au FileType typescript,typescriptreact set indentexpr=  " fixes indenting(/shrug)
+    " au FileType typescript,typescriptreact set indentexpr=  " fixes indenting(/shrug)
 augroup END
 
 augroup java
@@ -694,6 +714,10 @@ augroup end
 :onoremap p i(
 
 nnoremap <leader>v :Vifm<CR>
+nnoremap <leader>g :G<CR>
+nnoremap <leader>w :w<CR>
+nnoremap <leader>q :q<CR>
+nnoremap <leader>qw :wq<CR>
 nnoremap <leader>t :tabnew<CR>
 nnoremap tr :tabprevious<CR>
 nnoremap tz :tabnext<CR>
