@@ -5,7 +5,10 @@ filetype off
 call plug#begin('~/.local/share/nvim/plugged')
 
 " Conquer of Completion
-Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
+" Use release branch (recommend)
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Or build from source code by using yarn: https://yarnpkg.com
+" Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
 
 " UI
 Plug 'mhinz/vim-signify'
@@ -458,24 +461,19 @@ nmap <Leader>di <Plug>VimspectorBalloonEval
 " for visual mode, the visually selected text
 xmap <Leader>di <Plug>VimspectorBalloonEval
 
-" vebugger
-" let g:vebugger_leader = "<"
-"'i':'VBGstepIn',
-"'o':'VBGstepOver',
-"'O':'VBGstepOut',
-"'c':'VBGcontinue',
-"'t':'VBGtoggleTerminalBuffer',
-"'b':'VBGtoggleBreakpointThisLine',
-"'B':'VBGclearBreakpoints',
-"'e':'VBGevalWordUnderCursor',
-"'E':'exe "VBGeval ".input("VBG-Eval> ")',
-"'x':'exe "VBGexecute ".getline(".")',
-"'X':'exe "VBGexecute ".input("VBG-Exec> ")',
-"'R':'exe "VBGrawWrite ".input("VBG> ")'})
-"'e':'VBGevalSelectedText',
-"'x':'VBGexecuteSelectedText',
-"'r':'VBGrawWriteSelectedText'})
-" }}}
+" Key          | Mapping                                       | Function
+" ---          | ---                                           | ---
+" `F5`         | `<Plug>VimspectorContinue`                    | When debugging, continue. Otherwise start debugging.
+" `F3`         | `<Plug>VimspectorStop`                        | Stop debugging.
+" `F4`         | `<Plug>VimspectorRestart`                     | Restart debugging with the same configuration.
+" `F6`         | `<Plug>VimspectorPause`                       | Pause debuggee.
+" `F9`         | `<Plug>VimspectorToggleBreakpoint`            | Toggle line breakpoint on the current line.
+" `<leader>F9` | `<Plug>VimspectorToggleConditionalBreakpoint` | Toggle conditional line breakpoint or logpoint on the current line.
+" `F8`         | `<Plug>VimspectorAddFunctionBreakpoint`       | Add a function breakpoint for the expression under cursor
+" `<leader>F8` | `<Plug>VimspectorRunToCursor`                 | Run to Cursor
+" `F10`        | `<Plug>VimspectorStepOver`                    | Step Over
+" `F11`        | `<Plug>VimspectorStepInto`                    | Step Into
+" `F12`        | `<Plug>VimspectorStepOut`                     | Step out of current function scope
 
 " Lightline {{{
 
