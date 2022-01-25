@@ -2,6 +2,10 @@
 if type brew &>/dev/null; then
   FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
   source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+  autoload -Uz compinit
+  compinit
 fi
 
 # suggested by $(brew doctor) + something brew <-> coreutils related
@@ -9,20 +13,8 @@ export PATH="$PATH:/usr/local/sbin:/usr/local/opt/coreutils/libexec/gnubin"
 export MANPATH="$MANPATH:/usr/local/opt/coreutils/libexec/gnuman"
 
 # nvm
-[ -f "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
-[ -f "/usr/local/opt/nvm/etc/bash_completion" ] && . "/usr/local/opt/nvm/etc/bash_completion"  # This loads nvm bash_completion
-
-jdk () {
-    version=$1
-    export JAVA_HOME=$(/usr/libexec/java_home -v"$version");
-    java -version
-}
-
-# php symfony
-export PATH="$HOME/.symfony/bin:$PATH"
-
-# mysql cli in case MYSQL Workbench is installed
-export PATH="$PATH:/Applications/MySQLWorkbench.app/Contents/MacOS"
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
 # brew install
 
