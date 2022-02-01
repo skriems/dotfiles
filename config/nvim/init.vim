@@ -105,8 +105,6 @@ set mat=5
 set nohlsearch
 " BUT do highlight as you type your search phrase
 set incsearch
-" 80 cols wide
-set columns=80
 " Keep 5 lines (top/bottom) for scope
 set so=5
 " do blink
@@ -575,10 +573,6 @@ endfunction
 
 " Others {{{
 
-" neovide
-let g:neovide_transparency=0.8
-" let g:neovide_fullscreen=v:true
-
 let g:user_emmet_install_global = 0
 augroup emmet
     autocmd!
@@ -753,5 +747,4 @@ map <F9> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<
 
 " Commands {{{
 
-command! -bar LocalTodo :lvimgrep /\v\CTODO|FIXME|HACK|DEV/g % <bar> normal <F4>
 " }}}
