@@ -1,6 +1,6 @@
 {
   "coc.preferences.formatOnSaveFiletypes": ["css", "html", "json", "python", "rust", "javascript", "typescript"],
-  "codeLens.enable": true,
+  "codeLens.enable": false,
   // Javascript & TypeScript
   "eslint.autoFixOnSave": true,
   "javascript.suggestionActions.enabled": true,
