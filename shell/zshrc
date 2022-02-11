@@ -118,3 +118,9 @@ export CARGO_TARGET_DIR="$HOME/.cargo/target"
 [ -f "$HOME/.zshrc_platform" ] && source "$HOME/.zshrc_platform"
 
 alias passw="PASSWORD_STORE_DIR=~/.password-store-work pass"
+
+alias ls='ls --color=auto'
+alias l='ls -l --color=auto'
+alias ll="ls -la --color=auto"
+alias df="df -h"
+alias du="du -h"
