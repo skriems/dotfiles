@@ -1,8 +1,14 @@
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
 set nocompatible
 filetype off
 
 " vim-plug {{{
-call plug#begin('~/.local/share/nvim/plugged')
+call plug#begin('~/.vim/plugged')
 
 " Conquer of Completion
 " Use release branch (recommend)
@@ -62,7 +68,6 @@ call plug#end()
 " }}}
 
 " General {{{
-
 let mapleader = ','
 " let maplocalleader = '_'
 :nnoremap <leader>sv :source $MYVIMRC<cr>
@@ -155,10 +160,13 @@ set foldmethod=syntax
 
 " ColorScheme {{{
 if (has("termguicolors"))
-    " not sure if the below two are needed (in neovim)
-    set t_8f=\[[38;2;%lu;%lu;%lum
-    set t_8b=\[[48;2;%lu;%lu;%lum
     set termguicolors
+
+    " not sure if the below two are needed (in neovim) but breaks vim!
+    if has('nvim')
+      set t_8f=\[[38;2;%lu;%lu;%lum
+      set t_8b=\[[48;2;%lu;%lu;%lum
+    endif
 endif
 
 set background=dark
@@ -216,6 +224,18 @@ endif
 colorscheme gruvbox
 " }}}
 
+" Vim only {{{
+
+if !has('nvim')
+  " For Vim < 8
+  set t_Co=256
+  " allow italics (VIM only)
+  set t_ZH=[3m      " INSERT mode: <ctrl>+v<esc>
+  set t_ZR=[23m
+endif
+
+" }}}
+
 " Plugin Config {{{
 
 " Conquer of Completion {{{
@@ -241,6 +261,7 @@ let g:coc_global_extensions = [
     \ 'coc-rust-analyzer',
     \ 'coc-snippets',
     \ 'coc-stylelintplus',
+    \ 'coc-svelte',
     \ 'coc-svg',
     \ 'coc-tsserver',
     \ 'coc-yaml', ]
@@ -648,39 +669,18 @@ augroup python
     au FileType python set colorcolumn=80
 augroup END
 
-augroup html
+augroup two_spaces
     au!
-    au BufNewFile, BufRead *.html
-    au FileType html set softtabstop=2
-    au FileType html set tabstop=2
-    au FileType html set shiftwidth=2
-    au FileType html set expandtab
+    au BufNewFile, BufRead *.html,*.js,*.jsx,*.ts,*.tsx,*.svelte
+    au FileType html,javascript,javascriptreact,typescript,typescriptreact set softtabstop=2
+    au FileType html,javascript,javascriptreact,typescript,typescriptreact set tabstop=2
+    au FileType html,javascript,javascriptreact,typescript,typescriptreact set shiftwidth=2
+    au FileType html,javascript,javascriptreact,typescript,typescriptreact set expandtab
 augroup END
 
 augroup jsonc
     autocmd!
     autocmd FileType json syntax match Comment +\/\/.\+$+
-augroup END
-
-augroup javascript
-    au!
-    au BufNewFile, BufRead *.js,*.jsx
-    au FileType javascript,javascriptreact set softtabstop=2
-    au FileType javascript,javascriptreact set tabstop=2
-    au FileType javascript,javascriptreact set shiftwidth=2
-    au FileType javascript,javascriptreact set expandtab
-    " au FileType javascript set indentexpr=  " fixes indenting(/shrug)
- augroup END
-
-
-augroup typescript
-    au!
-    au BufNewFile, BufRead *.ts,*.tsx
-    au FileType typescript,typescriptreact set softtabstop=2
-    au FileType typescript,typescriptreact set tabstop=2
-    au FileType typescript,typescriptreact set shiftwidth=2
-    au FileType typescript,typescriptreact set expandtab
-    " au FileType typescript,typescriptreact set indentexpr=  " fixes indenting(/shrug)
 augroup END
 
 augroup java

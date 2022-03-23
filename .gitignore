@@ -6,4 +6,6 @@ config/vifm/vifmimgpdfpage
 config/vifm/vifminfo
 mutt/cache
 vim/undodir
+vim/plugged
+vim/autoload
 *.netrwhist
