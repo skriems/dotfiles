@@ -183,20 +183,20 @@ function! MyHighlights() abort
         " ligatures
         hi GruvboxYellow gui=italic
         " transparency
-        hi GruvboxRedSign ctermbg=None guibg=None " SignifySignDelete
-        hi GruvboxGreenSign ctermbg=None guibg=None "SignifySignAdd
-        hi GruvboxYellowSign ctermbg=None guibg=None
-        hi GruvboxBlueSign ctermbg=None guibg=None
-        hi GruvboxPurpleSign ctermbg=None guibg=None
-        hi GruvboxAquaSign ctermbg=None guibg=None "SignifySignChange
-        hi GruvboxOrangeSign ctermbg=None guibg=None
+        hi GruvboxRedSign ctermbg=NONE guibg=NONE " SignifySignDelete
+        hi GruvboxGreenSign ctermbg=NONE guibg=NONE "SignifySignAdd
+        hi GruvboxYellowSign ctermbg=NONE guibg=NONE
+        hi GruvboxBlueSign ctermbg=NONE guibg=NONE
+        hi GruvboxPurpleSign ctermbg=NONE guibg=NONE
+        hi GruvboxAquaSign ctermbg=NONE guibg=NONE "SignifySignChange
+        hi GruvboxOrangeSign ctermbg=NONE guibg=NONE
     endif
 
     " transparency
-    hi Normal ctermbg=None guibg=None
-    hi NonText ctermbg=None guifg=#3c3836 guibg=None
-    hi SignColumn ctermbg=None guibg=None
-    hi CursorLineNr ctermbg=None guibg=None
+    hi Normal ctermbg=NONE guibg=NONE
+    hi NonText ctermbg=NONE guifg=#3c3836 guibg=NONE
+    hi SignColumn ctermbg=NONE guibg=NONE
+    hi CursorLineNr ctermbg=NONE guibg=NONE
 
 endfunction
 
@@ -239,6 +239,9 @@ endif
 " Plugin Config {{{
 
 " Conquer of Completion {{{
+
+" global coc-settings should be in .vim for both vim and nvim
+let g:coc_config_home = '~/.vim'
 
 " let g:coc_force_debug = 1
 " and invoke `yarn install/build` to use build files
