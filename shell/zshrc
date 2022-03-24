@@ -9,12 +9,12 @@ export ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="wezm"
 
 export NVM_DIR="$HOME/.nvm"
-export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python
+export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
 export WORKON_HOME=$HOME/.virtualenvs
 [ -f /usr/local/bin/virtualenvwrapper.sh ] && . /usr/local/bin/virtualenvwrapper.sh
 
 # enable python-jedi in REPL
-export PYTHONSTARTUP="$(python -m jedi repl)"
+export PYTHONSTARTUP="$(python3 -m jedi repl)"
 
 # use `keychain` to manage ssh-keys
 eval $(keychain --eval --quiet --confhost ~/.ssh/id_rsa)
@@ -117,8 +117,9 @@ export CARGO_TARGET_DIR="$HOME/.cargo/target"
 # load the platform specific zshrc
 [ -f "$HOME/.zshrc_platform" ] && source "$HOME/.zshrc_platform"
 
-alias passw="PASSWORD_STORE_DIR=~/.password-store-work pass"
+export PINENTRY_USER_DATA=USE_TTY=1
 
+alias passw="PASSWORD_STORE_DIR=~/.password-store-work pass"
 alias ls='ls --color=auto'
 alias l='ls -l --color=auto'
 alias ll="ls -la --color=auto"
