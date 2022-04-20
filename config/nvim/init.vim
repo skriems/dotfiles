@@ -172,14 +172,7 @@ endif
 set background=dark
 
 function! MyHighlights() abort
-    " hi link pythonNone Boolean
-    " hi Statement cterm=italic gui=italic
-    " hi Conditional cterm=italic gui=italic
-    " hi Operator cterm=italic gui=italic
-    " hi Identifier cterm=italic gui=italic
-    " hi Type gui=italic
-
-    if (g:colors_name == "gruvbox")
+    if (g:colors_name == "gruvbox" && &background == "dark")
         " ligatures
         hi GruvboxYellow gui=italic
         " transparency
@@ -192,11 +185,13 @@ function! MyHighlights() abort
         hi GruvboxOrangeSign ctermbg=NONE guibg=NONE
     endif
 
-    " transparency
-    hi Normal ctermbg=NONE guibg=NONE
-    hi NonText ctermbg=NONE guifg=#3c3836 guibg=NONE
-    hi SignColumn ctermbg=NONE guibg=NONE
-    hi CursorLineNr ctermbg=NONE guibg=NONE
+    if (&background == "dark")
+        " transparency
+        hi Normal ctermbg=NONE guibg=NONE
+        hi NonText ctermbg=NONE guifg=#3c3836 guibg=NONE
+        hi SignColumn ctermbg=NONE guibg=NONE
+        hi CursorLineNr ctermbg=NONE guibg=NONE
+    endif
 
 endfunction
 
@@ -205,10 +200,15 @@ augroup MyColors
     autocmd ColorScheme * call MyHighlights()
 augroup END
 
-let g:afterglow_italic_comments = 1
-let g:deepspace_italics = 1
+" let g:afterglow_italic_comments = 1
+" let g:deepspace_italics = 1
+" let g:onedark_terminal_italics = 1
+
+" Gruvbox
+let g:gruvbox_contrast_light = 'medium'
+let g:gruvbox_contrast_dark = 'medium'
+let g:gruvbox_transparent_bg = 1
 let g:gruvbox_italic = 1
-let g:onedark_terminal_italics = 1
 
 " highligh all from vim-python/python-syntax
 let g:python_highlight_all = 1
@@ -290,8 +290,8 @@ set shortmess+=c
 " diagnostics appear/become resolved.
 if has("nvim-0.5.0") || has("patch-8.1.1564")
   " Recently vim can merge signcolumn and number column into one
-  set signcolumn=number
-else
+  " set signcolumn=number
+  " else
   set signcolumn=yes
 endif
 
