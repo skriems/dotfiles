@@ -19,9 +19,16 @@ export PYTHONSTARTUP="$(python3 -m jedi repl)"
 # use `keychain` to manage ssh-keys
 eval $(keychain --eval --quiet --confhost ~/.ssh/id_rsa)
 
-plugins=(docker docker-compose fzf git virtualenvwrapper)
+plugins=(kubectl docker docker-compose fzf git virtualenvwrapper)
 
 source $ZSH/oh-my-zsh.sh
+
+if type kubectl &>/dev/null; then
+    source <(kubectl completion zsh)
+fi
+if type helm &>/dev/null; then
+    source <(helm completion zsh)
+fi
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
@@ -50,8 +57,7 @@ zstyle :compinstall filename "$HOME/.zshrc"
 # prompt off
 
 # completion
-autoload -Uz compinit
-compinit
+autoload -Uz compinit && compinit
 setopt COMPLETE_ALIASES
 
 # make newly installed executables available to completion
@@ -85,13 +91,6 @@ zle -N down-line-or-beginning-search
 #
 # [end] remember the DIRSTACKSIZE last visited folders
 #
-if type kubectl &>/dev/null; then
-    source <(kubectl completion zsh)
-fi
-if type helm &>/dev/null; then
-    source <(helm completion zsh)
-fi
-
 # ~/.local/bin          # pip install --user
 # ~/.cargo/bin          # cargo
 # ~/tools/flutter/bin   # flutter
@@ -125,3 +124,8 @@ alias l='ls -l --color=auto'
 alias ll="ls -la --color=auto"
 alias df="df -h"
 alias du="du -h"
+
+export KUBECONFIG=/Users/skriems/repos/sailrs/high-seas/kubeconfig.yaml
+export GITLAB_USER=skriems
+# export GITLAB_TOKEN=glpat-PNdo6Y922QQ2FWz-zJwJ
+export GITLAB_TOKEN=$(pass sailrs/gitlab/token)
