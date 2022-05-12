@@ -1,0 +1,74 @@
+# A valid snippet should starts with:
+#
+#		snippet trigger_word [ "description" [ options ] ]
+#
+# and end with:
+#
+#		endsnippet
+#
+# Snippet options:
+#
+#		b - Beginning of line.
+#		i - In-word expansion.
+#		w - Word boundary.
+#		r - Regular expression
+#		e - Custom context snippet
+#		A - Snippet will be triggered automatically, when condition matches.
+#
+# Basic example:
+#
+#		snippet emitter "emitter properties" b
+#		private readonly ${1} = new Emitter<$2>()
+#		public readonly ${1/^_(.*)/$1/}: Event<$2> = this.$1.event
+#		endsnippet
+#
+# Online reference: https://github.com/SirVer/ultisnips/blob/master/doc/UltiSnips.txt
+
+snippet native "rn_component" b
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+
+type ${1}Props = {
+}
+
+export function ${1}({}: ${1}Props): React.ReactElement {
+	return (
+		<View style={styles.container}>
+			<Text>Hello</Text>
+		</View>
+	)
+}
+
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+	}
+})
+endsnippet
+
+snippet react "component" b
+import React from 'react';
+
+type ${1}Props = {
+}
+
+export function ${1}({}: ${1}Props): React.ReactElement {
+	return (
+		<>
+			<span>Hello World</span>
+		</>
+	)
+}
+endsnippet
+
+snippet test "component_test" b
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import { ${1} } from '../${1}'
+
+describe(\`\$\{${1}.name\}\`, () => {
+	it.todo('should render');
+})
+endsnippet
