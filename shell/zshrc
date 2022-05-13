@@ -125,7 +125,10 @@ alias ll="ls -la --color=auto"
 alias df="df -h"
 alias du="du -h"
 
-export KUBECONFIG=/Users/skriems/repos/sailrs/high-seas/kubeconfig.yaml
+export KUBECONFIG=$HOME/repos/sailrs/k3s-fleet/kubeconfig.yaml
 export GITLAB_USER=skriems
-# export GITLAB_TOKEN=glpat-PNdo6Y922QQ2FWz-zJwJ
 export GITLAB_TOKEN=$(pass sailrs/gitlab/token)
+
+export TF_VAR_hcloud_token=$(pass sailrs/gitlab/hcloud_token_sailrs)
+export TF_VAR_private_key=$HOME/.ssh/id_rsa_terraform
+export TF_VAR_public_key=$HOME/.ssh/id_rsa_terraform.pub

@@ -9,3 +9,4 @@ vim/undodir
 vim/plugged
 vim/autoload
 *.netrwhist
+config/vifm/vifminfo.json

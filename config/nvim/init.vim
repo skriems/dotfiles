@@ -64,6 +64,8 @@ Plug 'joshdick/onedark.vim'
 Plug 'tyrannicaltoucan/vim-deep-space'
 Plug 'morhetz/gruvbox'
 
+" Plug 'github/copilot.vim'
+
 call plug#end()
 " }}}
 
@@ -256,16 +258,17 @@ let g:coc_global_extensions = [
     \ 'coc-html',
     \ 'coc-java',
     \ 'coc-java-debug',
+    \ 'coc-jedi',
     \ 'coc-json',
     \ 'coc-pairs',
     \ 'coc-phpls',
     \ 'coc-prettier',
-    \ 'coc-python',
     \ 'coc-rust-analyzer',
     \ 'coc-snippets',
     \ 'coc-stylelintplus',
     \ 'coc-svelte',
     \ 'coc-svg',
+    \ 'coc-tabnine',
     \ 'coc-tsserver',
     \ 'coc-yaml', ]
 
