@@ -15,6 +15,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Or build from source code by using yarn: https://yarnpkg.com
 " Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
+Plug 'github/copilot.vim'
 
 " UI
 Plug 'mhinz/vim-signify'
@@ -27,6 +28,7 @@ Plug 'godlygeek/tabular' " tabular needs be before markdown
 Plug 'plasticboy/vim-markdown'
 Plug 'styled-components/vim-styled-components', {'branch': 'main'}
 Plug 'rhysd/vim-wasm'
+Plug 'pantharshit00/vim-prisma'
 
 " Fuzzy Finder
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -261,6 +263,7 @@ let g:coc_global_extensions = [
     \ 'coc-jedi',
     \ 'coc-json',
     \ 'coc-pairs',
+    \ 'coc-prisma',
     \ 'coc-phpls',
     \ 'coc-prettier',
     \ 'coc-rust-analyzer',
@@ -268,7 +271,6 @@ let g:coc_global_extensions = [
     \ 'coc-stylelintplus',
     \ 'coc-svelte',
     \ 'coc-svg',
-    \ 'coc-tabnine',
     \ 'coc-tsserver',
     \ 'coc-yaml', ]
 
@@ -686,6 +688,10 @@ augroup END
 
 augroup rust
     au BufNewFile /**/*.rs 0r ~/.vim/skeleton/rust.rs|norm G
+augroup END
+
+augroup bash
+    au BufNewFile /**/*.sh 0r ~/.vim/skeleton/bash.sh|norm G
 augroup END
 
 augroup python
