@@ -125,7 +125,7 @@ alias ll="ls -la --color=auto"
 alias df="df -h"
 alias du="du -h"
 
-export KUBECONFIG=$HOME/repos/sailrs/k3s-fleet/kubeconfig.yaml
+export KUBECONFIG=$HOME/repos/sailrs/k3s/fleet/kubeconfig.yaml
 export GITLAB_USER=skriems
 export GITLAB_TOKEN=$(pass sailrs/gitlab/token)
 
