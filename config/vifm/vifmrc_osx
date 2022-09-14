@@ -430,4 +430,4 @@ nnoremap <c-u> <c-w>x
 "
 " let $VIFM_SERVER_NAME = v:servername
 "
-source ~/.config/vifm/devicons
+source ~/.config/vifm/favicons.vifm
