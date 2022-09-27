@@ -3,13 +3,13 @@
 -- -> config/lsp.lua
 -- -> config/lsp.lua
 
-
 vim.g.mapleader = ","
 
 local opts = { noremap = true, silent = true }
 
 vim.keymap.set("n", "<leader>sv", ":source $MYVIMRC<CR>", { desc = "source my vimrc" })
 vim.keymap.set("n", "<leader>ev", ":e $MYVIMRC<CR>", { desc = "edit my vimrc" })
+vim.keymap.set("n", "<leader>ww", ":e $HOME/nextcloud/docs/wiki/index.md<CR>", { desc = "open my wiki" })
 vim.keymap.set("i", "jk", "<ESC>", { desc = "exit insert mode" })
 vim.keymap.set("n", "<leader>v", ":Vifm<CR>", { desc = "open vim file manager" })
 vim.keymap.set("n", "<leader>w", ":w<CR>", { desc = "save" })
