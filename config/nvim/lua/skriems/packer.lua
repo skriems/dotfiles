@@ -170,18 +170,6 @@ return require("packer").startup(function()
   use "tpope/vim-dotenv"
   use "tpope/vim-surround"
   use "vifm/vifm.vim"
-  use {
-    "vimwiki/vimwiki", 
-    config = function()
-      vim.g.vimwiki_list = {
-        {
-          path = "$HOME/nextcloud/docs/vimwiki/",
-	        syntax = "markdown",
-	        ext = ".md"
-        }
-      }
-    end
-  }
 
   -- use "mbbill/undotree"
   -- use "rhysd/git-messenger.vim"
