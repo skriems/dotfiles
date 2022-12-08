@@ -1,3 +1,7 @@
+-- the next two lines are needed for nvim-tree.lua
+vim.g.loader = 1
+vim.g.loaded_netrwPlugin = 1
+
 require('skriems.packer')
 require('skriems.options')
 require('skriems.augroups')

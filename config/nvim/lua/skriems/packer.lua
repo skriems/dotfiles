@@ -40,8 +40,11 @@ vim.cmd([[
 return require("packer").startup(function()
   use "wbthomason/packer.nvim" -- Packer can manage itself
 
+  --
   -- LSP
+  --
   use "neovim/nvim-lspconfig" -- Configurations for Nvim LSP
+  use('simrat39/inlay-hints.nvim') -- Show type hints in the buffer
 
   if is_mac then
     use "williamboman/nvim-lsp-installer"
@@ -69,9 +72,11 @@ return require("packer").startup(function()
     end,
   }
 
+  --
+  -- Completion
+  --
   use "github/copilot.vim"
 
-  -- Completion
   use "hrsh7th/nvim-cmp"
   use "hrsh7th/cmp-buffer"
   use "hrsh7th/cmp-path"
@@ -94,17 +99,20 @@ return require("packer").startup(function()
     cmd = "MarkdownPreview"
   }
 
+  --
   -- UI
+  --
   use {
     "lewis6991/gitsigns.nvim", requires = { "nvim-lua/plenary.nvim" },
     config = function() require("gitsigns").setup() end
   }
   use "nvim-lualine/lualine.nvim"
-  use "kyazdani42/nvim-web-devicons"
   use "rcarriga/nvim-notify"
   use "norcalli/nvim-colorizer.lua"
 
+  --
   -- Debugging
+  --
   use "mfussenegger/nvim-dap"
   use {
     "rcarriga/nvim-dap-ui",
@@ -117,7 +125,17 @@ return require("packer").startup(function()
   use "nvim-telescope/telescope-dap.nvim"
   use "leoluz/nvim-dap-go"
 
+  -- Node
+  use { "mxsdev/nvim-dap-vscode-js", requires = {"mfussenegger/nvim-dap"} }
+  use {
+    "microsoft/vscode-js-debug",
+    opt = true,
+    run = "npm install --legacy-peer-deps && npm run compile" 
+  }
+
+  --
   -- Telescope
+  --
   use {
     "nvim-telescope/telescope.nvim",
     requires = { "nvim-lua/plenary.nvim" }
@@ -138,6 +156,13 @@ return require("packer").startup(function()
 
   -- Tools
   use { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" }
+  use {
+    'nvim-tree/nvim-tree.lua',
+    requires = {
+      'nvim-tree/nvim-web-devicons', -- optional, for file icons
+    },
+    -- tag = 'nightly' -- optional, updated every week. (see issue #1193)
+  }
 
   use {
     "ThePrimeagen/refactoring.nvim",
@@ -176,10 +201,16 @@ return require("packer").startup(function()
   -- use "ziontee113/icon-picker.nvim"
   -- use "ziontee113/color-picker.nvim"
 
+  -- for neovim development
+  -- use "folke/neodev.nvim"
+
+  use {
+    "klesh/nvim-runscript",
+    config = function() require("nvim-runscript").setup{} end
+  }
   -- ColorScheme
   use "morhetz/gruvbox"
   use "EdenEast/nightfox.nvim"
-
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins

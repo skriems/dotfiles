@@ -54,7 +54,7 @@ require("pantran").setup({
   default_engine = "deepl",
   engines = {
     deepl = {
-      auth_key = "610f80fa-1faa-517c-e0c3-e4573ecc497f:fx",
+      auth_key = "87999240-45b7-2da1-15ad-0725414d090a:fx",
       free_api = true
     }
   }
@@ -106,4 +106,30 @@ notify.setup({
 vim.notify = notify
 
 -- nvim-colorizer
-require('colorizer').setup({})
+require('colorizer').setup()
+
+require('nvim-tree').setup({
+  diagnostics = {
+    enable = true,
+    show_on_dirs = true,
+    debounce_delay = 50,
+    icons = {
+      hint = "",
+      info = "",
+      warning = "",
+      error = "",
+    },
+  },
+  view = {
+    width = 40,
+    side = 'left',
+    mappings = {
+      list = {
+        { key = "h", action = "close_node" },
+        { key = "l", action = "edit" },
+      }
+    },
+    number = true,
+    relativenumber = true,
+  }
+})

@@ -130,6 +130,11 @@ _G.packer_plugins = {
     path = "/Users/skriems/.local/share/nvim/site/pack/packer/start/gruvbox",
     url = "https://github.com/morhetz/gruvbox"
   },
+  ["inlay-hints.nvim"] = {
+    loaded = true,
+    path = "/Users/skriems/.local/share/nvim/site/pack/packer/start/inlay-hints.nvim",
+    url = "https://github.com/simrat39/inlay-hints.nvim"
+  },
   ["lsp-colors.nvim"] = {
     loaded = true,
     path = "/Users/skriems/.local/share/nvim/site/pack/packer/start/lsp-colors.nvim",
@@ -207,6 +212,11 @@ _G.packer_plugins = {
     path = "/Users/skriems/.local/share/nvim/site/pack/packer/start/nvim-dap-virtual-text",
     url = "https://github.com/theHamsta/nvim-dap-virtual-text"
   },
+  ["nvim-dap-vscode-js"] = {
+    loaded = true,
+    path = "/Users/skriems/.local/share/nvim/site/pack/packer/start/nvim-dap-vscode-js",
+    url = "https://github.com/mxsdev/nvim-dap-vscode-js"
+  },
   ["nvim-lsp-installer"] = {
     loaded = true,
     path = "/Users/skriems/.local/share/nvim/site/pack/packer/start/nvim-lsp-installer",
@@ -226,6 +236,17 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/skriems/.local/share/nvim/site/pack/packer/start/nvim-notify",
     url = "https://github.com/rcarriga/nvim-notify"
+  },
+  ["nvim-runscript"] = {
+    config = { "\27LJ\2\n@\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\19nvim-runscript\frequire\0" },
+    loaded = true,
+    path = "/Users/skriems/.local/share/nvim/site/pack/packer/start/nvim-runscript",
+    url = "https://github.com/klesh/nvim-runscript"
+  },
+  ["nvim-tree.lua"] = {
+    loaded = true,
+    path = "/Users/skriems/.local/share/nvim/site/pack/packer/start/nvim-tree.lua",
+    url = "https://github.com/nvim-tree/nvim-tree.lua"
   },
   ["nvim-treesitter"] = {
     loaded = true,
@@ -256,6 +277,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/skriems/.local/share/nvim/site/pack/packer/start/refactoring.nvim",
     url = "https://github.com/ThePrimeagen/refactoring.nvim"
+  },
+  ["rest.nvim"] = {
+    loaded = true,
+    path = "/Users/skriems/.local/share/nvim/site/pack/packer/start/rest.nvim",
+    url = "https://github.com/rest-nvim/rest.nvim"
   },
   ["sqlite.lua"] = {
     loaded = true,
@@ -354,19 +380,15 @@ _G.packer_plugins = {
     path = "/Users/skriems/.local/share/nvim/site/pack/packer/start/vim-wasm",
     url = "https://github.com/rhysd/vim-wasm"
   },
-  vimwiki = {
-    config = { '\27LJ\2\nt\0\0\3\0\4\0\a6\0\0\0009\0\1\0004\1\3\0005\2\3\0>\2\1\1=\1\2\0K\0\1\0\1\0\3\vsyntax\rmarkdown\tpath"$HOME/nextcloud/docs/vimwiki/\bext\b.md\17vimwiki_list\6g\bvim\0' },
-    loaded = true,
-    path = "/Users/skriems/.local/share/nvim/site/pack/packer/start/vimwiki",
-    url = "https://github.com/vimwiki/vimwiki"
+  ["vscode-js-debug"] = {
+    loaded = false,
+    needs_bufread = false,
+    path = "/Users/skriems/.local/share/nvim/site/pack/packer/opt/vscode-js-debug",
+    url = "https://github.com/microsoft/vscode-js-debug"
   }
 }
 
 time([[Defining packer_plugins]], false)
--- Config for: telescope-frecency.nvim
-time([[Config for telescope-frecency.nvim]], true)
-try_loadstring("\27LJ\2\nM\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0'\2\3\0B\0\2\1K\0\1\0\rfrecency\19load_extension\14telescope\frequire\0", "config", "telescope-frecency.nvim")
-time([[Config for telescope-frecency.nvim]], false)
 -- Config for: vim-dadbod-ui
 time([[Config for vim-dadbod-ui]], true)
 try_loadstring("\27LJ\2\n¥\1\0\0\2\0\a\0\r6\0\0\0009\0\1\0)\1\1\0=\1\2\0006\0\0\0009\0\1\0'\1\4\0=\1\3\0006\0\0\0009\0\1\0'\1\6\0=\1\5\0K\0\1\0\24~/.config/nvim/dbui\24db_ui_save_location\nDBUI_!db_ui_dotenv_variable_prefix\29db_ui_show_database_icon\6g\bvim\0", "config", "vim-dadbod-ui")
@@ -375,10 +397,14 @@ time([[Config for vim-dadbod-ui]], false)
 time([[Config for gitsigns.nvim]], true)
 try_loadstring("\27LJ\2\n6\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\rgitsigns\frequire\0", "config", "gitsigns.nvim")
 time([[Config for gitsigns.nvim]], false)
--- Config for: vimwiki
-time([[Config for vimwiki]], true)
-try_loadstring('\27LJ\2\nt\0\0\3\0\4\0\a6\0\0\0009\0\1\0004\1\3\0005\2\3\0>\2\1\1=\1\2\0K\0\1\0\1\0\3\vsyntax\rmarkdown\tpath"$HOME/nextcloud/docs/vimwiki/\bext\b.md\17vimwiki_list\6g\bvim\0', "config", "vimwiki")
-time([[Config for vimwiki]], false)
+-- Config for: telescope-frecency.nvim
+time([[Config for telescope-frecency.nvim]], true)
+try_loadstring("\27LJ\2\nM\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0'\2\3\0B\0\2\1K\0\1\0\rfrecency\19load_extension\14telescope\frequire\0", "config", "telescope-frecency.nvim")
+time([[Config for telescope-frecency.nvim]], false)
+-- Config for: nvim-runscript
+time([[Config for nvim-runscript]], true)
+try_loadstring("\27LJ\2\n@\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\19nvim-runscript\frequire\0", "config", "nvim-runscript")
+time([[Config for nvim-runscript]], false)
 
 -- Command lazy-loads
 time([[Defining lazy-load commands]], true)

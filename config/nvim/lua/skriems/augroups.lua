@@ -5,6 +5,21 @@ vim.api.nvim_create_autocmd("FileType", {
   command = "setlocal foldmethod=marker",
 })
 
+local augroup = vim.api.nvim_create_augroup("module_ts", { clear = true })
+vim.api.nvim_create_autocmd("BufRead", {
+  pattern = "*.mts",
+  group = augroup,
+  command = "set filetype=typescriptreact",
+})
+
+local augroup = vim.api.nvim_create_augroup("module_js", { clear = true })
+vim.api.nvim_create_autocmd("BufRead", {
+  pattern = "*.mjs",
+  group = augroup,
+  command = "set filetype=javascriptreact",
+})
+
+
 local augroup = vim.api.nvim_create_augroup("rust", { clear = true })
 vim.api.nvim_create_autocmd("BufNewFile", {
   pattern = "*.rs",
@@ -41,7 +56,7 @@ vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
 
 local augroup = vim.api.nvim_create_augroup("two_spaces", { clear = true })
 vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
-  pattern = "*.html,*.css,*.js,*.jsx,*.ts,*.tsx,*.svelte,*.lua",
+  pattern = "*.html,*.css,*.php,*.json,*.js,*.jsx,*.ts,*.tsx,*.svelte,*.lua",
   group = augroup,
   callback = function ()
     vim.api.nvim_command("setlocal softtabstop=2")

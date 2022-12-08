@@ -25,8 +25,7 @@ local on_attach = function(client, bufnr)
   vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, bufopts)
   vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, bufopts)
   vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, bufopts)
-  vim.keymap.set("n", "<leader>f", vim.lsp.buf.formatting, bufopts)
-  -- vim.keymap.set("n", "<leader>f", vim.lsp.buf.format, { noremap=true, silent=true, buffer=bufnr, async=true })
+  vim.keymap.set('n', '<leader>f', function() vim.lsp.buf.format { async = true } end, bufopts)
 end
 
 
@@ -40,34 +39,38 @@ require("nvim-lsp-installer").setup({
         server_pending = "➜",
         server_uninstalled = "✗"
     }
-}
+  }
 })
 
 require("lspconfig").bashls.setup({
-    on_attach = on_attach,
+  on_attach = on_attach,
+  capabilities = capabilities,
 })
 
 require("lspconfig").cssls.setup({
-    on_attach = on_attach,
-    capabilities = capabilities,
+  on_attach = on_attach,
+  capabilities = capabilities,
 })
 
 require("lspconfig").diagnosticls.setup({
-    on_attach = on_attach,
+  on_attach = on_attach,
+  capabilities = capabilities,
 })
 
 require("lspconfig").emmet_ls.setup({
-    on_attach = on_attach,
-    capabilities = capabilities,
-    filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less" },
+  on_attach = on_attach,
+  capabilities = capabilities,
+  filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less" },
 })
 
 require("lspconfig").dockerls.setup({
-    on_attach = on_attach,
+  on_attach = on_attach,
+  capabilities = capabilities,
 })
 
 require("lspconfig").eslint.setup({
   on_attach = on_attach,
+  capabilities = capabilities,
   settings = {
     codeActionOnSave = {
       enabled = true,
@@ -75,9 +78,19 @@ require("lspconfig").eslint.setup({
     },
     format = true,
     onIgnoredFiles = "off",
-    run = "onType",
+    run = "onSave",
     validate = "on",
-  }
+  },
+  -- handlers = {
+  --     ["textDocument/publishDiagnostics"] = vim.lsp.with(
+  --         vim.lsp.diagnostic.on_publish_diagnostics, {
+  --             virtual_text = false,
+  --             signs = true,
+  --             underline = true,
+  --             update_in_insert = false,
+  --         }
+  --     )
+  -- },
 })
 
 -- not sure if `codeActionOnSave` or the below augroup works better
@@ -87,26 +100,35 @@ vim.api.nvim_create_autocmd({"BufWritePre"}, {
   command ="EslintFixAll",
 })
 
+-- enabled inlay type hints
+require("inlay-hints").setup()
+
 require("lspconfig").html.setup({
-    on_attach = on_attach,
-    capabilities = capabilities,
+  on_attach = on_attach,
+  capabilities = capabilities,
 })
 
 require("lspconfig").intelephense.setup({
-    on_attach = on_attach,
+  on_attach = on_attach,
+  capabilities = capabilities,
 })
 
 require("lspconfig").jsonls.setup({
-    on_attach = on_attach,
-    capabilities = capabilities,
+  on_attach = on_attach,
+  capabilities = capabilities,
 })
 
 require("lspconfig").rust_analyzer.setup({
-    on_attach = on_attach,
+  on_attach = function (client, bufnr) 
+    require('inlay-hints').on_attach(client, bufnr)
+    on_attach(client, bufnr)
+  end,
+  capabilities = capabilities,
 })
 
 require("lspconfig").stylelint_lsp.setup({
-    on_attach = on_attach,
+  on_attach = on_attach,
+  capabilities = capabilities,
   -- settings = {
   --   stylelintplus = {
   --     -- see available options in stylelint-lsp documentation
@@ -115,31 +137,60 @@ require("lspconfig").stylelint_lsp.setup({
 })
 
 require("lspconfig").sqlls.setup({
-    on_attach = on_attach
+  on_attach = on_attach,
+  capabilities = capabilities,
 })
 
 require("lspconfig").svelte.setup({
-    on_attach = on_attach
+  on_attach = on_attach,
+  capabilities = capabilities,
 })
 
 require("lspconfig").tailwindcss.setup({
-    on_attach = on_attach
+  on_attach = on_attach,
+  capabilities = capabilities,
 })
 
 require("lspconfig").tsserver.setup({
-    on_attach = on_attach
+  on_attach = function (client, bufnr) 
+    require('inlay-hints').on_attach(client, bufnr)
+    on_attach(client, bufnr)
+  end,
+  capabilities = capabilities,
+    settings = {
+    javascript = {
+      inlayHints = {
+        includeInlayEnumMemberValueHints = true,
+        includeInlayFunctionLikeReturnTypeHints = true,
+        includeInlayFunctionParameterTypeHints = true,
+        includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all';
+        includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+        includeInlayPropertyDeclarationTypeHints = true,
+        includeInlayVariableTypeHints = true,
+      },
+    },
+    typescript = {
+      inlayHints = {
+        includeInlayEnumMemberValueHints = true,
+        includeInlayFunctionLikeReturnTypeHints = true,
+        includeInlayFunctionParameterTypeHints = true,
+        includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all';
+        includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+        includeInlayPropertyDeclarationTypeHints = true,
+        includeInlayVariableTypeHints = true,
+      },
+    },
+  },
 })
 
 require("lspconfig").terraformls.setup({
-    on_attach = on_attach
-})
-
-require("lspconfig").tsserver.setup({
-    on_attach = on_attach
+  on_attach = on_attach,
+  capabilities = capabilities,
 })
 
 require("lspconfig").vimls.setup({
-    on_attach = on_attach
+  on_attach = on_attach,
+  capabilities = capabilities,
 })
 
 require("fidget").setup({}) -- standalone UI for nvim-lsp progress. Eye candy for the impatient.

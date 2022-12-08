@@ -12,6 +12,9 @@ vim.keymap.set("n", "<leader>ev", ":e $MYVIMRC<CR>", { desc = "edit my vimrc" })
 vim.keymap.set("n", "<leader>ww", ":e $HOME/nextcloud/docs/wiki/index.md<CR>", { desc = "open my wiki" })
 vim.keymap.set("i", "jk", "<ESC>", { desc = "exit insert mode" })
 vim.keymap.set("n", "<leader>v", ":Vifm<CR>", { desc = "open vim file manager" })
+vim.keymap.set("n", "<leader>t", ":NvimTreeToggle<CR>", { desc = "open nvim-tree" })
+vim.keymap.set("n", "<leader>tf", ":NvimTreeFindFile<CR>", { desc = "find file in nvim-tree" })
+vim.keymap.set("n", "<leader>tc", ":NvimTreeCollapse<CR>", { desc = "collapse nvim-tree" })
 vim.keymap.set("n", "<leader>w", ":w<CR>", { desc = "save" })
 vim.keymap.set("n", "<leader>q", ":q<CR>", { desc = "quit" })
 vim.keymap.set("n", "<leader>qw", ":wq<CR>", { desc = "quit and save" })
@@ -51,7 +54,6 @@ vim.keymap.set("n", "<leader>b", ":lua require'dap'.toggle_breakpoint()<CR>")
 vim.keymap.set("n", "<leader>B", ":lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>")
 vim.keymap.set("n", "<leader>lp", ":lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>")
 vim.keymap.set("n", "<leader>dr", ":lua require'dap'.repl.open()<CR>")
-vim.keymap.set("n", "<leader>dr", ":lua require'dap'.repl.open()<CR>")
 vim.keymap.set("n", "<leader>dt", ":lua require('dap-go').debug_test()<CR>")
 
 -- LSP
@@ -61,6 +63,10 @@ vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, opts)
 vim.keymap.set("n", "<leader>dn", vim.diagnostic.goto_prev, opts)
 vim.keymap.set("n", "<leader>dp", vim.diagnostic.goto_next, opts)
 vim.keymap.set("n", "<leader>do", vim.diagnostic.setloclist, opts)
+
+-- Copilot
+vim.keymap.set("i", "<leader><C-j>", "<Plug>(copilot-next)", { desc = "open copilot" })
+vim.keymap.set("i", "<leader><C-k>", "<Plug>(copilot-previous)", { desc = "open copilot" })
 
 -- Telescope
 vim.keymap.set("n", "<leader>ff", "<cmd>lua require('telescope.builtin').find_files()<CR>")
@@ -101,7 +107,7 @@ vim.keymap.set("n", "<leader>tb", ":Gitsigns toggle_current_line_blame<CR>")
 vim.keymap.set("n", "<leader>hd", ":Gitsigns diffthis<CR>")
 vim.keymap.set("n", "<leader>td", ":Gitsigns toggle_deleted<CR>")
 
-    -- Text object
+-- Text object
 vim.keymap.set("o", "ih", ":<C-U>Gitsigns select_hunk<CR>")
 vim.keymap.set("x", "ih", ":<C-U>Gitsigns select_hunk<CR>")
 
@@ -110,3 +116,6 @@ local pantran = require("pantran")
 vim.keymap.set("n", "<leader>tr", pantran.motion_translate, opts)
 vim.keymap.set("n", "<leader>trr", function() return pantran.motion_translate() .. "_" end, opts)
 vim.keymap.set("x", "<leader>tr", pantran.motion_translate, opts)
+
+-- rest.nvim-
+vim.keymap.set("n", "<leader>rs", ":RunScript<CR>", opts)
