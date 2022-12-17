@@ -57,6 +57,7 @@ zle -N down-line-or-beginning-search
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f /usr/local/bin/virtualenvwrapper.sh ] && . /usr/local/bin/virtualenvwrapper.sh
 
+export BW_SESSION=$(bw get password bitwarden_session_id)
 export NVM_DIR="$HOME/.nvm"
 export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
 export WORKON_HOME=$HOME/.virtualenvs

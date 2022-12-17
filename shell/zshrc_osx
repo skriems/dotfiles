@@ -1,9 +1,7 @@
 # brew completions; must be called before `.oh-my-zsh`
 if type brew &>/dev/null; then
-  FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
+  FPATH=$(brew --prefix)/share/zsh/site-functions:$(brew --prefix)/share/zsh-completions:$FPATH
   source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
   autoload -Uz compinit
   compinit
 fi
@@ -47,3 +45,7 @@ export MANPATH="$MANPATH:/usr/local/opt/coreutils/libexec/gnuman"
 
 # vifm
 export MYVIFMRC=~/.config/vifm/vifmrc_osx
+
+#jenv
+export PATH="$HOME/.jenv/bin:$PATH"
+eval "$(jenv init -)"
