@@ -1,6 +1,7 @@
 config/i3/config
 config/i3/i3blocks
 config/nvim/dbui
+config/nvim/plugin/packer_compiled.lua
 config/vifm/vifmimgpdffile
 config/vifm/vifmimgpdfpage
 config/vifm/vifminfo
