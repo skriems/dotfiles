@@ -1,7 +1,7 @@
 # neomutt only:
 # source ~/.mutt/colors-gruvbox-shuber-extended.muttrc
-source ~/.mutt/transparent-gruvbox.muttrc
-source ~/.muttgpg.rc
+# source ~/.mutt/transparent-gruvbox.muttrc
+source ~/.mutt/gpg.rc
 
 # invoke ":exec what-key" in mutt to find out the key to specify here
 # macro index y "<change-folder>?<toggle-mailboxes>" "show incoming mailboxes list"
