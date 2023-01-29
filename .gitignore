@@ -1,3 +1,4 @@
+config/fish/fish_variables
 config/i3/config
 config/i3/i3blocks
 config/nvim/dbui
