@@ -56,7 +56,7 @@ vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
 
 local augroup = vim.api.nvim_create_augroup("two_spaces", { clear = true })
 vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
-  pattern = "*.html,*.css,*.php,*.json,*.js,*.jsx,*.ts,*.tsx,*.svelte,*.lua",
+  pattern = "*.html,*.css,*.php,*.json,*.js,*.cjs,*.jsx,*.ts,*.tsx,*.svelte,*.lua",
   group = augroup,
   callback = function ()
     vim.api.nvim_command("setlocal softtabstop=2")

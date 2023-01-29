@@ -31,26 +31,59 @@ end
 --
 dap.adapters.lldb = {
   type = "executable",
-  command = "/Users/skriems/.cargo/bin/rust-lldb",
+  command = "/opt/homebrew/opt/llvm/bin/lldb-vscode",
   name = "lldb"
 }
 
+-- You can attach debuggers to existing processes. First, launch rust-lldb with the path to the exact binary in use. If you’re compiling in dev mode for this (recommended), make sure LanguageClient is actually using that binary. Don’t use the run command. Find the process id of ra_lsp_server and use the process attach -p 123 command after setting some breakpoints.
 dap.configurations.rust = {
   {
     name = "Launch file",
     type = "lldb",
     request = "launch",
-    -- program = "/Users/skriems/.cargo/bin/cargo",
     program = function()
-      -- return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
-      return vim.fn.input("Path to executable: ", os.getenv("CARGO_TARGET_DIR") .. "debug/", "file")
+      return vim.fn.input("Program: ", os.getenv("CARGO_TARGET_DIR") .. "/debug/", "file")
     end,
-    args = {"eval", "AsKs", "JhKh"},
-    -- runtimeArgs = function ()
-    --   return vim.fn.input("Runtime args: ", "", "file")
-    -- end,
+    args = function()
+      return vim.fn.input("args: ", "", "file")
+    end,
+    runtimeArgs = function ()
+      return vim.fn.input("runtime args: ", "", "file")
+    end,
     cwd = "${workspaceFolder}",
+    runInTerminal = false,
     stopOnEntry = false,
+    -- inherit env variables from the parent for lldb-vscode
+    env = function()
+      local variables = {}
+      for k, v in pairs(vim.fn.environ()) do
+        table.insert(variables, string.format("%s=%s", k, v))
+      end
+      return variables
+    end,
+  },
+  {
+    name = "cargo test",
+    type = "lldb",
+    request = "launch",
+    program = "cargo",
+    args = function()
+      return vim.fn.input("args: ", "", "file")
+    end,
+    runtimeArgs = function ()
+      return vim.fn.input("runtime args: ", "", "file")
+    end,
+    cwd = "${workspaceFolder}",
+    runInTerminal = false,
+    stopOnEntry = false,
+    -- inherit env variables from the parent for lldb-vscode
+    env = function()
+      local variables = {}
+      for k, v in pairs(vim.fn.environ()) do
+        table.insert(variables, string.format("%s=%s", k, v))
+      end
+      return variables
+    end,
   },
 }
 
@@ -67,6 +100,33 @@ require("dap-vscode-js").setup({
 for _, language in ipairs({ "typescript", "javascript" }) do
   dap.configurations[language] = {
     {
+      name = "Attach to port 9229",
+      type = "pwa-node",
+      request = "attach",
+      port = "9229",
+      -- port = function ()
+      --   return vim.fn.input("Port: ", 9229)
+      -- end,
+      -- localRoot = "${workspaceFolder}",
+      localRoot = function ()
+        return vim.fn.input("Local Root: ", vim.fn.getcwd())
+      end,
+      -- remoteRoot = "/application",
+      remoteRoot = function ()
+        return vim.fn.input("Remote root: ", "/application")
+      end,
+      cwd = "${workspaceFolder}",
+      envFile = "${workspaceFolder}/.env",
+    },
+    {
+      name = "Attach to process",
+      type = "pwa-node",
+      request = "attach",
+      processId = require'dap.utils'.pick_process,
+      cwd = "${workspaceFolder}",
+      envFile = "${workspaceFolder}/.env",
+    },
+    {
       name = "Launch file",
       type = "pwa-node",
       request = "launch",
@@ -74,14 +134,7 @@ for _, language in ipairs({ "typescript", "javascript" }) do
       cwd = "${workspaceFolder}",
     },
     {
-      name = "Attach",
-      type = "pwa-node",
-      request = "attach",
-      processId = require'dap.utils'.pick_process,
-      cwd = "${workspaceFolder}",
-    },
-    {
-      name = "Debug Jest Tests",
+      name = "debug jest tests",
       type = "pwa-node",
       request = "launch",
       -- trace = true, -- include debugger info
@@ -94,33 +147,6 @@ for _, language in ipairs({ "typescript", "javascript" }) do
       cwd = "${workspaceFolder}",
       console = "integratedTerminal",
       internalConsoleOptions = "neverOpen",
-    },
-    {
-      name = "zeou-gateway",
-      type = "pwa-node",
-      request = "attach",
-      port = 9221,
-      localRoot = "${workspaceFolder}/source/services/gateway-service",
-      remoteRoot = "/application",
-      protocol = "inspector"
-    },
-    {
-      name = "zeou-api",
-      type = "pwa-node",
-      request = "attach",
-      port = 9222,
-      localRoot = "${workspaceFolder}/source/services/api-service",
-      remoteRoot = "/application",
-      protocol = "inspector"
-    },
-    {
-      name = "zeou-worker",
-      type = "pwa-node",
-      request = "attach",
-      port = 9223,
-      localRoot = "${workspaceFolder}/source/services/worker",
-      remoteRoot = "/application",
-      protocol = "inspector"
     },
   }
 end

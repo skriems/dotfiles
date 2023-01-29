@@ -111,7 +111,7 @@ return require("packer").startup(function()
   use "norcalli/nvim-colorizer.lua"
 
   --
-  -- Debugging
+  -- DAP
   --
   use "mfussenegger/nvim-dap"
   use {
@@ -130,7 +130,8 @@ return require("packer").startup(function()
   use {
     "microsoft/vscode-js-debug",
     opt = true,
-    run = "npm install --legacy-peer-deps && npm run compile" 
+    commit = '008918b269b96934aa743361b1cd3f349c9eac8a'
+    -- run = "npm install --legacy-peer-deps && npm run compile" 
   }
 
   --

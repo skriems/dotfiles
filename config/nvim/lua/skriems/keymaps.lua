@@ -22,6 +22,8 @@ vim.keymap.set("n", "<leader>tn", ":tabnew<CR>", { desc = "new tab" })
 vim.keymap.set("n", "<leader>u", ":UndotreeToggle<CR>", { desc = "toggle undo tree" })
 vim.keymap.set("n", "<leader>db", ":DBUIToggle<CR>", { desc = "toggle vim-dadbod-ui" })
 vim.keymap.set("n", "<leader>s", ":%s/<<C-r><C-w>>/", { desc = "replace" })
+vim.keymap.set("n", "<leader>ip", ":exe ':normal i'.substitute(system('openssl rand --base64 12'),'[\n]*$','','')<CR><ESC>", { desc = 'replace' })
+vim.keymap.set("t", "<ESC>", "<C-\\><C-N>", { desc = 'exit terminal' })
 
 -- move text
 vim.keymap.set("n", "<C-j>", ":m .+1<CR>")
@@ -46,42 +48,27 @@ vim.keymap.set("n", "E", "<C-w>=", { desc = "equalize window sizes" })
 -- vim.keymap.set("n", "<C-J>", "gJ", { desc = "join lines" })
 
 -- DAP
-vim.keymap.set("n", "<F5>", ":lua require'dap'.continue()<CR>")
-vim.keymap.set("n", "<F10>", ":lua require'dap'.step_over()<CR>")
-vim.keymap.set("n", "<F11>", ":lua require'dap'.step_into()<CR>")
-vim.keymap.set("n", "<F12>", ":lua require'dap'.step_out()<CR>")
+vim.keymap.set("n", "<F8>", ":lua require'dap'.continue()<CR>")
+vim.keymap.set("n", "<F9>", ":lua require'dap'.step_over()<CR>")
+vim.keymap.set("n", "<F7>", ":lua require'dap'.step_into()<CR>")
+vim.keymap.set("n", "<F10>", ":lua require'dap'.step_out()<CR>")
 vim.keymap.set("n", "<leader>b", ":lua require'dap'.toggle_breakpoint()<CR>")
 vim.keymap.set("n", "<leader>B", ":lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>")
 vim.keymap.set("n", "<leader>lp", ":lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>")
 vim.keymap.set("n", "<leader>dr", ":lua require'dap'.repl.open()<CR>")
-vim.keymap.set("n", "<leader>dt", ":lua require('dap-go').debug_test()<CR>")
+-- vim.keymap.set("n", "<leader>dt", ":lua require('dap-go').debug_test()<CR>")
 
 -- LSP
 -- more keymaps _on_attach_ in lsp.lua and tools.lua
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, opts)
-vim.keymap.set("n", "<leader>dn", vim.diagnostic.goto_prev, opts)
-vim.keymap.set("n", "<leader>dp", vim.diagnostic.goto_next, opts)
+vim.keymap.set("n", "<leader>dp", vim.diagnostic.goto_prev, opts)
+vim.keymap.set("n", "<leader>dn", vim.diagnostic.goto_next, opts)
 vim.keymap.set("n", "<leader>do", vim.diagnostic.setloclist, opts)
 
 -- Copilot
 vim.keymap.set("i", "<leader><C-j>", "<Plug>(copilot-next)", { desc = "open copilot" })
 vim.keymap.set("i", "<leader><C-k>", "<Plug>(copilot-previous)", { desc = "open copilot" })
-
--- Telescope
-vim.keymap.set("n", "<leader>ff", "<cmd>lua require('telescope.builtin').find_files()<CR>")
-vim.keymap.set("n", "<leader>fg", "<cmd>lua require('telescope.builtin').live_grep()<CR>")
-vim.keymap.set("n", "<leader>fb", "<cmd>lua require('telescope.builtin').buffers()<CR>")
-vim.keymap.set("n", "<leader>fh", "<cmd>lua require('telescope.builtin').help_tags()<CR>")
-vim.keymap.set("n", "<leader>F", "<cmd>lua require('telescope.builtin').grep_string()<CR>")
-vim.keymap.set("n", "<leader>fv", ":Telescope file_browser<CR>")
-vim.keymap.set("n", "<leader><leader>", "<Cmd>lua require('telescope').extensions.frecency.frecency()<CR>", opts)
-vim.keymap.set("v", "<leader>rf", "<Esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>", { noremap = true })
-vim.keymap.set("n", "<leader>gg", ":G<CR>", { desc = "open vim-fugitive" })
-vim.keymap.set("n", "<leader>gc", "<cmd>lua require('telescope.builtin').git_commits()<CR>")
-vim.keymap.set("n", "<leader>gbc", "<cmd>lua require('telescope.builtin').git_bcommits()<CR>")
-vim.keymap.set("n", "<leader>gb", "<cmd>lua require('telescope.builtin').git_branches()<CR>")
-vim.keymap.set("n", "<leader>gst", "<cmd>lua require('telescope.builtin').git_status()<CR>")
 
 -- Trouble
 vim.keymap.set("n", "<leader>xx", "<cmd>Trouble<CR>", opts)
