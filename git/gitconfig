@@ -3,6 +3,8 @@
     email = foo@bar.com
 [includeIf "gitdir:~/repos/work/"]
     path = ~/repos/work/.gitconfig
+[includeIf "gitdir:~/repos/sailrs/"]
+    path = ~/repos/sailrs/.gitconfig
 [alias]
     st = status
     co = checkout
