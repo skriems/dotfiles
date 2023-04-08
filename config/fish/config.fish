@@ -86,3 +86,6 @@ else
     abbr -a ll 'ls -l'
     abbr -a lll 'ls -la'
 end
+
+# load rbenv on startup
+status --is-interactive; and rbenv init - fish | source
