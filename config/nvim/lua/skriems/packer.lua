@@ -43,12 +43,21 @@ return require("packer").startup(function()
   --
   -- LSP
   --
-  use "neovim/nvim-lspconfig" -- Configurations for Nvim LSP
-  use('simrat39/inlay-hints.nvim') -- Show type hints in the buffer
+  use {
+    "williamboman/mason.nvim",
+    "williamboman/mason-lspconfig.nvim",
 
-  if is_mac then
-    use "williamboman/nvim-lsp-installer"
-  end
+    "neovim/nvim-lspconfig", -- Configurations for Nvim LSP
+
+    "mfussenegger/nvim-dap",
+    "jay-babu/mason-nvim-dap.nvim",
+
+    'simrat39/inlay-hints.nvim', -- Show type hints in the buffer
+  }
+
+  -- if is_mac then
+  --   use "williamboman/nvim-lsp-installer"
+  -- end
 
   use "j-hui/fidget.nvim"
   use "onsails/lspkind-nvim"
@@ -87,12 +96,12 @@ return require("packer").startup(function()
   use "saadparwaiz1/cmp_luasnip"
   -- use({"petertriho/cmp-git", requires = "nvim-lua/plenary.nvim"})
 
-  use {
-    "styled-components/vim-styled-components",
-    branch = "main"
-  }
+  -- use {
+  --   "styled-components/vim-styled-components",
+  --   branch = "main"
+  -- }
   use "rhysd/vim-wasm"
-  use "pantharshit00/vim-prisma"
+  -- use "pantharshit00/vim-prisma"
   use {
     "iamcco/markdown-preview.nvim",
     run = "cd app && yarn install",
@@ -113,7 +122,6 @@ return require("packer").startup(function()
   --
   -- DAP
   --
-  use "mfussenegger/nvim-dap"
   use {
     "rcarriga/nvim-dap-ui",
     requires = {"mfussenegger/nvim-dap"}
@@ -156,6 +164,18 @@ return require("packer").startup(function()
   use "nvim-telescope/telescope-file-browser.nvim"
 
   -- Tools
+  -- use {
+  --   'mg979/vim-visual-multi',
+  --   config = function()
+  --     -- vim.g.VM_leader = '<Space>'
+  --     vim.g.VM_default_mappings = 0
+  --     vim.g.VM_maps = {}
+  --     -- vim.g.VM_maps = {
+  --     --   ["Add Cursor Up"] = '<C-Up>',
+  --     --   ["Add Cursor Down"] = '<C-Down>',
+  --     -- }
+  --   end,
+  -- }
   use { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" }
   use {
     'nvim-tree/nvim-tree.lua',

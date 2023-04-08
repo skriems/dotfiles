@@ -1,3 +1,12 @@
+require("mason").setup()
+require("mason-lspconfig").setup()
+require("mason-nvim-dap").setup({
+  automatic_setup = true,
+})
+
+require("inlay-hints").setup()  -- enabled inlay type hints
+require("fidget").setup({})     -- UI for nvim-lsp progress
+
 -- Enable (broadcasting) snippet capability for completion
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -28,70 +37,93 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', '<leader>f', function() vim.lsp.buf.format { async = true } end, bufopts)
 end
 
-
--- required to be called before any servers are set up
-require("nvim-lsp-installer").setup({
-  automatic_installation = true, -- automatically detect which servers to install (based on which servers are set up via lspconfig)
-  ui = {
-    check_outdated_servers_on_open = true,
-    icons = {
-        server_installed = "✓",
-        server_pending = "➜",
-        server_uninstalled = "✗"
+require("mason-lspconfig").setup_handlers {
+  -- The first entry (without a key) will be the default handler
+  -- and will be called for each installed server that doesn't have
+  -- a dedicated handler.
+  function (server_name) -- default handler (optional)
+    require("lspconfig")[server_name].setup {
+      on_attach = on_attach,
+      capabilities = capabilities,
     }
-  }
-})
+  end,
 
-require("lspconfig").bashls.setup({
-  on_attach = on_attach,
-  capabilities = capabilities,
-})
+  -- Next, you can provide a dedicated handler for specific servers.
+  -- For example, a handler override for the `rust_analyzer`:
+  ["rust_analyzer"] = function ()
+    -- require("rust-tools").setup {}
+    require("lspconfig").rust_analyzer.setup {
+      on_attach = function (client, bufnr) 
+        require('inlay-hints').on_attach(client, bufnr)
+        on_attach(client, bufnr)
+      end,
+      capabilities = capabilities,
+    }
+  end,
 
-require("lspconfig").cssls.setup({
-  on_attach = on_attach,
-  capabilities = capabilities,
-})
+  -- ["emmet_ls"] = function ()
+  --   filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less" },
+  -- end
 
-require("lspconfig").diagnosticls.setup({
-  on_attach = on_attach,
-  capabilities = capabilities,
-})
+  ["eslint"] = function ()
+    require("lspconfig").eslint.setup {
+      on_attach = on_attach,
+      capabilities = capabilities,
+      settings = {
+        codeActionOnSave = {
+          enabled = true,
+          mode = "all",
+        },
+        format = true,
+        onIgnoredFiles = "off",
+        run = "onSave",
+        validate = "on",
+      },
+      handlers = {
+        ["textDocument/publishDiagnostics"] = vim.lsp.with(
+            vim.lsp.diagnostic.on_publish_diagnostics, {
+                virtual_text = false,
+                signs = true,
+                underline = true,
+                update_in_insert = false,
+            }
+        )
+      }
+    }
+  end,
 
-require("lspconfig").emmet_ls.setup({
-  on_attach = on_attach,
-  capabilities = capabilities,
-  filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less" },
-})
+  ["tailwindcss"] = function ()
+    require("lspconfig").tailwindcss.setup {
+      on_attach = on_attach,
+      capabilities = capabilities,
+      settings = {
+        tailwindCSS = {
+          experimental = {
+            classRegex = {
+              "cva\\(([^)]*)\\)",
+              "[\"'`]([^\"'`]*).*?[\"'`]",
+            },
+          },
+        },
+      },
+    }
+  end,
 
-require("lspconfig").dockerls.setup({
-  on_attach = on_attach,
-  capabilities = capabilities,
-})
-
-require("lspconfig").eslint.setup({
-  on_attach = on_attach,
-  capabilities = capabilities,
-  settings = {
-    codeActionOnSave = {
-      enabled = true,
-      mode = "all",
-    },
-    format = true,
-    onIgnoredFiles = "off",
-    run = "onSave",
-    validate = "on",
-  },
-  -- handlers = {
-  --     ["textDocument/publishDiagnostics"] = vim.lsp.with(
-  --         vim.lsp.diagnostic.on_publish_diagnostics, {
-  --             virtual_text = false,
-  --             signs = true,
-  --             underline = true,
-  --             update_in_insert = false,
-  --         }
-  --     )
-  -- },
-})
+  -- ["null_ls"] = function ()
+  --   lspconfig.null_ls.setup {
+  --     on_attach = on_attach,
+  --     capabilities = capabilities,
+  --     sources = {
+  --       require("null-ls").builtins.code_actions.eslint,
+  --       require("null-ls").builtins.code_actions.gitsigns,
+  --       require("null-ls").builtins.completion.luasnip,
+  --       require("null-ls").builtins.diagnostics.eslint,
+  --       require("null-ls").builtins.formatting.prettier,
+  --       require("null-ls").builtins.formatting.stylua,
+  --     }
+  --   }
+  -- end,
+}
 
 -- not sure if `codeActionOnSave` or the below augroup works better
 vim.api.nvim_create_autocmd({"BufWritePre"}, {
@@ -100,119 +132,34 @@ vim.api.nvim_create_autocmd({"BufWritePre"}, {
   command ="EslintFixAll",
 })
 
--- enabled inlay type hints
-require("inlay-hints").setup()
-
-require("lspconfig").html.setup({
-  on_attach = on_attach,
-  capabilities = capabilities,
-})
-
-require("lspconfig").intelephense.setup({
-  on_attach = on_attach,
-  capabilities = capabilities,
-})
-
-require("lspconfig").jsonls.setup({
-  on_attach = on_attach,
-  capabilities = capabilities,
-})
-
-require("lspconfig").rust_analyzer.setup({
-  on_attach = function (client, bufnr) 
-    require('inlay-hints').on_attach(client, bufnr)
-    on_attach(client, bufnr)
-  end,
-  capabilities = capabilities,
-})
-
-require("lspconfig").stylelint_lsp.setup({
-  on_attach = on_attach,
-  capabilities = capabilities,
-  -- settings = {
-  --   stylelintplus = {
-  --     -- see available options in stylelint-lsp documentation
-  --   }
-  -- }
-})
-
-require("lspconfig").sqlls.setup({
-  on_attach = on_attach,
-  capabilities = capabilities,
-})
-
-require("lspconfig").svelte.setup({
-  on_attach = on_attach,
-  capabilities = capabilities,
-})
-
-require("lspconfig").tailwindcss.setup({
-  on_attach = on_attach,
-  capabilities = capabilities,
-  settings = {
-    tailwindCSS = {
-      experimental = {
-        classRegex = {
-          "cva\\(([^)]*)\\)",
-          "[\"'`]([^\"'`]*).*?[\"'`]",
-        },
-      },
-    },
-  },
-})
-
-require("lspconfig").tsserver.setup({
-  on_attach = function (client, bufnr) 
-    require('inlay-hints').on_attach(client, bufnr)
-    on_attach(client, bufnr)
-  end,
-  capabilities = capabilities,
-    settings = {
-    javascript = {
-      inlayHints = {
-        includeInlayEnumMemberValueHints = true,
-        includeInlayFunctionLikeReturnTypeHints = true,
-        includeInlayFunctionParameterTypeHints = true,
-        includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all';
-        includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-        includeInlayPropertyDeclarationTypeHints = true,
-        includeInlayVariableTypeHints = true,
-      },
-    },
-    typescript = {
-      inlayHints = {
-        includeInlayEnumMemberValueHints = true,
-        includeInlayFunctionLikeReturnTypeHints = true,
-        includeInlayFunctionParameterTypeHints = true,
-        includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all';
-        includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-        includeInlayPropertyDeclarationTypeHints = true,
-        includeInlayVariableTypeHints = true,
-      },
-    },
-  },
-})
-
-require("lspconfig").terraformls.setup({
-  on_attach = on_attach,
-  capabilities = capabilities,
-})
-
-require("lspconfig").vimls.setup({
-  on_attach = on_attach,
-  capabilities = capabilities,
-})
-
-require("fidget").setup({}) -- standalone UI for nvim-lsp progress. Eye candy for the impatient.
-
-require("null-ls").setup({
-  on_attach = on_attach,
-  sources = {
-    require("null-ls").builtins.code_actions.eslint,
-    require("null-ls").builtins.code_actions.gitsigns,
-    require("null-ls").builtins.completion.luasnip,
-    require("null-ls").builtins.diagnostics.eslint,
-    require("null-ls").builtins.formatting.prettier,
-    require("null-ls").builtins.formatting.stylua,
-  },
-})
+-- require("lspconfig").tsserver.setup({
+--   on_attach = function (client, bufnr) 
+--     require('inlay-hints').on_attach(client, bufnr)
+--     on_attach(client, bufnr)
+--   end,
+--   capabilities = capabilities,
+--     settings = {
+--     javascript = {
+--       inlayHints = {
+--         includeInlayEnumMemberValueHints = true,
+--         includeInlayFunctionLikeReturnTypeHints = true,
+--         includeInlayFunctionParameterTypeHints = true,
+--         includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all';
+--         includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+--         includeInlayPropertyDeclarationTypeHints = true,
+--         includeInlayVariableTypeHints = true,
+--       },
+--     },
+--     typescript = {
+--       inlayHints = {
+--         includeInlayEnumMemberValueHints = true,
+--         includeInlayFunctionLikeReturnTypeHints = true,
+--         includeInlayFunctionParameterTypeHints = true,
+--         includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all';
+--         includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+--         includeInlayPropertyDeclarationTypeHints = true,
+--         includeInlayVariableTypeHints = true,
+--       },
+--     },
+--   },
+-- })
