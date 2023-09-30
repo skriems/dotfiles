@@ -1,14 +1,14 @@
 require("dapui").setup()
 
 require("nvim-dap-virtual-text").setup({
-  enabled = true,
-  enabled_commands = false,  -- DapVirtualTextEnable, DapVirtualTextDisable, DapVirtualTextToggle, DapVirtualTextForceRefresh
-  highlight_changed_variables = true,  -- highlight changed values with NvimDapVirtualTextChanged, else always NvimDapVirtualText
-  highlight_new_as_changed = true,
-  commented = false,  -- prefix virtual text with comment string
-  show_stop_reason = true,
-  virt_text_pos = "eol", -- position of virtual text, see `:h nvim_buf_set_extmark()`
-  all_frames = false, -- show virtual text for all stack frames not only current. Only works for debugpy on my machine.
+	enabled = true,
+	enabled_commands = false, -- DapVirtualTextEnable, DapVirtualTextDisable, DapVirtualTextToggle, DapVirtualTextForceRefresh
+	highlight_changed_variables = true, -- highlight changed values with NvimDapVirtualTextChanged, else always NvimDapVirtualText
+	highlight_new_as_changed = true,
+	commented = false, -- prefix virtual text with comment string
+	show_stop_reason = true,
+	virt_text_pos = "eol", -- position of virtual text, see `:h nvim_buf_set_extmark()`
+	all_frames = false, -- show virtual text for all stack frames not only current. Only works for debugpy on my machine.
 })
 
 -- env = function()
@@ -27,13 +27,13 @@ require("nvim-dap-virtual-text").setup({
 -- open and close dapui
 local dap, dapui = require("dap"), require("dapui")
 dap.listeners.after.event_initialized["dapui_config"] = function()
-  dapui.open()
+	dapui.open()
 end
 dap.listeners.before.event_terminated["dapui_config"] = function()
-  dapui.close()
+	dapui.close()
 end
 dap.listeners.before.event_exited["dapui_config"] = function()
-  dapui.close()
+	dapui.close()
 end
 
 --
@@ -101,62 +101,62 @@ end
 -- Node
 --
 require("dap-vscode-js").setup({
-  -- node_path = "node", -- Path of node executable. Defaults to $NODE_PATH, and then "node"
-  -- debugger_path = "(runtimedir)/site/pack/packer/opt/vscode-js-debug", -- Path to vscode-js-debug installation.
-  -- debugger_cmd = { "js-debug-adapter" }, -- Command to use to launch the debug server. Takes precedence over `node_path` and `debugger_path`.
-  adapters = { 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost' }, -- which adapters to register in nvim-dap
+	-- node_path = "node", -- Path of node executable. Defaults to $NODE_PATH, and then "node"
+	-- debugger_path = "(runtimedir)/site/pack/packer/opt/vscode-js-debug", -- Path to vscode-js-debug installation.
+	-- debugger_cmd = { "js-debug-adapter" }, -- Command to use to launch the debug server. Takes precedence over `node_path` and `debugger_path`.
+	adapters = { "pwa-node", "pwa-chrome", "pwa-msedge", "node-terminal", "pwa-extensionHost" }, -- which adapters to register in nvim-dap
 })
 
 for _, language in ipairs({ "typescript", "javascript" }) do
-  dap.configurations[language] = {
-    {
-      name = "Attach to port 9229",
-      type = "pwa-node",
-      request = "attach",
-      port = "9229",
-      -- port = function ()
-      --   return vim.fn.input("Port: ", 9229)
-      -- end,
-      -- localRoot = "${workspaceFolder}",
-      localRoot = function ()
-        return vim.fn.input("Local Root: ", vim.fn.getcwd())
-      end,
-      -- remoteRoot = "/application",
-      remoteRoot = function ()
-        return vim.fn.input("Remote root: ", "/application")
-      end,
-      cwd = "${workspaceFolder}",
-      envFile = "${workspaceFolder}/.env",
-    },
-    {
-      name = "Attach to process",
-      type = "pwa-node",
-      request = "attach",
-      processId = require'dap.utils'.pick_process,
-      cwd = "${workspaceFolder}",
-      envFile = "${workspaceFolder}/.env",
-    },
-    {
-      name = "Launch file",
-      type = "pwa-node",
-      request = "launch",
-      program = "${file}",
-      cwd = "${workspaceFolder}",
-    },
-    {
-      name = "debug jest tests",
-      type = "pwa-node",
-      request = "launch",
-      -- trace = true, -- include debugger info
-      runtimeExecutable = "node",
-      runtimeArgs = {
-        "./node_modules/jest/bin/jest.js",
-        "--runInBand",
-      },
-      rootPath = "${workspaceFolder}",
-      cwd = "${workspaceFolder}",
-      console = "integratedTerminal",
-      internalConsoleOptions = "neverOpen",
-    },
-  }
+	dap.configurations[language] = {
+		{
+			name = "Attach to port 9229",
+			type = "pwa-node",
+			request = "attach",
+			port = "9229",
+			-- port = function ()
+			--   return vim.fn.input("Port: ", 9229)
+			-- end,
+			-- localRoot = "${workspaceFolder}",
+			localRoot = function()
+				return vim.fn.input("Local Root: ", vim.fn.getcwd())
+			end,
+			-- remoteRoot = "/application",
+			remoteRoot = function()
+				return vim.fn.input("Remote root: ", "/application")
+			end,
+			cwd = "${workspaceFolder}",
+			envFile = "${workspaceFolder}/.env",
+		},
+		{
+			name = "attach to process",
+			type = "pwa-node",
+			request = "attach",
+			processId = require("dap.utils").pick_process,
+			cwd = "${workspaceFolder}",
+			envFile = "${workspaceFolder}/.env",
+		},
+		{
+			name = "launch file",
+			type = "pwa-node",
+			request = "launch",
+			program = "${file}",
+			cwd = "${workspaceFolder}",
+		},
+		{
+			name = "debug jest tests",
+			type = "pwa-node",
+			request = "launch",
+			-- trace = true, -- include debugger info
+			runtimeExecutable = "node",
+			runtimeArgs = {
+				"./node_modules/jest/bin/jest.js",
+				"--runInBand",
+			},
+			rootPath = "${workspaceFolder}",
+			cwd = "${workspaceFolder}",
+			console = "integratedTerminal",
+			internalConsoleOptions = "neverOpen",
+		},
+	}
 end
