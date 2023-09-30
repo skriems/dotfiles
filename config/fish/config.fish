@@ -45,7 +45,7 @@ eval (/opt/homebrew/bin/brew shellenv)
 setenv CARGO_TARGET_DIR $HOME/.cargo/target
 setenv NVM_DIR $HOME/.nvm
 setenv BAT_CONFIG_DIR $HOME/.config/bat
-setenv KUBECONFIG $HOME/sailrs/k3s/fleet/kubeconfig.yaml:$HOME/sailrs/k3s/fleet-playground/kubeconfig.yaml
+setenv KUBECONFIG $HOME/sailrs/k3s/fleet-1/fleet-1_kubeconfig.yaml
 
 setenv GITLAB_USER skriems
 
