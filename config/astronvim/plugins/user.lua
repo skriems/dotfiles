@@ -22,51 +22,66 @@ return {
     -- vim.keymap.set("x", "<leader>tr", pantran.motion_translate, opts)
   },
   {
-    "mxsdev/nvim-dap-vscode-js",
+    "David-Kunz/gen.nvim",
     event = "User AstroFile",
-    dependencies = {
-      {
-        "microsoft/vscode-js-debug",
-        config = function() end,
-        build = "npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out && git checkout -- .",
-      },
+    cmd = { "Gen" },
+    config = function(plugin, opts)
+      vim.print(plugin)
+      -- configure default model and prompts
+      -- local gen = require "gen"
+      -- gen.model = "codellama:latest"
+    end,
+    keys = {
+      { mode = "n", "<leader>O", "<cmd>Gen<cr>", desc = "Ollama" },
+      { mode = "v", "<leader>O", "<cmd>Gen<cr>", desc = "Ollama" },
     },
-    opts = {
-      debugger_path = vim.fn.stdpath "data" .. "/lazy/vscode-js-debug",
-      -- adapters = { "pwa-node", "pwa-chrome", "pwa-msedge", "node-terminal", "pwa-extensionHost" },
-      -- adapters = { "pwa-node" },
-    },
-    -- config = function(plugin, opts)
-    --   require "plugins.configs.mason-nvim-dap"(plugin, opts)
-    --   local dap = require "dap"
-    --   local attach_process = {
-    --     type = "pwa-node",
-    --     request = "attach",
-    --     name = "attach to process",
-    --     processId = function(...) return require("dap.utils").pick_process(...) end,
-    --     cwd = "${workspaceFolder}",
-    --   }
-    --
-    --   local attach_port = {
-    --     name = "attach to port",
-    --     type = "pwa-node",
-    --     request = "attach",
-    --     port = function() return vim.fn.input("Port: ", "9229") end,
-    --     localRoot = function() return vim.fn.input("Local Root: ", vim.fn.getcwd()) end,
-    --     remoteRoot = function() return vim.fn.input("Remote root: ", "/application") end,
-    --     cwd = "${workspaceFolder}",
-    --     envFile = "${workspaceFolder}/.env",
-    --   }
-    --   dap.configurations.javascript = {
-    --     attach_process,
-    --     attach_port,
-    --   }
-    --   dap.configurations.typescript = {
-    --     attach_process,
-    --     attach_port,
-    --   }
-    -- end,
   },
+  -- {
+  --   "mxsdev/nvim-dap-vscode-js",
+  --   event = "User AstroFile",
+  --   dependencies = {
+  --     {
+  --       "microsoft/vscode-js-debug",
+  --       config = function() end,
+  --       build = "npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out && git checkout -- .",
+  --     },
+  --   },
+  --   opts = {
+  --     debugger_path = vim.fn.stdpath "data" .. "/lazy/vscode-js-debug",
+  --     -- adapters = { "pwa-node", "pwa-chrome", "pwa-msedge", "node-terminal", "pwa-extensionHost" },
+  --     -- adapters = { "pwa-node" },
+  --   },
+  --   -- config = function(plugin, opts)
+  --   --   require "plugins.configs.mason-nvim-dap"(plugin, opts)
+  --   --   local dap = require "dap"
+  --   --   local attach_process = {
+  --   --     type = "pwa-node",
+  --   --     request = "attach",
+  --   --     name = "attach to process",
+  --   --     processId = function(...) return require("dap.utils").pick_process(...) end,
+  --   --     cwd = "${workspaceFolder}",
+  --   --   }
+  --   --
+  --   --   local attach_port = {
+  --   --     name = "attach to port",
+  --   --     type = "pwa-node",
+  --   --     request = "attach",
+  --   --     port = function() return vim.fn.input("Port: ", "9229") end,
+  --   --     localRoot = function() return vim.fn.input("Local Root: ", vim.fn.getcwd()) end,
+  --   --     remoteRoot = function() return vim.fn.input("Remote root: ", "/application") end,
+  --   --     cwd = "${workspaceFolder}",
+  --   --     envFile = "${workspaceFolder}/.env",
+  --   --   }
+  --   --   dap.configurations.javascript = {
+  --   --     attach_process,
+  --   --     attach_port,
+  --   --   }
+  --   --   dap.configurations.typescript = {
+  --   --     attach_process,
+  --   --     attach_port,
+  --   --   }
+  --   -- end,
+  -- },
   -- {
   --   "epwalsh/obsidian.nvim",
   --   event = { "BufReadPre ~/obsidian--vault/**.md" },

@@ -3,7 +3,7 @@ return {
   -- the obsidian vault in this default config  ~/obsidian-vault
   -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand':
   -- event = { "bufreadpre " .. vim.fn.expand "~" .. "/my-vault/**.md" },
-  event = { "BufReadPre  */obsidian-vault/**.md" },
+  event = { "BufReadPre  */nextcloud/docs/wiki/**.md" },
   keys = {
     {
       "gf",

@@ -1,0 +1,26 @@
+{
+  "name": "snippets",
+  "engines": {
+    "vscode": "^1.11.0"
+  },
+  "contributes": {
+    "snippets": [
+      {
+        "language": "typescript",
+        "path": "./function.json"
+      },
+      {
+        "language": "typescriptreact",
+        "path": "./function.json"
+      },
+      {
+        "language": "typescript",
+        "path": "./function_async.json"
+      },
+      {
+        "language": "typescriptreact",
+        "path": "./function_async.json"
+      }
+    ]
+  }
+}

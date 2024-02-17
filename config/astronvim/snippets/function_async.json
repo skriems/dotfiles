@@ -1,0 +1,14 @@
+{
+  "setup": {
+    "prefix": [
+      "fn-async",
+      "template"
+    ],
+    "body": [
+      "export async function $1($2) {",
+      "\t$3",
+      "}"
+    ],
+    "description": "function"
+  }
+}

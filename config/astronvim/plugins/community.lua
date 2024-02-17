@@ -34,7 +34,7 @@ return {
   { import = "astrocommunity.pack.prisma" },
   { import = "astrocommunity.pack.python" },
   { import = "astrocommunity.pack.rust" },
-  { import = "astrocommunity.pack.svelte" },
+  -- { import = "astrocommunity.pack.svelte" },
   { import = "astrocommunity.pack.terraform" },
   { import = "astrocommunity.pack.tailwindcss" },
   { import = "astrocommunity.pack.toml" },
