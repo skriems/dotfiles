@@ -1,3 +1,3 @@
 function fish_greeting
-    echo "Knock, knock, $USER! 😱"
+    echo "knock, knock, $USER! 😱"
 end
