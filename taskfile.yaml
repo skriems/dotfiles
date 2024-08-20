@@ -1,0 +1,14 @@
+version: "3"
+
+tasks:
+  init:
+    - ln -s ./config/bat ~/.config/bat
+    - ln -s ./config/fish ~/.config/fish
+    - ln -s ./config/omf ~/.config/omf
+    - ln -s ./config/kitty ~/.config/kitty
+    - ln -s ./config/nvim ~/.config/nvim-lazy
+
+    - ln -s ./git/gitconfig ~/.gitconfig
+    - ln -s ./git/gitignore_global ~/.gitignore_global
+
+    - ln -s ./termux/tmux.conf ~/.tmux.conf
