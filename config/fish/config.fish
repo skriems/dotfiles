@@ -1,5 +1,18 @@
 setenv SHELL /opt/homebrew/bin/fish
 
+# Define a function that will run nvm use
+function __nvm_use
+    if test -f .nvmrc
+        nvm use
+    end
+end
+
+# If you want to run this every time, just add this line below to your config.fish
+# or create a function that runs the following code and call that in config.fish.
+function __oncd --on-variable PWD --description 'Run nvm use when changing directories'
+    __nvm_use
+end
+
 if status is-interactive
     # Commands to run in interactive sessions can go here
     # if ! set -q TMUX
@@ -25,7 +38,7 @@ end
 
 export (grep "^[^#]" $HOME/.config/fish/.env |xargs -L 1)
 
-fish_add_path /usr/local/bin    # set -gx PATH $PATH $HOME/.local/bin
+fish_add_path /usr/local/bin # set -gx PATH $PATH $HOME/.local/bin
 fish_add_path /usr/local/sbin
 fish_add_path /opt/homebrew/bin
 fish_add_path /opt/homebrew/sbin
@@ -35,7 +48,7 @@ fish_add_path $HOME/.local/bin
 fish_add_path $HOME/.cargo/bin
 fish_add_path $HOME/.jenv/shims
 fish_add_path $HOME/.jenv/bin
-fish_add_path /usr/local/opt/coreutils/libexec/gnubin   # suggested by $(brew doctor)
+fish_add_path /usr/local/opt/coreutils/libexec/gnubin # suggested by $(brew doctor)
 
 setenv EDITOR nvim
 
@@ -56,10 +69,7 @@ setenv GITLAB_USER skriems
 setenv TF_VAR_ssh_private_key $HOME/.ssh/id_terraform
 setenv TF_VAR_ssh_public_key $HOME/.ssh/id_terraform.pub
 
-setenv PYTHONSTARTUP "$(python3 -m jedi repl)"
-setenv WORKON_HOME $HOME/.virtualenvs
-
-setenv APPLE_SSH_ADD_BEHAVIOR "macos"   # ssh - use '--apple-use-keychain'
+setenv APPLE_SSH_ADD_BEHAVIOR macos # ssh - use '--apple-use-keychain'
 
 setenv FZF_DEFAULT_COMMAND 'rg --files --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
 setenv FZF_CTRL_T_COMMAND "$FZF_DEFAULT_COMMAND"
@@ -70,22 +80,34 @@ setenv FZF_DEFAULT_OPTS "--no-mouse --height 60% -1 --reverse --multi --inline-i
 --bind='f3:execute(bat {} || less -f {}),f2:toggle-preview,shift-up:preview-page-up,shift-down:preview-page-down,ctrl-a:select-all+accept,ctrl-y:execute-silent(echo {+} | pbcopy)'"
 
 # Fish git prompt
-set __fish_git_prompt_showuntrackedfiles 'yes'
-set __fish_git_prompt_showdirtystate 'yes'
+set __fish_git_prompt_showuntrackedfiles yes
+set __fish_git_prompt_showdirtystate yes
 set __fish_git_prompt_showstashstate ''
-set __fish_git_prompt_showupstream 'none'
+set __fish_git_prompt_showupstream none
 set -g fish_prompt_pwd_dir_length 3
 
-if command -v exa > /dev/null
-    abbr -a l 'exa'
-    abbr -a ls 'exa'
+if command -v exa >/dev/null
+    abbr -a l exa
+    abbr -a ls exa
     abbr -a ll 'exa -l'
     abbr -a lll 'exa -la'
 else
-    abbr -a l 'ls'
+    abbr -a l ls
     abbr -a ll 'ls -l'
     abbr -a lll 'ls -la'
 end
 
 # load rbenv on startup
 status --is-interactive; and rbenv init - fish | source
+
+# fish shell integration
+fzf --fish | source
+
+
+# BEGIN opam configuration
+# This is useful if you're using opam as it adds:
+#   - the correct directories to the PATH
+#   - auto-completion for the opam binary
+# This section can be safely removed at any time if needed.
+test -r '/Users/sebastiankriems/.opam/opam-init/init.fish' && source '/Users/sebastiankriems/.opam/opam-init/init.fish' > /dev/null 2> /dev/null; or true
+# END opam configuration
