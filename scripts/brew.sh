@@ -21,6 +21,7 @@ if command -v brew &>/dev/null; then
 else
   # Install Homebrew securely using the provided link
   curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh | sh
+  install_packages
 fi
 
 # Optional: Verify if Homebrew installation was successful.
