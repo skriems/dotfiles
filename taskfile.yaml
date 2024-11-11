@@ -4,11 +4,14 @@ tasks:
   init:
     - ln -s ./config/bat ~/.config/bat
     - ln -s ./config/fish ~/.config/fish
-    - ln -s ./config/omf ~/.config/omf
+    # - ln -s ./config/omf ~/.config/omf
     - ln -s ./config/kitty ~/.config/kitty
     - ln -s ./config/nvim ~/.config/nvim-lazy
-
     - ln -s ./git/gitconfig ~/.gitconfig
     - ln -s ./git/gitignore_global ~/.gitignore_global
-
     - ln -s ./termux/tmux.conf ~/.tmux.conf
+
+    # fisher
+    - curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher
+    # nvm plugin
+    - fisher install jorgebucaran/nvm.fish

@@ -57,11 +57,7 @@ zle -N down-line-or-beginning-search
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f /usr/local/bin/virtualenvwrapper.sh ] && . /usr/local/bin/virtualenvwrapper.sh
 
-export BW_SESSION=$(bw get password bitwarden_session_id)
 export NVM_DIR="$HOME/.nvm"
-export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
-export WORKON_HOME=$HOME/.virtualenvs
-export PYTHONSTARTUP="$(python3 -m jedi repl)"
 export PATH=$PATH:~/.local/bin:~/.cargo/bin
 export FZF_DEFAULT_OPTS="--no-mouse --height 60% -1 --reverse --multi --inline-info \
 --preview='[[ \$(file --mime {}) =~ binary ]] && echo {} is a binary file || \
@@ -74,14 +70,6 @@ export BAT_CONFIG_DIR="~/.config/bat/config"
 export CARGO_TARGET_DIR="$HOME/.cargo/target"
 export PINENTRY_USER_DATA=USE_TTY=1
 export CLICOLOR=1
-
-export GITLAB_USER=skriems
-export GITLAB_TOKEN=$(bw get password GITLAB_TOKEN)
-export KUBECONFIG=$HOME/sailrs/k3s/fleet/kubeconfig.yaml:$HOME/sailrs/k3s/fleet-playground/kubeconfig.yaml
-export TF_VAR_hcloud_token=$(bw get password hcloud_token_sailrs)
-# export TF_VAR_hcloud_token=$(bw get password hcloud_token_playground)
-export TF_VAR_ssh_private_key=$HOME/.ssh/id_terraform
-export TF_VAR_ssh_public_key=$HOME/.ssh/id_terraform.pub
 
 alias rust-musl-builder='docker run --rm -it -v "$(pwd)":/home/rust/src ekidd/rust-musl-builder'
 alias ls='ls --color=auto'

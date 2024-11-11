@@ -15,3 +15,7 @@ skr_*
 .vim
 
 **/main/generated
+
+taskfiles/
+taskfile.yaml
+macos-built-deps

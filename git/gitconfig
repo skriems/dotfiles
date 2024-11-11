@@ -1,36 +1,42 @@
 [user]
-    name = Sebastian Kriems
-    email = foo@bar.com
-[includeIf "gitdir:~/repos/work/"]
-    path = ~/repos/work/.gitconfig
-[includeIf "gitdir:~/repos/sailrs/"]
-    path = ~/repos/sailrs/.gitconfig
+  name = Sebastian Kriems
+[includeIf "gitdir:~/repos/**"]
+  path = ~/.gitconfig_private
+[includeIf "gitdir:~/repos/lifestage/github/**"]
+  path = ~/.gitconfig_lifestage
 [alias]
-    st = status
-    co = checkout
-    br = branch
-    ci = commit
-    cit = "!f() { ticket=$(git ticket); git commit -m \"${ticket}: $1\" ;}; f"
-    l = log --pretty=format:\"%C(auto)%h %Cgreen(%p)%Creset %cn (%ad) %C(auto)%d%Creset%n  %s\"
-    ll = log --pretty=format:\"%C(auto)%h %Cgreen(%p)%Creset %cn (%ad) %C(auto)%d%Creset%n  %s\" --stat
-    lg = log --pretty=format:\"%C(auto)%h %Cgreen(%p)%Creset %cn (%ad) %C(auto)%d%Creset%n  %s\" --graph
-    tia = !sh -c \"git tag -a  -m \"
-    ticket = "! git rev-parse --abbrev-ref HEAD | tr '/|-' ' ' | awk '{print $2 \"-\" $3}'"
-    cleanup = "! git branch --merged master | grep -v '^[ *]*\\(master\\|develop\\)$' | xargs git branch -d"
+  st = status
+  co = checkout
+  sw = switch -c
+  br = branch
+  ci = commit
+  cit = "!f() { ticket=$(git ticket); git commit -m \"${ticket}: $1\" ;}; f"
+  l = log --pretty=format:\"%C(auto)%h %Cgreen(%p)%Creset %cn (%ad) %C(auto)%d%Creset%n  %s\"
+  ll = log --pretty=format:\"%C(auto)%h %Cgreen(%p)%Creset %cn (%ad) %C(auto)%d%Creset%n  %s\" --stat
+  lg = log --pretty=format:\"%C(auto)%h %Cgreen(%p)%Creset %cn (%ad) %C(auto)%d%Creset%n  %s\" --graph
+  tia = !sh -c \"git tag -a  -m \"
+  ticket = "! git rev-parse --abbrev-ref HEAD | tr '/|-' ' ' | awk '{print $2 \"-\" $3}'"
+  cleanup = "! git branch --merged master | grep -v '^[ *]*\\(master\\|develop\\)$' | xargs git branch -d"
 [pull]
-    rebase = true
+  rebase = true
 [push]
-    followTags = true
+  followTags = true
 [core]
-    excludesfile = ~/.gitignore_global
+  excludesfile = /Users/sebastiankriems/.gitignore_global
 [credential]
-    helper = cache --timeout=3600
+  helper = cache --timeout=3600
 [filter "lfs"]
-    clean = git-lfs clean -- %f
-    smudge = git-lfs smudge -- %f
-    process = git-lfs filter-process
-    required = true
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
 [init]
-    defaultBranch = main
+  defaultBranch = main
 [diff]
-	submodule = log
+  submodule = log
+[difftool "sourcetree"]
+  cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+  path = 
+[mergetool "sourcetree"]
+  cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+  trustExitCode = true
