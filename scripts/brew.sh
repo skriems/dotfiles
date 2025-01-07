@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/usr/bin/env bash
 
 install_packages() {
   # Install packages using Homebrew
@@ -11,7 +11,7 @@ install_packages() {
     caddy nixpacks ngrok nats-io/nats-tools/nats nats nsc \
     hadolint \
     pearcleaner stats \
-    keycastr \
+    keycastr
 }
 
 # Check if Homebrew is already installed
@@ -21,14 +21,17 @@ if command -v brew &>/dev/null; then
 else
   # Install Homebrew securely using the provided link
   curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh | sh
-  install_packages
 fi
 
 # Optional: Verify if Homebrew installation was successful.
 echo "Verify that Homebrew is installed by running 'brew --version'."
 
-if command -v rustup &>/dev/null; then
-  echo "rustup already installed"
-else
-  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-fi
+# if command -v rustup &>/dev/null; then
+#   echo "rustup already installed"
+# else
+#   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+# fi
+#
+#
+# brew tap nats-io/nats-tools
+# brew install nats-io/nats-tools/nats

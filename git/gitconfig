@@ -2,7 +2,7 @@
   name = Sebastian Kriems
 [includeIf "gitdir:~/repos/**"]
   path = ~/.gitconfig_private
-[includeIf "gitdir:~/repos/lifestage/github/**"]
+[includeIf "gitdir:~/repos/lifestage/code/**"]
   path = ~/.gitconfig_lifestage
 [alias]
   st = status
@@ -22,14 +22,14 @@
 [push]
   followTags = true
 [core]
-  excludesfile = /Users/sebastiankriems/.gitignore_global
+  excludesfile = /Users/skriems/.gitignore_global
 [credential]
   helper = cache --timeout=3600
-[filter "lfs"]
-  clean = git-lfs clean -- %f
-  smudge = git-lfs smudge -- %f
-  process = git-lfs filter-process
-  required = true
+; [filter "lfs"]
+;   clean = git-lfs clean -- %f
+;   smudge = git-lfs smudge -- %f
+;   process = git-lfs filter-process
+;   required = true
 [init]
   defaultBranch = main
 [diff]

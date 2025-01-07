@@ -1,2 +1,3 @@
 
-source "/Users/sebastiankriems/.deno/env.fish"
+source "/Users/skriems/.deno/env.fish"
+

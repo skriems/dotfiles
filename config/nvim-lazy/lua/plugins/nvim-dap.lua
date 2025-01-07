@@ -49,10 +49,10 @@ return {
             return vim.fn.input("Port", "9229")
           end,
           localRoot = "${workspaceFolder}",
-          remoteRoot = "/code",
-          -- remoteRoot = function()
-          --   return vim.fn.input("remoteRoot", "/code")
-          -- end,
+          -- remoteRoot = "/code",
+          remoteRoot = function()
+            return vim.fn.input("remoteRoot", "/code")
+          end,
         },
         {
           type = "pwa-chrome",

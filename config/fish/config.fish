@@ -1,9 +1,14 @@
 setenv SHELL /opt/homebrew/bin/fish
 
-# Define a function that will run nvm use
 function __nvm_use
     if test -f .nvmrc
         nvm use
+    end
+end
+
+function __dotenv
+    if test -f .env
+        source .env
     end
 end
 
@@ -11,6 +16,7 @@ end
 # or create a function that runs the following code and call that in config.fish.
 function __oncd --on-variable PWD --description 'Run nvm use when changing directories'
     __nvm_use
+    __dotenv
 end
 
 if status is-interactive
@@ -109,5 +115,7 @@ fzf --fish | source
 #   - the correct directories to the PATH
 #   - auto-completion for the opam binary
 # This section can be safely removed at any time if needed.
-test -r '/Users/sebastiankriems/.opam/opam-init/init.fish' && source '/Users/sebastiankriems/.opam/opam-init/init.fish' > /dev/null 2> /dev/null; or true
+test -r '/Users/skriems/.opam/opam-init/init.fish' && source '/Users/skriems/.opam/opam-init/init.fish' >/dev/null 2>/dev/null; or true
 # END opam configuration
+
+set --universal nvm_default_version v18.14.0
