@@ -8,7 +8,7 @@ end
 
 function __dotenv
     if test -f .env
-        source .env
+        export (grep "^[^#]" .env |xargs -L 1)
     end
 end
 
@@ -18,6 +18,9 @@ function __oncd --on-variable PWD --description 'Run nvm use when changing direc
     __nvm_use
     __dotenv
 end
+
+__nvm_use
+__dotenv
 
 if status is-interactive
     # Commands to run in interactive sessions can go here
@@ -63,17 +66,6 @@ eval (/opt/homebrew/bin/brew shellenv)
 # setenv JAVA_HOME (jenv javahome)
 setenv CARGO_TARGET_DIR $HOME/.cargo/target
 setenv NVM_DIR $HOME/.nvm
-setenv BAT_CONFIG_DIR $HOME/.config/bat
-setenv KUBECONFIG $HOME/sailrs/k3s/fleet-1/fleet-1_kubeconfig.yaml
-
-setenv GITLAB_USER skriems
-
-# setenv GITLAB_TOKEN $(bw get password GITLAB_TOKEN)
-# setenv TF_VAR_hcloud_token $(bw get password hcloud_token_sailrs)
-# setenv TF_VAR_hcloud_token $(bw get password hcloud_token_playground)
-
-setenv TF_VAR_ssh_private_key $HOME/.ssh/id_terraform
-setenv TF_VAR_ssh_public_key $HOME/.ssh/id_terraform.pub
 
 setenv APPLE_SSH_ADD_BEHAVIOR macos # ssh - use '--apple-use-keychain'
 
@@ -92,23 +84,11 @@ set __fish_git_prompt_showstashstate ''
 set __fish_git_prompt_showupstream none
 set -g fish_prompt_pwd_dir_length 3
 
-if command -v exa >/dev/null
-    abbr -a l exa
-    abbr -a ls exa
-    abbr -a ll 'exa -l'
-    abbr -a lll 'exa -la'
-else
-    abbr -a l ls
-    abbr -a ll 'ls -l'
-    abbr -a lll 'ls -la'
-end
-
 # load rbenv on startup
 status --is-interactive; and rbenv init - fish | source
 
 # fish shell integration
 fzf --fish | source
-
 
 # BEGIN opam configuration
 # This is useful if you're using opam as it adds:
