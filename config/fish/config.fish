@@ -118,4 +118,6 @@ fzf --fish | source
 test -r '/Users/skriems/.opam/opam-init/init.fish' && source '/Users/skriems/.opam/opam-init/init.fish' >/dev/null 2>/dev/null; or true
 # END opam configuration
 
-set --universal nvm_default_version v18.14.0
+set --universal nvm_default_version v22.14.0
+
+ssh-add --apple-use-keychain ~/.ssh/id_ed25519
