@@ -27,5 +27,8 @@ vim.keymap.set("v", "<space>x", ":lua<CR>", { desc = "run line in normal mode" }
 vim.keymap.set("n", "<leader>fp", function()
   require("telescope.builtin").find_files({ cwd = vim.fs.joinpath(vim.fn.stdpath("data"), "lazy") })
 end, { desc = "Plugins" })
+
+vim.keymap.set("n", "<leader>gd", ":Gitsigns diffthis<CR>", { desc = "diff this" })
+
 -- :lua =vim
 -- :lua =vim.api
