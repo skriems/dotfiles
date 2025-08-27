@@ -6,32 +6,8 @@ return {
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
-      -- "j-hui/fidget.nvim", -- Display status,
-      "franco-ruggeri/codecompanion-spinner.nvim", -- progress spinner
-      {
-        "MeanderingProgrammer/render-markdown.nvim",
-        ft = { "markdown", "codecompanion" },
-      },
-      -- {
-      --   "OXY2DEV/markview.nvim",
-      --   lazy = false,
-      --   opts = {
-      --     preview = {
-      --       filetypes = { "markdown", "codecompanion" },
-      --       ignore_buftypes = {},
-      --     },
-      --   },
-      -- },
-      -- {
-      --   "echasnovski/mini.diff",
-      --   config = function()
-      --     local diff = require("mini.diff")
-      --     diff.setup({
-      --       -- Disabled by default
-      --       source = diff.gen_source.none(),
-      --     })
-      --   end,
-      -- },
+      "j-hui/fidget.nvim", -- Display status,
+      -- "franco-ruggeri/codecompanion-spinner.nvim", -- progress spinner
     },
     opts = {
       ---@module "codecompanion"
@@ -45,49 +21,76 @@ return {
             show_result_in_chat = true,
           },
         },
-        spinner = {},
+        -- spinner = {},
+      },
+      strategies = {
+        chat = {
+          name = "copilot",
+          model = "gpt-4.1",
+        },
+        inline = {
+          adapter = "copilot",
+        },
+        cmd = {
+          adapter = "copilot",
+        },
       },
       adapters = {
-        gemini = function()
-          return require("codecompanion.adapters").extend("gemini", {
-            env = {
-              api_key = "cmd:env | grep GEMINI_API_KEY | awk -F= '{print $2}'",
-            },
-          })
-        end,
-        ollama = function()
-          return require("codecompanion.adapters").extend("ollama", {
-            schema = {
-              model = {
-                default = "qwen3:latest",
+        acp = {
+          gemini_cli = function()
+            return require("codecompanion.adapters").extend("gemini_cli", {
+              env = {
+                api_key = "cmd:env | grep GEMINI_API_KEY | awk -F= '{print $2}'",
               },
-              num_ctx = {
-                default = 20000,
+            })
+          end,
+        },
+        http = {
+          gemini = function()
+            return require("codecompanion.adapters").extend("gemini", {
+              env = {
+                api_key = "cmd:env | grep GEMINI_API_KEY | awk -F= '{print $2}'",
               },
-            },
-          })
-        end,
-        openai = function()
-          return require("codecompanion.adapters").extend("openai", {
-            opts = {
-              stream = true,
-            },
-            env = {
-              api_key = "cmd:env | grep OPENAI_API_KEY | awk -F= '{print $2}'",
-            },
-            schema = {
-              model = {
-                default = function()
-                  return "gpt-5"
-                end,
+            })
+          end,
+          ollama = function()
+            return require("codecompanion.adapters").extend("ollama", {
+              schema = {
+                model = {
+                  default = "gpt-oss:latest",
+                },
+                num_ctx = {
+                  default = 20000,
+                },
               },
-            },
-          })
-        end,
+            })
+          end,
+          openai = function()
+            return require("codecompanion.adapters").extend("openai", {
+              opts = {
+                stream = true,
+              },
+              env = {
+                api_key = "cmd:env | grep OPENAI_API_KEY | awk -F= '{print $2}'",
+              },
+              schema = {
+                model = {
+                  default = function()
+                    return "gpt-5"
+                  end,
+                },
+              },
+            })
+          end,
+        },
       },
       opts = {
         log_level = "DEBUG",
       },
     },
+    config = function(_, opts)
+      require("codecompanion").setup(opts)
+      vim.keymap.set("n", "<leader>ac", "<cmd>CodeCompanionChat Toggle<cr>", { desc = "Toggle Code CompanionChat" })
+    end,
   },
 }
