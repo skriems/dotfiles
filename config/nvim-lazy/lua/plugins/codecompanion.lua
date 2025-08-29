@@ -6,8 +6,7 @@ return {
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
-      "j-hui/fidget.nvim", -- Display status,
-      -- "franco-ruggeri/codecompanion-spinner.nvim", -- progress spinner
+      "folke/noice.nvim",
     },
     opts = {
       ---@module "codecompanion"
@@ -40,7 +39,7 @@ return {
           gemini_cli = function()
             return require("codecompanion.adapters").extend("gemini_cli", {
               env = {
-                api_key = "cmd:env | grep GEMINI_API_KEY | awk -F= '{print $2}'",
+                GEMINI_API_KEY = "cmd:env | grep GEMINI_API_KEY | awk -F= '{print $2}'",
               },
             })
           end,
@@ -90,7 +89,8 @@ return {
     },
     config = function(_, opts)
       require("codecompanion").setup(opts)
-      vim.keymap.set("n", "<leader>ac", "<cmd>CodeCompanionChat Toggle<cr>", { desc = "Toggle Code CompanionChat" })
+      vim.keymap.set("n", "<leader>ac", "<cmd>CodeCompanionChat Toggle<cr>", { desc = "Toggle CodeCompanionChat" })
+      vim.keymap.set("n", "<leader>aa", "<cmd>CodeCompanionActions<cr>", { desc = "CompanionChat Action Palette" })
     end,
   },
 }
