@@ -8,6 +8,9 @@ return {
       "nvim-treesitter/nvim-treesitter",
       "folke/noice.nvim",
     },
+    init = function()
+      require("dev.companion-notify").init()
+    end,
     opts = {
       ---@module "codecompanion"
       ---@type CodeCompanion.Config
