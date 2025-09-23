@@ -1,0 +1,7 @@
+model = "gpt-5-codex"
+auto_upgrade_enabled = true
+tui = { theme = { name = "dark-oled-black-pro" } , alternate_screen = true }
+
+[mcp_servers.context7]
+command = "npx"
+args = ["-y", "@upstash/context7-mcp"]
