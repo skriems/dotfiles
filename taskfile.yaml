@@ -1,0 +1,33 @@
+version: 3.0
+
+dotenv: [".env"]
+
+tasks:
+  brew:
+    cmd: brew bundle
+  stow:
+    deps:
+      - stow:codex
+      - stow:fish
+      - stow:ghostty
+      - stow:git
+      - stow:lazyvim
+      - stow:mcphub
+      - stow:opencode
+      - stow:tmux
+  stow:codex:
+    cmd: stow --target $HOME codex
+  stow:fish:
+    cmd: stow --target $HOME fish
+  stow:ghostty:
+    cmd: stow --target $HOME ghostty
+  stow:git:
+    cmd: stow --target $HOME git
+  stow:lazyvim:
+    cmd: stow --target $HOME lazyvim
+  stow:mcphub:
+    cmd: stow --target $HOME mcphub
+  stow:opencode:
+    cmd: stow --target $HOME opencode
+  stow:tmux:
+    cmd: stow --target $HOME tmux
