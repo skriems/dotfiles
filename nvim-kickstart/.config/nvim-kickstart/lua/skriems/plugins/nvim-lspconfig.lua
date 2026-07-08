@@ -24,7 +24,6 @@ return { -- LSP Configuration & Pluginslsp
         map('<leader>lsw', require('telescope.builtin').lsp_dynamic_workspace_symbols, 'Workspace Symbols')
         map('<leader>lr', vim.lsp.buf.rename, 'Rename')
         map('<leader>la', vim.lsp.buf.code_action, 'Code Actions')
-
         map('<leader>[d', vim.diagnostic.goto_prev, 'Go to previous [D]iagnostic message')
 
         vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
@@ -59,38 +58,48 @@ return { -- LSP Configuration & Pluginslsp
     capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
     local servers = {
+      biome = {},
       dockerls = {},
       docker_compose_language_service = {},
       emmet_ls = {
         filetypes = { 'html', 'typescriptreact', 'javascriptreact' },
       },
-      eslint = {
-        on_attach = function(client, bufnr)
-          client.server_capabilities.documentFormattingProvider = true
-        end,
-        -- capabilities = {
-        --   textDocument = {
-        --     formatting = true
-        --   }
-        -- },
-        settings = {
-          -- validate = 'on',
-          enable = true,
-          format = { enable = true },
-          autoFixOnSave = true,
-          lintTask = { enable = true },
-          codeActionsOnSave = {
-            mode = 'all',
-            rules = { '!debugger', '!no-only-tests/*' },
-          },
-        },
-      },
+      -- eslint = {
+      --   on_attach = function(client, bufnr)
+      --     client.server_capabilities.documentFormattingProvider = true
+      --   end,
+      --   -- capabilities = {
+      --   --   textDocument = {
+      --   --     formatting = true
+      --   --   }
+      --   -- },
+      --   settings = {
+      --     -- validate = 'on',
+      --     enable = true,
+      --     format = { enable = true },
+      --     autoFixOnSave = true,
+      --     lintTask = { enable = true },
+      --     codeActionsOnSave = {
+      --       mode = 'all',
+      --       rules = { '!debugger', '!no-only-tests/*' },
+      --     },
+      --   },
+      -- },
       jsonls = {
         settings = { json = { schemas = schemastore.json.schemas(), validate = { enable = true } } },
       },
       lua_ls = {
         settings = {
           Lua = {
+            runtim = { version = 'LuaJIT' },
+            diagnostics = {
+              globals = { 'vim' },
+            },
+            workspace = {
+              library = vim.api.nvim_get_runtime_file('', true), -- Adds Neovim runtime files
+              checkThirdParty = false,
+            },
+            telemetry = { enable = false },
             completion = {
               callSnippet = 'Replace',
             },
@@ -99,12 +108,12 @@ return { -- LSP Configuration & Pluginslsp
           },
         },
       },
-      prettierd = {},
-      prismals = {},
+      -- prettierd = {},
+      -- prismals = {},
       rust_analyzer = {},
-      svelte = {},
+      -- svelte = {},
       tailwindcss = {},
-      tsserver = { settings = { format = { enable = false } } },
+      vtsls = {},
       yamlls = {
         settings = { yaml = { schemas = schemastore.json.schemas(), validate = { enable = true } } },
       },

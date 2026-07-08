@@ -58,6 +58,7 @@ fish_add_path $HOME/.cargo/bin
 fish_add_path $HOME/.jenv/shims
 fish_add_path $HOME/.jenv/bin
 fish_add_path /usr/local/opt/coreutils/libexec/gnubin # suggested by $(brew doctor)
+fish_add_path /Applications/Docker.app/Contents/Resources/bin
 
 setenv EDITOR nvim
 
@@ -85,7 +86,7 @@ set __fish_git_prompt_showupstream none
 set -g fish_prompt_pwd_dir_length 3
 
 # load rbenv on startup
-status --is-interactive; and rbenv init - fish | source
+# status --is-interactive; and rbenv init - fish | source
 
 # fish shell integration
 fzf --fish | source
@@ -95,9 +96,26 @@ fzf --fish | source
 #   - the correct directories to the PATH
 #   - auto-completion for the opam binary
 # This section can be safely removed at any time if needed.
-test -r '/Users/skriems/.opam/opam-init/init.fish' && source '/Users/skriems/.opam/opam-init/init.fish' >/dev/null 2>/dev/null; or true
+function load_opam
+    # eval (opam env --shell=fish --readonly 2> /dev/null)
+    test -r '/Users/skriems/.opam/opam-init/init.fish' && source '/Users/skriems/.opam/opam-init/init.fish' >/dev/null 2>/dev/null; or true
+end
+
+function __maybe_load_opam --on-variable PWD
+    if test -f "$PWD/dune" -o -f "$PWD/jbuild" -o -d "$PWD/_opam"
+        load_opam
+    end
+end
+
 # END opam configuration
 
-set --universal nvm_default_version v22.14.0
+set --universal nvm_default_version v22.22.0
+set --universal nvm_default_packages opencode-ai,mcp-hub
 
 ssh-add --apple-use-keychain ~/.ssh/id_ed25519
+
+alias vim='env NVIM_APPNAME=nvim-kickstart nvim'
+
+# Added by OrbStack: command-line tools and integration
+# This won't be added again if you remove it.
+source ~/.orbstack/shell/init2.fish 2>/dev/null || :

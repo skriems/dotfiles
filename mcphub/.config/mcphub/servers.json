@@ -5,6 +5,10 @@
         "-y",
         "@upstash/context7-mcp"
       ],
+      "autoApprove": [
+        "resolve-library-id",
+        "query-docs"
+      ],
       "command": "npx",
       "disabled": false,
       "env": {

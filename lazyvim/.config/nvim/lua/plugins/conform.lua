@@ -1,5 +1,7 @@
 local js_linters = {
   "biome-check",
+  "oxlint",
+  "oxfmt",
   "eslint",
   "prettierd",
   stop_after_first = true,

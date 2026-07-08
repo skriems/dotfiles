@@ -18,7 +18,7 @@ vim.keymap.set("n", "<space>j", "<c-w>j", { desc = "move to down window" })
 vim.keymap.set("n", "<space>k", "<c-w>k", { desc = "move to up window" })
 vim.keymap.set("n", "<space>l", "<c-w>l", { desc = "move to right window" })
 
-vim.keymap.set("n", "<space>w", ":wa<CR>", { desc = "write" })
+vim.keymap.set("n", "<space>w", ":w<CR>", { desc = "write" })
 vim.keymap.set("n", "<space>q", ":q<CR>", { desc = "quit" })
 vim.keymap.set("n", "<space><space>x", "<cmd>source %<CR>", { desc = "source current file" })
 vim.keymap.set("n", "<space>x", ":.lua<CR>", { desc = "run line in normal mode" })

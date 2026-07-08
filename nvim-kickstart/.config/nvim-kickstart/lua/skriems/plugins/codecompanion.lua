@@ -7,9 +7,6 @@ return {
       "nvim-treesitter/nvim-treesitter",
       "folke/noice.nvim",
     },
-    init = function()
-      require("dev.companion-notify").init()
-    end,
     opts = {
       ---@module "codecompanion"
       ---@type CodeCompanion.Config
@@ -25,22 +22,15 @@ return {
       },
       strategies = {
         chat = {
-          adapter = {
-            name = "copilot",
-            model = "gpt-5.4",
-          },
+          adapter = "copilot",
+          name = "copilot",
+          model = "gpt-5-mini",
         },
         inline = {
-          adapter = {
-            name = "copilot",
-            model = "gpt-5.4",
-          },
+          adapter = "copilot",
         },
         cmd = {
-          adapter = {
-            name = "copilot",
-            model = "gpt-5.4",
-          },
+          adapter = "copilot",
         },
       },
       adapters = {

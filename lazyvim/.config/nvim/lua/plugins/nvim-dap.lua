@@ -25,22 +25,32 @@ return {
 
     for _, ft in ipairs(js_filetypes) do
       require("dap").configurations[ft] = {
-        -- {
-        --   type = "pwa-node",
-        --   request = "attach",
-        --   name = "attach to repl",
-        --   port = 9231,
-        --   localRoot = "${workspaceFolder}",
-        --   remoteRoot = "/code",
-        -- },
-        -- {
-        --   type = "pwa-node",
-        --   request = "attach",
-        --   name = "attach remote /code on port 9229",
-        --   port = 9229,
-        --   localRoot = "${workspaceFolder}",
-        --   remoteRoot = "/code",
-        -- },
+        {
+          type = "pwa-node",
+          request = "launch",
+          name = "launch file",
+          program = "${file}",
+          cwd = "${workspaceFolder}",
+        },
+        {
+          -- Launch current file with node and the inspector enabled.
+          -- This starts node under the debug adapter (no manual --inspect needed).
+          type = "pwa-node",
+          request = "launch",
+          name = "Launch node (inspect-brk)",
+          program = "${file}",
+          cwd = "${workspaceFolder}",
+          runtimeExecutable = "node",
+          runtimeArgs = { "--inspect-brk=9229" }, -- change to --inspect to not break on first line
+          console = "integratedTerminal",
+        },
+        {
+          type = "pwa-node",
+          request = "attach",
+          name = "attach to process",
+          processId = require("dap.utils").pick_process,
+          cwd = "${workspaceFolder}",
+        },
         {
           type = "pwa-node",
           request = "attach",

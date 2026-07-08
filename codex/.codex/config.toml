@@ -1,3 +1,4 @@
+projects = { "/Users/skriems/repos/priv/skriems" = { trust_level = "trusted" }, "/Users/skriems/repos/lifestage/code/b2c" = { trust_level = "trusted" } }
 model = "gpt-5-codex"
 
 [mcp_servers.context7]

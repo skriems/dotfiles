@@ -1,48 +1,23 @@
-return { -- Autoformat
-  'stevearc/conform.nvim',
-  keys = {
-    {
-      -- Customize or remove this keymap to your liking
-      '<leader>lf',
-      function()
-        require('conform').format { async = true, lsp_fallback = true }
-      end,
-      mode = '',
-      desc = 'Format buffer',
-    },
-  },
-  opts = {
-    notify_on_error = true,
-    format_on_save = function(bufnr)
-      -- Disable "format_on_save lsp_fallback" for languages that don't
-      -- have a well standardized coding style. You can add additional
-      -- languages here or re-enable it for the disabled ones.
-      local disable_filetypes = { c = true, cpp = true }
-      return {
-        timeout_ms = 500,
-        lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
-      }
-    end,
-    formatters_by_ft = {
-      lua = { 'stylua' },
-      -- Conform can also run multiple formatters sequentially
-      -- python = { "isort", "black" },
-      --
-      -- You can use a sub-list to tell conform to run *until* a formatter
-      -- is found.
-      -- javascript = { { 'eslint', 'prettierd' } },
-      javascript = { 'eslint', 'prettierd' },
-      javascriptreact = { 'eslint', 'prettierd' },
-      typescript = { 'eslint', 'prettierd' },
-      typescriptreact = { 'eslint', 'prettierd' },
-    },
-  },
-  config = function()
-    vim.api.nvim_create_autocmd('BufWritePre', {
-      pattern = '*',
-      callback = function(args)
-        require('conform').format { bufnr = args.buf }
-      end,
-    })
-  end,
+local js_linters = {
+  "biome-check",
+  "eslint",
+  "prettierd",
+  stop_after_first = true,
 }
+
+return {
+  {
+    "stevearc/conform.nvim",
+    opts = {
+      formatters_by_ft = {
+        lua = { "stylua" },
+        rust = { "rustfmt", lsp_format = "fallback" },
+        javascript = js_linters,
+        javascriptreact = js_linters,
+        typescript = js_linters,
+        typescriptreact = js_linters,
+      },
+    },
+  },
+}
+

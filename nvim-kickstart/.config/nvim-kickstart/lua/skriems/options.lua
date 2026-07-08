@@ -71,6 +71,7 @@ vim.opt.wrap = false
 vim.opt.termguicolors = true
 
 local utils = require 'skriems.utils'
+
 vim.diagnostic.config {
   virtual_text = true,
   update_in_insert = true,
@@ -93,3 +94,5 @@ vim.diagnostic.config {
     },
   },
 }
+
+vim.opt.spell = false
