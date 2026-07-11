@@ -1,1 +1,1 @@
-source "/Users/skriems/.deno/env.fish"
+source "$HOME/.deno/env.fish"

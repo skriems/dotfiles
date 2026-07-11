@@ -98,7 +98,7 @@ fzf --fish | source
 # This section can be safely removed at any time if needed.
 function load_opam
     # eval (opam env --shell=fish --readonly 2> /dev/null)
-    test -r '/Users/skriems/.opam/opam-init/init.fish' && source '/Users/skriems/.opam/opam-init/init.fish' >/dev/null 2>/dev/null; or true
+    test -r '$HOME/.opam/opam-init/init.fish' && source '$HOME/.opam/opam-init/init.fish' >/dev/null 2>/dev/null; or true
 end
 
 function __maybe_load_opam --on-variable PWD
