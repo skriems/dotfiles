@@ -4,7 +4,18 @@ dotenv: [".env"]
 
 tasks:
   brew:
-    cmd: brew bundle
+    cmds:
+      - brew tap atlassian/homebrew-acli
+      - brew trust atlassian/homebrew-acli
+      - brew tap anomalyco/tap
+      - brew trust anomalyco/tap
+      - brew tap go-task/tap
+      - brew trust go-task/tap
+      - brew tap pulumi/tap
+      - brew trust pulumi/tap
+      - brew tap sst/tap
+      - brew trust sst/tap
+      - brew bundle
   stow:
     deps:
       - stow:codex
