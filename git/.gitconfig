@@ -23,7 +23,7 @@
 [push]
   followTags = true
 [core]
-	excludesfile = /Users/skriems/.gitignore_global
+	excludesfile = ~/.gitignore_global
 [credential]
   helper = cache --timeout=3600
 ; [filter "lfs"]
