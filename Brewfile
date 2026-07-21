@@ -5,6 +5,7 @@ tap 'pulumi/tap'
 tap 'sst/tap'
 
 brew 'atlassian/homebrew-acli/acli'
+brew 'auth0'
 brew 'awscli'
 brew 'bat'
 brew 'block-goose-cli'
