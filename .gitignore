@@ -3,7 +3,12 @@ fish/.config/fish/conf.d/lss.fish
 fish/.config/fish/conf.d/secret.fish
 fish/.config/fish/.env
 
+codex/.codex/*
+!codex/.codex/config.toml
+
 i3/.config/i3/config
 i3/.config/i3/i3blocks
 
 !taskfile.yaml
+
+/lazyvim/.config/nvim/lazy-lock.json
