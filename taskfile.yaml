@@ -9,6 +9,8 @@ tasks:
       - brew trust atlassian/homebrew-acli
       - brew tap anomalyco/tap
       - brew trust anomalyco/tap
+      - brew tap agavra/tap
+      - brew trust agavra/tap
       - brew tap go-task/tap
       - brew trust go-task/tap
       - brew tap pulumi/tap
