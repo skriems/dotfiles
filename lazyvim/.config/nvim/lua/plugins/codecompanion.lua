@@ -27,19 +27,19 @@ return {
         chat = {
           adapter = {
             name = "copilot",
-            model = "gpt-5.4",
+            model = "gpt-5.6",
           },
         },
         inline = {
           adapter = {
             name = "copilot",
-            model = "gpt-5.4",
+            model = "gpt-5.6",
           },
         },
         cmd = {
           adapter = {
             name = "copilot",
-            model = "gpt-5.4",
+            model = "gpt-5.6",
           },
         },
       },
