@@ -7,7 +7,7 @@ function __nvm_use
 end
 
 function __dotenv
-    if test -f .env
+    if test -f .env; and grep -q "^[A-Za-z_][A-Za-z0-9_]*=" .env
         export (grep "^[^#]" .env |xargs -L 1)
     end
 end
@@ -45,7 +45,9 @@ end
 # eval $(keychain --eval --quiet --confhost $HOME/.ssh/id_rsa)
 # eval $(keychain --eval --quiet --confhost $HOME/.ssh/id_ed25519)
 
-export (grep "^[^#]" $HOME/.config/fish/.env |xargs -L 1)
+if test -f $HOME/.config/fish/.env; and grep -q "^[A-Za-z_][A-Za-z0-9_]*=" $HOME/.config/fish/.env
+    export (grep "^[^#]" $HOME/.config/fish/.env | xargs -L 1)
+end
 
 fish_add_path /usr/local/bin # set -gx PATH $PATH $HOME/.local/bin
 fish_add_path /usr/local/sbin
