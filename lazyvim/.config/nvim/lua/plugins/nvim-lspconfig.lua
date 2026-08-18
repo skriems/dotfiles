@@ -5,7 +5,7 @@ return {
     servers = {
       oxlint = {
         settings = {
-          fixKind = "safe_fix",
+          fixKind = "all",
         },
       },
       -- eslint = {
