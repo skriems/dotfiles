@@ -10,5 +10,3 @@ i3/.config/i3/config
 i3/.config/i3/i3blocks
 
 !taskfile.yaml
-
-/lazyvim/.config/nvim/lazy-lock.json

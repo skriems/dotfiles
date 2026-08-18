@@ -15,11 +15,9 @@ return {
       table.insert(
         opts.adapters,
         require("neotest-jest")({
-          jestCommand = "npm test --",
-          jestConfigFile = "jest.config.js",
           env = { CI = true },
-          cwd = function()
-            return vim.fn.getcwd()
+          cwd = function(path)
+            return vim.fs.root(path, "package.json")
           end,
         })
       )

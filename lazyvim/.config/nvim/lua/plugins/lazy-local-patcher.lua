@@ -1,5 +1,5 @@
 return {
   "polirritmico/lazy-local-patcher.nvim",
+  lazy = false,
   config = true,
-  ft = "lazy", -- for lazy loading
 }

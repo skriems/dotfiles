@@ -3,7 +3,11 @@ return {
   dependencies = { "saghen/blink.cmp" },
   opts = {
     servers = {
-      oxlint = {},
+      oxlint = {
+        settings = {
+          fixKind = "safe_fix",
+        },
+      },
       -- eslint = {
       --   -- filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
       --   -- root_dir = require("lspconfig.util").root_pattern(".eslintrc.js", ".eslintrc"),
@@ -25,38 +29,6 @@ return {
       -- biome = {},
       lua_ls = {},
       vtsls = {},
-      rust_analyzer = {
-        lens = {
-          debug = { enable = true },
-          enable = true,
-          implementations = { enable = true },
-          references = {
-            adt = { enable = true },
-            enumVariant = { enable = true },
-            method = { enable = true },
-            trait = { enable = true },
-          },
-          run = { enable = true },
-          updateTest = { enable = true },
-        },
-      },
-    },
-    setup = {
-      eslint = function()
-        Snacks.util.lsp.on(function(bufnr, client)
-          if client.name == "eslint" then
-            client.server_capabilities.documentFormattingProvider = true
-            vim.api.nvim_create_autocmd("BufWritePre", {
-              buffer = bufnr,
-              command = "EslintFixAll",
-            })
-          elseif client.name == "tsserver" then
-            client.server_capabilities.documentFormattingProvider = false
-          elseif client.name == "vtsls" then
-            client.server_capabilities.documentFormattingProvider = false
-          end
-        end)
-      end,
     },
   },
 }
