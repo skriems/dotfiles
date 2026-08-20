@@ -89,6 +89,7 @@ enabled = true
 enabled = true
 
 [features]
+hooks = true
 js_repl = false
 
 [desktop]
