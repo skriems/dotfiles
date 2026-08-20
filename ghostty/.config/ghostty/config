@@ -1,3 +1,5 @@
+command = /opt/homebrew/bin/fish
+
 theme = tokyonight
 background-opacity = 0.8
 
