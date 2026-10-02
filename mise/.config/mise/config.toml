@@ -1,0 +1,17 @@
+[tools]
+node = "22.22.2"
+python = "3.14.7"
+
+[settings]
+idiomatic_version_file_enable_tools = ["node", "python"]
+
+[hooks]
+postinstall = '''
+if printf '%s' "$MISE_INSTALLED_TOOLS" | grep -Eq '"name"[[:space:]]*:[[:space:]]*"node"'; then
+    printf '%s' "$MISE_INSTALLED_TOOLS" |
+        jq -r '.[] | select(.name == "node") | .install_path' |
+        while IFS= read -r install_path; do
+            "$install_path/bin/npm" install --global mcp-hub neovim
+        done
+fi
+'''

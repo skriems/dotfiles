@@ -57,7 +57,6 @@ zle -N down-line-or-beginning-search
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f /usr/local/bin/virtualenvwrapper.sh ] && . /usr/local/bin/virtualenvwrapper.sh
 
-export NVM_DIR="$HOME/.nvm"
 export PATH=$PATH:~/.local/bin:~/.cargo/bin
 export FZF_DEFAULT_OPTS="--no-mouse --height 60% -1 --reverse --multi --inline-info \
 --preview='[[ \$(file --mime {}) =~ binary ]] && echo {} is a binary file || \
@@ -79,3 +78,7 @@ alias df="df -h"
 alias du="du -h"
 
 [ -f "$HOME/.zshrc_platform" ] && source "$HOME/.zshrc_platform"
+
+if command -v mise >/dev/null 2>&1; then
+  eval "$(mise activate zsh)"
+fi

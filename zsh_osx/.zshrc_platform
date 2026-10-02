@@ -10,10 +10,6 @@ fi
 export PATH="$PATH:/usr/local/sbin:/usr/local/opt/coreutils/libexec/gnubin"
 export MANPATH="$MANPATH:/usr/local/opt/coreutils/libexec/gnuman"
 
-# nvm
-[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
-[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
-
 # brew install
 
 # bash-completion
@@ -33,7 +29,6 @@ export MANPATH="$MANPATH:/usr/local/opt/coreutils/libexec/gnuman"
 # jq
 # watchman
 # tldr
-# nvm
 # rustup-init
 # adoptopenjdk8
 # adoptopenjdk11

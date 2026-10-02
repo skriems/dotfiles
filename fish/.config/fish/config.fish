@@ -1,10 +1,8 @@
-setenv SHELL /opt/homebrew/bin/fish
+# The following lines were added by Docker Desktop to add commands to your PATH.
+export PATH="$PATH:/Users/sebastian.kriems/.docker/bin"
+# End of Docker Desktop section.
 
-function __nvm_use
-    if test -f .nvmrc
-        nvm use
-    end
-end
+setenv SHELL /opt/homebrew/bin/fish
 
 function __dotenv
     if test -f .env; and grep -q "^[A-Za-z_][A-Za-z0-9_]*=" .env
@@ -14,12 +12,10 @@ end
 
 # If you want to run this every time, just add this line below to your config.fish
 # or create a function that runs the following code and call that in config.fish.
-function __oncd --on-variable PWD --description 'Run nvm use when changing directories'
-    __nvm_use
+function __oncd --on-variable PWD --description 'Load project .env when changing directories'
     __dotenv
 end
 
-__nvm_use
 __dotenv
 
 if status is-interactive
@@ -66,9 +62,13 @@ setenv EDITOR nvim
 
 eval (/opt/homebrew/bin/brew shellenv)
 
+# Activate mise when it is installed on this machine.
+if type -q mise
+    mise activate fish | source
+end
+
 # setenv JAVA_HOME (jenv javahome)
 setenv CARGO_TARGET_DIR $HOME/.cargo/target
-setenv NVM_DIR $HOME/.nvm
 
 setenv APPLE_SSH_ADD_BEHAVIOR macos # ssh - use '--apple-use-keychain'
 
@@ -110,9 +110,6 @@ function __maybe_load_opam --on-variable PWD
 end
 
 # END opam configuration
-
-set --universal nvm_default_version v22.22.0
-set --universal nvm_default_packages opencode-ai,mcp-hub
 
 ssh-add --apple-use-keychain ~/.ssh/id_ed25519
 

@@ -1,6 +1,3 @@
-# nvm
-[ -f /usr/share/nvm/init-nvm.sh ] && . /usr/share/nvm/init-nvm.sh
-
 # fzf
 export FZF_BASE="/usr/share/fzf"
 [ -s "$FZF_BASE/key-bindings.zsh" ] && source $FZF_BASE/key-bindings.zsh
